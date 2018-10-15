@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Item } from '../../models/item';
-import { ItemService } from '../../services/itemService/item.service';
+import { ItemService } from '../../services/item-service/item.service';
 
 
 @Component({

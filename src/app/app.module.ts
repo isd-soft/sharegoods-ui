@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { UserComponent } from './components/userComponent/user.component';
-import { ItemComponent } from './components/itemComponent/item.component';
+import { UserComponent } from './components/user-component/user.component';
+import { ItemComponent } from './components/item-component/item.component';
 
 import {HttpClientModule} from "@angular/common/http";
 
