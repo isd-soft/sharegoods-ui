@@ -13,15 +13,16 @@
 
     <form>
       <div class="form-group">
-        <label for="image">Choose image: </label>
-        <input type="file" id="image" (change)="onFileChange($event)">
-        <button (click)="deleteImage()">Delete</button>
+        <label for="image">Add images: </label>
+        <input type="file" id="image" (change)="onFileChange($event)" multiple >
       </div>
     </form>
   </form>
 
 
   <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-success" (click)="createItem()">Create</button>
+
+
 </div>
 
 
