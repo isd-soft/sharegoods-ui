@@ -15,6 +15,7 @@ export class AddItemComponent implements OnInit {
   fileList: FileList;
   uploadedImages: File[] = [];
   formData: FormData = new FormData();
+  urls = new Array<string>();
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute) { }
 
@@ -26,15 +27,21 @@ export class AddItemComponent implements OnInit {
 
   onFileChange(event) {
     this.uploadedImages = [];
+    this.urls = [];
     if (event.target.files.length === 0) {
       return;
     }
     this.fileList = event.target.files;
     for (let i = 0; i < this.fileList.length; i++) {
+      let reader = new FileReader();
       const file = this.fileList[i];
+      reader.onload = (e: any) => {
+        this.urls.push(e.target.result);
+      };
       if (!file.type.match('image')) {
         continue;
       }
+      reader.readAsDataURL(file);
       this.uploadedImages.push(file);
     }
   }
