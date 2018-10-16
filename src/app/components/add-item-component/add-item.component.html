@@ -2,15 +2,24 @@
   <h2>Add new post</h2>
   <form #newItemForm="ngForm">
     <div class="form-group">
-      <label for="title">Title:</label>
+      <label for="title">Title: </label>
       <input placeholder="Enter title" name="title" class="form-control" id="title" required [(ngModel)]="item.title">
     </div>
 
     <div class="form-group">
-      <label for="description">Description:</label>
+      <label for="description">Description: </label>
       <textarea class="form-control" name="description" rows="5" id="description" required [(ngModel)]="item.description"></textarea>
     </div>
+
+    <form>
+      <div class="form-group">
+        <label for="image">Choose image: </label>
+        <input type="file" id="image" (change)="onFileChange($event)">
+        <button (click)="deleteImage()">Delete</button>
+      </div>
+    </form>
   </form>
+
 
   <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-success" (click)="createItem()">Create</button>
 </div>
