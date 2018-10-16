@@ -16,6 +16,8 @@ export class AddItemComponent implements OnInit {
   uploadedImages: File[] = [];
   formData: FormData = new FormData();
   urls = new Array<string>();
+  itemCreated: boolean = false;
+
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute) { }
 
@@ -56,6 +58,7 @@ export class AddItemComponent implements OnInit {
     this.itemService.createItem(this.userId, this.formData)
       .subscribe(data => {
           console.log(data);
+          this.itemCreated = true;
         },
         err => {
           console.log("Error occured to create new item");

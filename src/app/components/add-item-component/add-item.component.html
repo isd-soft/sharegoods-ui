@@ -20,11 +20,19 @@
   </form>
 
   <div>
-    <img *ngFor="let url of urls" [src]="url" width="100" height="100">
+    <img *ngFor="let url of urls" [src]="url" width="50%" height="50%">
   </div>
   <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-success" (click)="createItem()">Create</button>
 
-  <ngIf
+  <div *ngIf="itemCreated">
+    <h4> Item details </h4>
+    <h5>Title: {{item.title}}</h5>
+    <h5>Title: {{item.description}}</h5>
+    <h5>Images: </h5>
+    <div id="imagediv">
+      <img *ngFor="let url of urls" [src]="url" width="25% height="25%">
+    </div>
+  </div>
 
 
 
