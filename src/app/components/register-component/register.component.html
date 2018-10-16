@@ -1,0 +1,57 @@
+<div class="col-md-6">
+  <h2 class="text-center">Register</h2>
+  <form #newRegisterForm="ngForm">
+
+    <div class="form-group">
+      <label for="firstName">First Name:</label>
+      <input type="text" class="form-control" placeholder="First Name" name="firstName" id="firstName"
+             required
+             [(ngModel)]="user.firstName"
+             #firstName="ngModel">
+      <div [hidden]="firstName.valid || firstName.pristine"
+           class="alert alert-danger">
+        First Name is required</div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="lastName">Last Name:</label>
+      <input type="text" class="form-control" id="lastName"
+             required
+             [(ngModel)]="user.lastName" placeholder="Last name" name="lastName"
+             #lastName="ngModel">
+      <div [hidden]="lastName.valid || lastName.pristine"
+           class="alert alert-danger">
+        Last Name is required</div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email address:</label>
+      <input type="email" class="form-control" id="email"
+             required
+             [(ngModel)]="user.email" placeholder="Email" name="email"
+             #email="ngModel">
+      <div [hidden]="email.valid || email.pristine"
+           class="alert alert-danger">
+        Email is required</div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" id="password"
+             required
+             [(ngModel)]="user.password" placeholder="Enter password" name="password"
+             #password="ngModel">
+      <div [hidden]="password.valid || password.pristine"
+           class="alert alert-danger">
+        Password is required</div>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="newRegisterForm.form.invalid" (click)="createUser()">Register</button>
+  </form>
+</div>
+
+
+
+
+
