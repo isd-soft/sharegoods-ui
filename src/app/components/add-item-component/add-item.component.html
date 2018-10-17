@@ -10,27 +10,11 @@
       <label for="description">Description: </label>
       <textarea class="form-control" name="description" rows="5" id="description" required [(ngModel)]="item.description"></textarea>
     </div>
-
-    <!--<form>-->
-      <!--<div class="form-group">-->
-        <!--<label for="image">Add images: </label>-->
-        <!--<input type="file" id="image" (change)="onFileChange($event)" multiple >-->
-      <!--</div>-->
-    <!--</form>-->
   </form>
 
-  <!--<div>-->
-    <!--<img *ngFor="let url of urls" [src]="url" width="100px" height="100px">-->
-    <!--<button *ngFor="let url of urls"type="button" class="btn btn-primary btn-xs">Delete</button>-->
-  <!--</div>-->
-
-  <image-upload></image-upload>
+  <image-upload [max]="4"></image-upload>
 
   <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-success" (click)="createItem()">Create</button>
-
-  <div *ngIf="itemCreated">
-  </div>
-
 
 </div>
 
