@@ -20,7 +20,7 @@
   </form>
 
   <div>
-    <img *ngFor="let url of urls" [src]="url" width="50%" height="50%">
+    <img *ngFor="let url of urls" [src]="url" width="100px" height="100px">
   </div>
   <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-success" (click)="createItem()">Create</button>
 
@@ -30,7 +30,7 @@
     <h5>Title: {{item.description}}</h5>
     <h5>Images: </h5>
     <div id="imagediv">
-      <img *ngFor="let url of urls" [src]="url" width="25% height="25%">
+      <img *ngFor="let url of urls" [src]="url" width="100px" height="100px">
     </div>
   </div>
 
