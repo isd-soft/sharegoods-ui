@@ -21,4 +21,8 @@ export class ItemService {
     return this.http.post<Item>(createItemUrl, formData);
   }
 
+  public getItem(itemId) {
+    const getItemUrl = this.apiUrl + 'items' + itemId;
+  }
+
 }
