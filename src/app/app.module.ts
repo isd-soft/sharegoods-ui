@@ -7,11 +7,12 @@ import { AppComponent } from './app.component';
 import { UserComponent } from './components/user-component/user.component';
 import { ItemComponent } from './components/item-component/item.component';
 import { RegisterComponent } from './components/register-component/register.component';
-import { UserService } from './services/user-service/user.service';
 
 import { HttpClientModule } from "@angular/common/http";
 import { AddItemComponent } from './components/add-item-component/add-item.component';
 import { FormsModule } from "@angular/forms";
+import {ImageUploadModule} from "angular2-image-upload";
+
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { FormsModule } from "@angular/forms";
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ImageUploadModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

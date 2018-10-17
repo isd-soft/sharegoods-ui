@@ -11,29 +11,25 @@
       <textarea class="form-control" name="description" rows="5" id="description" required [(ngModel)]="item.description"></textarea>
     </div>
 
-    <form>
-      <div class="form-group">
-        <label for="image">Add images: </label>
-        <input type="file" id="image" (change)="onFileChange($event)" multiple >
-      </div>
-    </form>
+    <!--<form>-->
+      <!--<div class="form-group">-->
+        <!--<label for="image">Add images: </label>-->
+        <!--<input type="file" id="image" (change)="onFileChange($event)" multiple >-->
+      <!--</div>-->
+    <!--</form>-->
   </form>
 
-  <div>
-    <img *ngFor="let url of urls" [src]="url" width="100px" height="100px">
-  </div>
+  <!--<div>-->
+    <!--<img *ngFor="let url of urls" [src]="url" width="100px" height="100px">-->
+    <!--<button *ngFor="let url of urls"type="button" class="btn btn-primary btn-xs">Delete</button>-->
+  <!--</div>-->
+
+  <image-upload></image-upload>
+
   <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-success" (click)="createItem()">Create</button>
 
   <div *ngIf="itemCreated">
-    <h4> Item details </h4>
-    <h5>Title: {{item.title}}</h5>
-    <h5>Title: {{item.description}}</h5>
-    <h5>Images: </h5>
-    <div id="imagediv">
-      <img *ngFor="let url of urls" [src]="url" width="100px" height="100px">
-    </div>
   </div>
-
 
 
 </div>
