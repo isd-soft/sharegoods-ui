@@ -8,18 +8,24 @@
 
     <div class="form-group">
       <label for="description">Description: </label>
-      <textarea class="form-control" name="description" rows="5" id="description" required [(ngModel)]="item.description"></textarea>
+      <textarea class="form-control"
+                name="description"
+                rows="5"
+                id="description"
+                required
+                [(ngModel)]="item.description"></textarea>
     </div>
   </form>
 
   <image-upload [max]="4" dropBoxMessage="You can add max 4 images"></image-upload>
 
-  <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-success" (click)="createItem()">Create</button>
+  <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-success" (click)="createItem()">Create
+  </button>
 </div>
 
 <div *ngIf="itemCreated">
   <h4>Item details:</h4>
-  <h6>Title:   {{itemDto.title}} </h6>
+  <h6>Title: {{itemDto.title}} </h6>
   <h6>Description: {{itemDto.description}} </h6>
   <h6>Date created: {{itemDto.dateTime}}</h6>
   <h6>Images:</h6>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Item } from '../../models/item';
-import { ItemService } from '../../services/item-service/item.service';
+import { Item } from '@models/item';
+import { ItemService } from '@services/item-service/item.service';
 
 
 @Component({
@@ -13,11 +13,13 @@ import { ItemService } from '../../services/item-service/item.service';
 export class ItemComponent implements OnInit {
 
   items: Item[];
-  constructor(private router: Router, private itemService: ItemService) { }
+
+  constructor(private router: Router, private itemService: ItemService) {
+  }
 
   ngOnInit() {
     this.itemService.getItems()
-      .subscribe( data => {
+      .subscribe(data => {
         this.items = data;
       });
   }

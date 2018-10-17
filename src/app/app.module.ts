@@ -1,18 +1,21 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { ImageUploadModule } from 'angular2-image-upload';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { UserComponent } from './components/user-list-component/user.component';
-import { ItemComponent } from './components/item-list-component/item.component';
-import { RegisterComponent } from './components/register-component/register.component';
-
-import { HttpClientModule } from "@angular/common/http";
-import { AddItemComponent } from './components/add-item-component/add-item.component';
-import { FormsModule } from "@angular/forms";
-import {ImageUploadModule} from "angular2-image-upload";
-
+import { UserComponent } from '@components/user-list-component/user.component';
+import { ItemComponent } from '@components/item-list-component/item.component';
+import { RegisterComponent } from '@components/register-component/register.component';
+import { AddItemComponent } from '@components/add-item-component/add-item.component';
+import { HomePageComponent } from '@components/home-page-component/home-page.component';
+import { FooterComponent } from '@core/components/footer/footer.component';
+import { HeaderComponent } from '@core/components/header/header.component';
+import { LayoutComponent } from '@core/components/layout/layout.component';
+import { NavComponent } from '@core/components/nav/nav.component';
 
 
 @NgModule({
@@ -21,7 +24,12 @@ import {ImageUploadModule} from "angular2-image-upload";
     UserComponent,
     ItemComponent,
     RegisterComponent,
-    AddItemComponent
+    AddItemComponent,
+    FooterComponent,
+    HeaderComponent,
+    LayoutComponent,
+    NavComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +38,15 @@ import {ImageUploadModule} from "angular2-image-upload";
     HttpClientModule,
     ImageUploadModule.forRoot(),
   ],
+  exports: [
+    FooterComponent,
+    HeaderComponent,
+    LayoutComponent,
+    NavComponent
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
