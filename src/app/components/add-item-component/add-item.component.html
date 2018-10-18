@@ -12,10 +12,21 @@
     </div>
   </form>
 
-  <image-upload [max]="4"></image-upload>
+  <image-upload [max]="4" dropBoxMessage="You can add max 4 images"></image-upload>
 
   <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-success" (click)="createItem()">Create</button>
-
 </div>
+
+<div *ngIf="itemCreated">
+  <h4>Item details:</h4>
+  <h6>Title:   {{itemDto.title}} </h6>
+  <h6>Description: {{itemDto.description}} </h6>
+  <h6>Date created: {{itemDto.dateTime}}</h6>
+  <h6>Images:</h6>
+  <div *ngFor="let src of imagesSrc">
+    <img [src]="src" width="100px" height="100px">
+  </div>
+</div>
+
 
 

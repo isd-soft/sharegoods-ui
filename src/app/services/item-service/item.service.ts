@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 
 import { Item } from '../../models/item';
 
@@ -19,6 +19,10 @@ export class ItemService {
   public createItem(userId, formData) {
     const createItemUrl = this.apiUrl + 'users/' + userId + '/items';
     return this.http.post<Item>(createItemUrl, formData);
+  }
+
+  public getItem(itemId) {
+    return this.http.get(this.apiUrl + 'items/' + itemId);
   }
 
 }
