@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {UserComponent} from './components/user-component/user.component';
-import {ItemComponent} from './components/item-component/item.component';
+import {UserComponent} from './components/user-list-component/user.component';
+import {ItemComponent} from './components/item-list-component/item.component';
 import {AddItemComponent} from "./components/add-item-component/add-item.component";
 import {RegisterComponent} from './components/register-component/register.component';
 

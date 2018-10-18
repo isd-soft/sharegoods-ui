@@ -20,7 +20,7 @@ export class AddItemComponent implements OnInit {
   itemCreated: boolean = false;
   itemId: Number;
 
-  // for testing(to be removed after get-item-component exists)
+  // for testing(to be removed after get-item-list-component exists)
   itemDetails: any;
   itemDto: Item = new Item();
   imagesSrc = new Array();
@@ -48,7 +48,7 @@ export class AddItemComponent implements OnInit {
           this.itemCreated = true;
           this.itemId = data['id'];
 
-          //testing(to be removed after get-item-component exists, redirect to getItemComponent )
+          //testing(to be removed after get-item-list-component exists, redirect to getItemComponent )
           this.itemService.getItem(this.itemId)
             .subscribe( data => {
               this.itemDetails = data;
