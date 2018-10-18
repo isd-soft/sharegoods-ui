@@ -1,9 +1,26 @@
-<p>
-  item works!
-</p>
-<div *ngFor="let item of items">
-  {{item.id}}
-  {{item.user_id}}
-  {{item.title}}
-  {{item.description}}
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Author</th>
+      <th scope="col">Created</th>
+      <th scope="col">Rating</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let item of items" a [routerLink]="[item.id]">
+      <td> {{ item.title }}</td>
+      <td> {{item.description}}</td>
+      <td> {{item.author}} </td>
+      <td> {{item.dateTime}}</td>
+      <td> ***** </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a routerLink="../users/1/additem"><button class="btn btn-primary pull-right"> Add post</button></a>
 </div>
+

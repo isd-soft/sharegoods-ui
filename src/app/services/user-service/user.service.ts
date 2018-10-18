@@ -19,4 +19,5 @@ export class UserService {
   public createUser(user) {
     return this.http.post<User>(this.apiUrl + '/users', user);
   }
+
 }

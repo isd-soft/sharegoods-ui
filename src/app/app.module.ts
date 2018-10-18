@@ -12,7 +12,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { AddItemComponent } from './components/add-item-component/add-item.component';
 import { FormsModule } from "@angular/forms";
 import {ImageUploadModule} from "angular2-image-upload";
-
+import { ItemDetailsComponent } from './components/item-details-component/item-details.component';
+import {LightboxModule} from "ngx-lightbox";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {ImageUploadModule} from "angular2-image-upload";
     UserComponent,
     ItemComponent,
     RegisterComponent,
-    AddItemComponent
+    AddItemComponent,
+    ItemDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +31,7 @@ import {ImageUploadModule} from "angular2-image-upload";
     AppRoutingModule,
     HttpClientModule,
     ImageUploadModule.forRoot(),
+    LightboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
