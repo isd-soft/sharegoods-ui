@@ -31,10 +31,6 @@ const routes: Routes = [
     component: LoginComponent 
   },
   {
-    path: '**', 
-    redirectTo: 'items'
-  },
-  {
     path: 'register',
     component: RegisterComponent
   },
@@ -45,7 +41,11 @@ const routes: Routes = [
   {
     path: '**', 
     redirectTo: 'items'
-  }
+  },
+  {
+    path: '**', 
+    redirectTo: 'items'
+  },
 ];
 
 @NgModule({

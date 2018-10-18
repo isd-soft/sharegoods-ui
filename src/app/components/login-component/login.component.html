@@ -1,24 +1,39 @@
-<p>
-  Login
-</p>
-<form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
-  <div [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-    <label for="email">Email</label>
-    <input type="email" name="email" [(ngModel)]="model.email" #email="ngModel" required />
-    <div *ngIf="f.submitted && !email.valid"
-      [hidden]="email.valid || email.pristine" class="alert alert-danger">
-      Email is required
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <h2 class="text-center">Login</h2>
+      <form #f="ngForm">
+        
+        <div class="form-group">
+            <label for="email" >Email</label>
+            <input type="email" name="email"  class="form-control" #email="ngModel"
+              [(ngModel)]="model.email" 
+              minlength="6" 
+              maxlength="100" 
+              pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+              required />
+            <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+              Email is required, minimum 6 characters, e.g. name@domain.com
+            </div>
+        </div>
+
+        <div class="form-group">
+          <div [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+            <label for="password">Password</label>
+            <input type="password" name="password"  class="form-control" [(ngModel)]="model.password" #password="ngModel" minlength="3" maxlength="100" required />
+            <div [hidden]="password.valid || password.pristine" class="alert alert-danger">Password is required, minimum 3 charachters</div>
+          </div>
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-success" [disabled]="f.form.invalid" (click)="login()">Login</button>
+        </div>
+      </form>
+      <br><br>
+
+    If you do not have a profile yet, please <a href="/register">Register</a>
     </div>
+    <div class="col-md-4"></div>
   </div>
-  <div [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-    <label for="password">Password</label>
-    <input type="password" name="password" [(ngModel)]="model.password" #password="ngModel" required />
-    <div *ngIf="f.submitted
-        && !password.valid">Password is required</div>
-  </div>
-  <div>
-    <button [disabled]="loading">Login</button>
-  </div>
-</form>
-<br><br>
-<a href="/register">Register</a>
+</div>
