@@ -9,7 +9,6 @@ import {Router} from '@angular/router'
 })
 export class LoginComponent implements OnInit {
   model: any = {};
-
   constructor(
     private loginService :LoginService,
     private router : Router) {
@@ -18,11 +17,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  // Need to add boolean response so HTML side can show OK or NOK with ngif logic
   login () {
     let result : boolean = this.loginService.login(this.model.email, this.model.password);
     if (result) {
       this.router.navigate(['items']);    
     }
+
   }
 }

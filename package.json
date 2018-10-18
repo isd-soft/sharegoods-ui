@@ -21,7 +21,11 @@
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "angular2-image-upload": "^1.0.0-rc.1",
+=======
+    "angular2-jwt": "^0.2.3",
+>>>>>>> Updates to login component and authorization logic
 =======
     "angular2-jwt": "^0.2.3",
 >>>>>>> Updates to login component and authorization logic

@@ -10,6 +10,7 @@ import { Config } from './config'
 import { UserComponent } from './components/user-component/user.component';
 import { ItemComponent } from './components/item-component/item.component';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { RegisterComponent } from './components/register-component/register.component';
 
 import { HttpClientModule } from "@angular/common/http";
@@ -24,6 +25,12 @@ import { LoginComponent } from './components/login-component/login.component';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthService } from './auth/auth.service';
 >>>>>>> Updates to login component and authorization logic
+=======
+import { LoginComponent } from './components/login-component/login.component';
+
+import { TokenInterceptor } from './auth/token.interceptor';
+import { AuthService } from './auth/auth.service';
+>>>>>>> Updates to login component and authorization logic
 
 @NgModule({
   declarations: [
@@ -31,8 +38,12 @@ import { AuthService } from './auth/auth.service';
     UserComponent,
     ItemComponent,
 <<<<<<< HEAD
+<<<<<<< HEAD
     RegisterComponent,
     AddItemComponent
+=======
+    LoginComponent
+>>>>>>> Updates to login component and authorization logic
 =======
     LoginComponent
 >>>>>>> Updates to login component and authorization logic
@@ -43,8 +54,11 @@ import { AuthService } from './auth/auth.service';
     AppRoutingModule,
     HttpClientModule,
 <<<<<<< HEAD
+<<<<<<< HEAD
     ImageUploadModule.forRoot(),
 =======
+=======
+>>>>>>> Updates to login component and authorization logic
     FormsModule
   ],
   providers: [
@@ -55,6 +69,9 @@ import { AuthService } from './auth/auth.service';
       useClass: TokenInterceptor,
       multi: true
     }
+<<<<<<< HEAD
+>>>>>>> Updates to login component and authorization logic
+=======
 >>>>>>> Updates to login component and authorization logic
   ],
   bootstrap: [AppComponent]

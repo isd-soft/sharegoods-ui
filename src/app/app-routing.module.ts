@@ -3,12 +3,9 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {UserComponent} from './components/user-component/user.component';
 import {ItemComponent} from './components/item-component/item.component';
-<<<<<<< HEAD
 import {AddItemComponent} from "./components/add-item-component/add-item.component";
 import {RegisterComponent} from './components/register-component/register.component';
-=======
 import {LoginComponent} from './components/login-component/login.component';
->>>>>>> Updates to login component and authorization logic
 
 
 const routes: Routes = [
@@ -25,7 +22,6 @@ const routes: Routes = [
     path: 'items',
     component: ItemComponent
   },
-<<<<<<< HEAD
   {
     path: 'users/:userId/additem',
     component: AddItemComponent
@@ -35,7 +31,6 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent
   },
-=======
   { 
     path: 'login',
     component: LoginComponent 
@@ -44,8 +39,6 @@ const routes: Routes = [
     path: '**', 
     redirectTo: 'items'
   }
->>>>>>> Updates to login component and authorization logic
-
 ];
 
 @NgModule({
