@@ -3,10 +3,11 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {UserComponent} from './components/user-component/user.component';
 import {ItemComponent} from './components/item-component/item.component';
+import {LoginComponent} from './components/login-component/login.component';
 
 
 const routes: Routes = [
-  {
+   {
     path: '',
     redirectTo: 'users',
     pathMatch: 'full'
@@ -19,6 +20,14 @@ const routes: Routes = [
     path: 'items',
     component: ItemComponent
   },
+  { 
+    path: 'login',
+    component: LoginComponent 
+  },
+  {
+    path: '**', 
+    redirectTo: 'items'
+  }
 
 ];
 
