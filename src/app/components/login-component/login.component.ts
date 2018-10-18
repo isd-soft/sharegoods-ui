@@ -22,6 +22,5 @@ export class LoginComponent implements OnInit {
     if (result) {
       this.router.navigate(['items']);    
     }
-
   }
 }

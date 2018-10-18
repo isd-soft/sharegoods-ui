@@ -26,7 +26,14 @@ const routes: Routes = [
     path: 'users/:userId/additem',
     component: AddItemComponent
   },
-
+  { 
+    path: 'login',
+    component: LoginComponent 
+  },
+  {
+    path: '**', 
+    redirectTo: 'items'
+  },
   {
     path: 'register',
     component: RegisterComponent
