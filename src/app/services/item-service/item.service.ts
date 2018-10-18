@@ -22,7 +22,7 @@ export class ItemService {
   }
 
   public getItem(itemId) {
-    const getItemUrl = this.apiUrl + 'items' + itemId;
+    return this.http.get(this.apiUrl + 'items/' + itemId);
   }
 
 }

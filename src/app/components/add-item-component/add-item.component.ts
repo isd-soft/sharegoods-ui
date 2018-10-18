@@ -3,6 +3,7 @@ import {Item} from "../../models/item";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ItemService} from "../../services/item-service/item.service";
 import {ImageUploadComponent} from "angular2-image-upload";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-add-item',
@@ -16,8 +17,15 @@ export class AddItemComponent implements OnInit {
   userId : string;
   formData: FormData = new FormData();
   uploadedImages: any;
+  itemCreated: boolean = false;
+  itemId: Number;
 
-  constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute) { }
+  // for testing(to be removed after get-item-component exists)
+  itemDetails: any;
+  itemDto: Item = new Item();
+  imagesSrc = new Array();
+
+  constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -37,11 +45,23 @@ export class AddItemComponent implements OnInit {
       .subscribe(data => {
           console.log(data);
           alert("Item was created");
+          this.itemCreated = true;
+          this.itemId = data['id'];
+
+          //testing(to be removed after get-item-component exists, redirect to getItemComponent )
+          this.itemService.getItem(this.itemId)
+            .subscribe( data => {
+              this.itemDetails = data;
+              this.itemDto = this.itemDetails.itemDto;
+              let imageDtoList = this.itemDetails.imageDtoList;
+              for(let i = 0; i < imageDtoList.length; i++) {
+                let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,'+ imageDtoList[i].imageBase64);
+                this.imagesSrc.push(imageSrc);
+              }});
         },
         err => {
           console.log("Error occured to create new item");
         });
   };
-
 
 }
