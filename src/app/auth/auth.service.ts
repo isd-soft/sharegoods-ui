@@ -1,11 +1,21 @@
 import { Injectable } from '@angular/core';
+import { Observable, of, from } from 'rxjs';
+import { Config } from 'app/config';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
 
+  constructor (
+    private config : Config,
+    private http: HttpClient
+  ) {
+
+  }
+
   public isAuthenticated(): boolean {
     const token = this.getToken();
-    if (token) return true;
+    if (token) return true; 
     return false;
   } 
 
@@ -21,4 +31,11 @@ export class AuthService {
     sessionStorage.removeItem('token');
   }
 
+  public isLoginDataValid (email, password) {
+    let url = this.config.serverUrl + '/users/login';
+    let header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    let body = new HttpParams().set('email', email).set('password', password);
+
+    return this.http.post<Boolean>(url, body, { headers: header });
+  }
 }

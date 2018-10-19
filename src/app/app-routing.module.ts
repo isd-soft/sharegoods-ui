@@ -30,6 +30,10 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent 
   },
+  { 
+    path: 'login/:newuser',
+    component: LoginComponent 
+  },
   {
     path: 'register',
     component: RegisterComponent

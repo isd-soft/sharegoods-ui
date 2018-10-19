@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-
 import { User } from '../../models/user';
 import { UserService } from '../../services/user-service/user.service';
-
+import { AuthService } from 'app/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -14,15 +12,29 @@ import { UserService } from '../../services/user-service/user.service';
 
 export class RegisterComponent {
 
-  user: User = new User();
-  constructor(private router: Router, private userService: UserService) {
+  private emailNotUnique : boolean = false;
 
+  user: User = new User();
+  constructor(
+    private router: Router, 
+    private userService: UserService,
+    private auth : AuthService
+    ) {
   }
 
   createUser(): void {
     this.userService.createUser(this.user)
       .subscribe( data => {
-        alert('User created successfully.');
+        this.router.navigate(['login/newuser']);
+      },
+      err => {
+        if(err.status == 409) {
+          this.emailNotUnique = true;
+        }
+        else {
+          alert("Some error occured: " + err.error);
+        }
+        
       });
   }
 }
