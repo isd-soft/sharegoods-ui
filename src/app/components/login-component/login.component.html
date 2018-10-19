@@ -3,29 +3,44 @@
     <div class="col-md-4"></div>
     <div class="col-md-4">
       <h2 class="text-center">Login</h2>
+
       <form #f="ngForm">
-        
+
+        <ng-template [ngIf]= "this.authFailed" >
+            <div class="alert alert-danger">
+              Email or password incorrect
+            </div>
+        </ng-template> 
+
+        <ng-template [ngIf]= "this.authSuccess" >
+            <div class="alert alert-success">
+              Logged in successfully!
+            </div>
+        </ng-template> 
+
+        <ng-template [ngIf]= "this.registerSuccess" >
+            <div class="alert alert-success">
+              You have been registered, please login
+            </div>
+        </ng-template> 
+
         <div class="form-group">
             <label for="email" >Email</label>
             <input type="email" name="email"  class="form-control" #email="ngModel"
               [(ngModel)]="model.email" 
-              minlength="6" 
               maxlength="100" 
               pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
               required />
-            <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-              Email is required, minimum 6 characters, e.g. name@domain.com
+            <div *ngIf="email.touched && !email.valid" class="alert alert-warning">
+              Email is required, e.g. name@domain.com
             </div>
         </div>
 
         <div class="form-group">
-          <div [ngClass]="{ 'has-error': f.submitted && !password.valid }">
             <label for="password">Password</label>
             <input type="password" name="password"  class="form-control" [(ngModel)]="model.password" #password="ngModel" minlength="3" maxlength="100" required />
-            <div [hidden]="password.valid || password.pristine" class="alert alert-danger">Password is required, minimum 3 charachters</div>
-          </div>
+            <div *ngIf="password.touched && !password.valid" class="alert alert-warning">Password is required, minimum 3 charachters</div>
         </div>
-
         <div>
           <button type="submit" class="btn btn-success" [disabled]="f.form.invalid" (click)="login()">Login</button>
         </div>

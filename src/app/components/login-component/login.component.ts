@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginService} from 'app/services/login-service/login.service';
-import {Router} from '@angular/router'
+import {Router, ActivatedRoute} from '@angular/router';
+import {AuthService} from 'app/auth/auth.service';
 
 @Component({
   selector: 'login',
@@ -8,19 +8,45 @@ import {Router} from '@angular/router'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  model: any = {};
+
+  private model : any = {};
+  private authFailed : boolean = false;
+  private authSuccess : boolean = false;
+  private registerSuccess : boolean = false;
+
   constructor(
-    private loginService :LoginService,
-    private router : Router) {
+    private router : Router,
+    private auth : AuthService,
+    private route : ActivatedRoute
+    ) {
+      if(auth.isAuthenticated()) {
+        router.navigate(['items']);
+      }
   }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      if(params['newuser']) {
+        this.registerSuccess = true;            
+      }
+    });
   }
 
-  login () {
-    let result : boolean = this.loginService.login(this.model.email, this.model.password);
-    if (result) {
-      this.router.navigate(['items']);    
-    }
+  login() {
+    this.auth.isLoginDataValid(this.model.email, this.model.password)
+      .subscribe(isValid => {
+          this.auth.setToken(this.model.email,  this.model.password);
+          this.authFailed = false;
+          this.authSuccess = true;
+          this.router.navigate(['items']);
+      },
+      err => {
+        if(err.status = 404) {
+          this.authFailed = true;
+        }
+        else {
+          alert("Some error occured: " + err.error);
+        }
+      });
   }
 }
