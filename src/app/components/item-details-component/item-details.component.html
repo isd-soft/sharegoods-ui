@@ -4,13 +4,9 @@
   <h6>Author {{itemDto.author}}</h6>
   <h6>Date {{itemDto.dateTime}}</h6>
 
-  <div *ngFor="let src of imagesSrc">
-    <img [src]="src" width="100px" height="100px">
-  </div>
-
-  <div class="column has-text-centered">
-    <div class="img-row" *ngFor="let image of albums; let i=index">
-      <img class="img-frame" [src]="image.thumb" (click)="open(i)"/>
+  <div class="row">
+    <div class="img-row col-sm-3" *ngFor="let image of albums; let i=index">
+      <img class="img-frame img-responsive margin" style="width:100%" alt="Image" [src]="image.src" (click)="open(i)"/>
     </div>
   </div>
 

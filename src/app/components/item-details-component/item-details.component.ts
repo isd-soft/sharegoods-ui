@@ -41,6 +41,7 @@ export class ItemDetailsComponent implements OnInit {
           let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,'+ imageDtoList[i].imageBase64);
           this.imagesSrc.push(imageSrc);
           const album = {src: imageSrc, thumb: 'assets/img/image' + (i+1) + '-thumb.jpg'};
+          //const album = {src: imageSrc, thumb: imageSrc};
           this.albums.push(album);
           };
         },
