@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of, from } from 'rxjs';
 import { Config } from 'app/config';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+<<<<<<< HEAD
 import { User } from 'app/models/user';
+=======
+>>>>>>> 3470cdae7950c6422fcae279f140a30dfa5f2cb4
 
 @Injectable()
 export class AuthService {
@@ -46,6 +49,10 @@ export class AuthService {
     let header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     let body = new HttpParams().set('email', email).set('password', password);
 
+<<<<<<< HEAD
     return this.http.post<User>(url, body, { headers: header });
+=======
+    return this.http.post<Boolean>(url, body, { headers: header });
+>>>>>>> 3470cdae7950c6422fcae279f140a30dfa5f2cb4
   }
 }
