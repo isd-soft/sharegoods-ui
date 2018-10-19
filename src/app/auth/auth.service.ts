@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, from } from 'rxjs';
 import { Config } from 'app/config';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { User } from 'app/models/user';
 
 @Injectable()
 export class AuthService {
@@ -27,6 +28,15 @@ export class AuthService {
     return sessionStorage.getItem('token');
   }
 
+  public setCurrentUser (user : User) {
+    sessionStorage.setItem('user', JSON.stringify(user));
+  }
+
+  public getCurrentUser(): User {
+    let user : User = JSON.parse(sessionStorage.getItem('user'));
+    return user;
+  }
+
   public removeToken () {
     sessionStorage.removeItem('token');
   }
@@ -36,6 +46,6 @@ export class AuthService {
     let header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     let body = new HttpParams().set('email', email).set('password', password);
 
-    return this.http.post<Boolean>(url, body, { headers: header });
+    return this.http.post<User>(url, body, { headers: header });
   }
 }

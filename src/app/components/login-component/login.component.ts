@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import {AuthService} from 'app/auth/auth.service';
+import { User } from 'app/models/user';
 
 @Component({
   selector: 'login',
@@ -33,11 +34,15 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+
     this.auth.isLoginDataValid(this.model.email, this.model.password)
-      .subscribe(isValid => {
+      .subscribe(user => {
+          this.auth.setCurrentUser(user);
           this.auth.setToken(this.model.email,  this.model.password);
+          
           this.authFailed = false;
           this.authSuccess = true;
+          
           this.router.navigate(['items']);
       },
       err => {
