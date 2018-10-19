@@ -1,9 +1,9 @@
 <div class="container">
-  <h2>Add new post</h2>
+  <h2 align="center">Add new post</h2>
   <form #newItemForm="ngForm">
     <div class="form-group">
       <label for="title">Title: </label>
-      <input placeholder="Enter title" name="title" class="form-control" id="title" required [(ngModel)]="item.title">
+      <input name="title" class="form-control" id="title" required [(ngModel)]="item.title">
     </div>
 
     <div class="form-group">
@@ -19,19 +19,8 @@
 
   <image-upload [max]="4" dropBoxMessage="You can add max 4 images"></image-upload>
 
-  <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-success" (click)="createItem()">Create
-  </button>
-</div>
+  <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-primary" (click)="createItem()">Create</button>
 
-<div *ngIf="itemCreated">
-  <h4>Item details:</h4>
-  <h6>Title: {{itemDto.title}} </h6>
-  <h6>Description: {{itemDto.description}} </h6>
-  <h6>Date created: {{itemDto.dateTime}}</h6>
-  <h6>Images:</h6>
-  <div *ngFor="let src of imagesSrc">
-    <img [src]="src" width="100px" height="100px">
-  </div>
 </div>
 
 

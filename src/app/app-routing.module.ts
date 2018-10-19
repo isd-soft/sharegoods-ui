@@ -6,6 +6,7 @@ import { ItemComponent } from '@components/item-list-component/item.component';
 import { AddItemComponent } from '@components/add-item-component/add-item.component';
 import { RegisterComponent } from '@components/register-component/register.component';
 import { HomePageComponent } from '@components/home-page-component/home-page.component';
+import { ItemDetailsComponent } from "./components/item-details-component/item-details.component";
 
 
 const routes: Routes = [
@@ -30,12 +31,14 @@ const routes: Routes = [
     path: 'users/:userId/additem',
     component: AddItemComponent
   },
-
   {
     path: 'register',
     component: RegisterComponent
   },
-
+  {
+    path: 'items/:itemId',
+    component: ItemDetailsComponent
+  },
 ];
 
 @NgModule({

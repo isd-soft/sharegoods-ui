@@ -4,6 +4,8 @@ export class Item {
   title: string;
   description: string;
   dateTime: any;
+  author: string;
+  rating: Number;
 
   constructor() {
     this.title = '';
