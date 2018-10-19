@@ -3,7 +3,7 @@ import {Item} from "../../models/item";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ItemService} from "../../services/item-service/item.service";
 import {DomSanitizer} from "@angular/platform-browser";
-import {IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent} from "ngx-lightbox";
+import {IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent} from "ngx-lightbox";
 import {Subscription} from "rxjs/Rx";
 
 @Component({

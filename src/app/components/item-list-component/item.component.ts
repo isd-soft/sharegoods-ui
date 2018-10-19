@@ -19,6 +19,12 @@ export class ItemComponent implements OnInit {
     this.itemService.getItems()
       .subscribe( data => {
         this.items = data;
+        for (let i = 0; i < this.items.length; i++) {
+          let description = this.items[i].description;
+          if (description.length > 50) {
+            this.items[i].description = description.substr(0, 50) + '...';
+          }
+        }
         console.log(data);
       });
   }
