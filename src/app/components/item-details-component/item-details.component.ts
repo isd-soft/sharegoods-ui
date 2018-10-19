@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Item} from "../../models/item";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ItemService} from "../../services/item-service/item.service";
-import {DomSanitizer} from "@angular/platform-browser";
-import {IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent} from "ngx-lightbox";
-import {Subscription} from "rxjs/Rx";
+import { Item } from "../../models/item";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ItemService } from "../../services/item-service/item.service";
+import { DomSanitizer } from "@angular/platform-browser";
+import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from "ngx-lightbox";
+import { Subscription } from "rxjs/Rx";
 
 @Component({
   selector: 'app-item-details',

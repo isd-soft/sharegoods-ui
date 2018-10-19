@@ -4,7 +4,7 @@
     "outDir": "../out-tsc/app",
     "module": "es2015",
     "types": [],
-    "baseUrl": "./",
+    "baseUrl": "src",
     "paths": {
       "@components/*": [
         "app/components/*"
@@ -23,7 +23,11 @@
       ],
       "@env/*": [
         "environments/*"
+      ],
+      "@app/*": [
+        "app/*"
       ]
+
     }
   },
   "exclude": [
