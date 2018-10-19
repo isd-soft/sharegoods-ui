@@ -13,12 +13,12 @@ import {Subscription} from "rxjs/Rx";
 })
 export class ItemDetailsComponent implements OnInit {
 
-  public albums: Array<IAlbum>;
+  public albums: any = [];
   private _subscription: Subscription;
   itemId: Number;
   itemDetails: any;
   itemDto: Item = new Item();
-  imagesSrc = new Array();
+  imagesSrc: any = new Array();
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
               private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig) {
@@ -29,19 +29,9 @@ export class ItemDetailsComponent implements OnInit {
       this.itemId = params.itemId;
     });
 
-    this.albums = [];
-    for (let i = 1; i <= 4; i++) {
-      const src = 'assets/img/image' + i + '.jpg';
-      const thumb = 'assets/img/image' + i + '-thumb.jpg';
-      const album = {
-        src: src,
-        thumb: thumb
-      };
-      this.albums.push(album);
-    }
-
-    // set default config
+     // set default config
     this._lighboxConfig.fadeDuration = 1;
+
     this.itemService.getItem(this.itemId)
       .subscribe( data => {
         this.itemDetails = data;
@@ -50,8 +40,10 @@ export class ItemDetailsComponent implements OnInit {
         for(let i = 0; i < imageDtoList.length; i++) {
           let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,'+ imageDtoList[i].imageBase64);
           this.imagesSrc.push(imageSrc);
-          this.albums[i].src = imageDtoList[i].imageBase64;
-        }},
+          const album = {src: imageSrc, thumb: 'assets/img/image' + (i+1) + '-thumb.jpg'};
+          this.albums.push(album);
+          };
+        },
         err => {
           console.log("Error occured to get item");
         });
@@ -59,8 +51,6 @@ export class ItemDetailsComponent implements OnInit {
 
   open(index: number): void {
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
-
-    // override the default config
     this._lightbox.open(this.albums, index, { wrapAround: true, showImageNumberLabel: true });
   }
 
