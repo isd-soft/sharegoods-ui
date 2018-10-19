@@ -1,0 +1,25 @@
+.activated {
+  background-color: #9f8060;
+  border-radius: 10px;
+}
+
+.app-nav {
+  padding: 0;
+  z-index: 3;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.icon {
+  color: #d98026;
+  font-size: 200% !important;
+  padding-left: 2px;
+  outline: none;
+}
+
+.menubtn {
+  border: none;
+  padding: 6px;
+}

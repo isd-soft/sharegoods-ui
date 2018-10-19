@@ -10,7 +10,8 @@
              #firstName="ngModel">
       <div [hidden]="firstName.valid || firstName.pristine"
            class="alert alert-danger">
-        First Name is required</div>
+        First Name is required
+      </div>
     </div>
 
 
@@ -22,7 +23,8 @@
              #lastName="ngModel">
       <div [hidden]="lastName.valid || lastName.pristine"
            class="alert alert-danger">
-        Last Name is required</div>
+        Last Name is required
+      </div>
     </div>
 
     <div class="form-group">
@@ -33,7 +35,8 @@
              #email="ngModel">
       <div [hidden]="email.valid || email.pristine"
            class="alert alert-danger">
-        Email is required</div>
+        Email is required
+      </div>
     </div>
 
     <div class="form-group">
@@ -44,10 +47,13 @@
              #password="ngModel">
       <div [hidden]="password.valid || password.pristine"
            class="alert alert-danger">
-        Password is required</div>
+        Password is required
+      </div>
     </div>
 
-    <button type="submit" class="btn btn-success" [disabled]="newRegisterForm.form.invalid" (click)="createUser()">Register</button>
+    <button type="submit" class="btn btn-success" [disabled]="newRegisterForm.form.invalid" (click)="createUser()">
+      Register
+    </button>
   </form>
 </div>
 

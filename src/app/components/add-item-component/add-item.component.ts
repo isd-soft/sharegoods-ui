@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Item} from "../../models/item";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ItemService} from "../../services/item-service/item.service";
-import {ImageUploadComponent} from "angular2-image-upload";
-import {DomSanitizer} from "@angular/platform-browser";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ImageUploadComponent } from 'angular2-image-upload';
+
+import { Item } from '@models/item';
+import { ItemService } from '@services/item-service/item.service';
 
 @Component({
   selector: 'app-add-item',
@@ -14,13 +15,14 @@ export class AddItemComponent implements OnInit {
   @ViewChild(ImageUploadComponent) imageUploadComponent;
 
   item: Item = new Item();
-  userId : string;
+  userId: string;
   formData: FormData = new FormData();
   uploadedImages: any;
-  itemCreated: boolean = false;
+  itemCreated = false;
   itemId: Number;
 
-  constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer) { }
+  constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -32,7 +34,7 @@ export class AddItemComponent implements OnInit {
     this.uploadedImages = this.imageUploadComponent.files;
     this.formData.append('title', this.item.title);
     this.formData.append('description', this.item.description);
-    for(let i = 0; i < this.uploadedImages.length; i++){
+    for (let i = 0; i < this.uploadedImages.length; i++) {
       this.formData.append('file', this.uploadedImages[i].file);
     }
 
@@ -43,8 +45,7 @@ export class AddItemComponent implements OnInit {
           this.router.navigate(['/items', this.itemId]);
         },
         err => {
-          console.log("Error occured to create new item");
+          console.log('Error occured to create new item');
         });
-  };
-
+  }
 }
