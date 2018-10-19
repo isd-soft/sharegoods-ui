@@ -16,6 +16,8 @@ import { FooterComponent } from '@core/components/footer/footer.component';
 import { HeaderComponent } from '@core/components/header/header.component';
 import { LayoutComponent } from '@core/components/layout/layout.component';
 import { NavComponent } from '@core/components/nav/nav.component';
+import { ItemDetailsComponent } from "./components/item-details-component/item-details.component";
+import { LightboxModule } from "ngx-lightbox";
 
 
 @NgModule({
@@ -25,6 +27,7 @@ import { NavComponent } from '@core/components/nav/nav.component';
     ItemComponent,
     RegisterComponent,
     AddItemComponent,
+    ItemDetailsComponent,
     FooterComponent,
     HeaderComponent,
     LayoutComponent,
@@ -37,6 +40,7 @@ import { NavComponent } from '@core/components/nav/nav.component';
     AppRoutingModule,
     HttpClientModule,
     ImageUploadModule.forRoot(),
+    LightboxModule
   ],
   exports: [
     FooterComponent,
