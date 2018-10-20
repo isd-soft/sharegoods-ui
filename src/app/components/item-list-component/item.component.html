@@ -1,26 +1,9 @@
 <div class="container">
-  <table class="table table-hover">
-    <thead>
-    <tr class="row">
-      <th class="col-md-3" scope="col">Title</th>
-      <th class="col-md-4" scope="col">Description</th>
-      <th class="col-md-2" scope="col">Author</th>
-      <th class="col-md-2" scope="col">Created</th>
-      <th class="col-md-1" scope="col">Rating</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    <tr class="row" *ngFor="let item of items" a [routerLink]="[item.id]">
-      <td class="col-md-3"> {{ item.title }}</td>
-      <td class="col-md-4"> {{ item.description }}</td>
-      <td class="col-md-2"> {{ item.author }} </td>
-      <td class="col-md-2"> {{ item.dateTime }}</td>
-      <td class="col-md-1"> ***** </td>
-    </tr>
-    </tbody>
-  </table>
-
-  <a routerLink="../users/1/additem"><button class="btn btn-primary pull-right"> Add post</button></a>
+  <div class="gallery" *ngFor="let item of itemsDto">
+    <a [routerLink]="['/items/', item.itemId]">
+      <img width="200px" height="150px" alt="Image" [src]="item.src">
+    </a>
+    <div class="desc">{{item.title}}</div>
+  </div>
 </div>
 
