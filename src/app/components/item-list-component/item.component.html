@@ -1,9 +1,15 @@
+<!--<app-add-item></app-add-item>-->
+
 <div class="container">
-  <div class="gallery" *ngFor="let item of itemsDto">
-    <a [routerLink]="['/items/', item.itemId]">
-      <img width="200px" height="150px" alt="Image" [src]="item.src">
-    </a>
-    <div class="desc">{{item.title}}</div>
+  <div class="row">
+    <div class="gallery col-md-3" *ngFor="let item of itemsDto">
+      <div class="img-container">
+        <a [routerLink]="['/items/', item.itemId]">
+          <img alt="Image" [src]="item.src">
+        </a>
+      </div>
+      <div class="title">{{item.title}}</div>
+    </div>
   </div>
 </div>
 

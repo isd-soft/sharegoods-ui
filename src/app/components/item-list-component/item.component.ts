@@ -23,7 +23,6 @@ export class ItemComponent implements OnInit {
   ngOnInit() {
     this.itemService.getItems()
       .subscribe(data => {
-        console.log("data:", data);
         this.items = data;
         for(let i = 0; i < this.items.length; i++) {
           let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,'+ this.items[i].thumbnailDto.imageBase64);

@@ -1,20 +1,32 @@
-div.gallery {
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.gallery  {
+  margin-top: 15px;
+  height: 200px;
+  padding: 10px;
+  margin-bottom: 25px;
+}
+
+.img-container {
+  height: 150px;
+  overflow: hidden;
   margin: 5px;
-  border: 1px solid #ccc;
-  float: left;
-  width: 180px;
+  background-color: #c5c5c5;
 }
 
-div.gallery:hover {
-  border: 1px solid #777;
-}
-
-div.gallery img {
+img {
   width: 100%;
   height: auto;
 }
 
-div.desc {
-  padding: 15px;
+.title {
   text-align: center;
+  padding: 10px;
 }
+
+
