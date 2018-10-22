@@ -46,7 +46,14 @@ export class ItemDetailsComponent implements OnInit {
           };
         },
         err => {
+
           console.log("Error occured to get item");
+
+          if(err.status == 404)
+          { this.router.navigate(['items']) }
+          else
+          { alert("Some error has occured " + err.status) }
+          
         });
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { AuthService } from 'app/auth/auth.service';
 import { NavBarLink } from '@models/navbar-link';
 
 @Component({
@@ -21,7 +21,7 @@ export class NavComponent implements OnInit {
     },
   ];
 
-  constructor() {
+  constructor(private auth : AuthService) {
   }
 
   ngOnInit() {

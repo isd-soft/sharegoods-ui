@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomePageComponent
+    component: ItemComponent
   },
   {
     path: 'users',
@@ -32,7 +32,6 @@ const routes: Routes = [
     path: 'users/:userId/additem',
     component: AddItemComponent
   },
-<<<<<<< HEAD
   { 
     path: 'login',
     component: LoginComponent 
@@ -41,30 +40,22 @@ const routes: Routes = [
     path: 'login/:newuser',
     component: LoginComponent 
   },
-=======
->>>>>>> master
   {
     path: 'register',
     component: RegisterComponent
   },
-<<<<<<< HEAD
   { 
     path: 'login',
     component: LoginComponent 
   },
   {
-    path: '**', 
-    redirectTo: 'items'
-  },
-  {
-    path: '**', 
-    redirectTo: 'items'
-=======
-  {
     path: 'items/:itemId',
     component: ItemDetailsComponent
->>>>>>> master
   },
+  {
+    path: '**', 
+    redirectTo: 'items'
+  }
 ];
 
 @NgModule({

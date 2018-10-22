@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageUploadComponent } from 'angular2-image-upload';
-
+import { AuthService } from 'app/auth/auth.service';
 import { Item } from '@models/item';
 import { ItemService } from '@services/item-service/item.service';
 
@@ -21,7 +21,15 @@ export class AddItemComponent implements OnInit {
   itemCreated = false;
   itemId: Number;
 
-  constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer) {
+  constructor(
+    private router: Router, 
+    private itemService: ItemService, 
+    private route: ActivatedRoute, 
+    private sanitizer: DomSanitizer,
+    private auth : AuthService) {
+      if(!auth.isAuthenticated()) {
+        router.navigate(['items']);
+    }
   }
 
   ngOnInit() {

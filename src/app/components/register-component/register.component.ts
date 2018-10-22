@@ -20,6 +20,9 @@ export class RegisterComponent {
     private userService: UserService,
     private auth : AuthService
     ) {
+      if(auth.isAuthenticated()) {
+        router.navigate(['items']);
+      }
   }
 
   createUser(): void {
