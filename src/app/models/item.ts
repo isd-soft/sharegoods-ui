@@ -6,6 +6,7 @@ export class Item {
   dateTime: any;
   author: string;
   rating: Number;
+  thumbnail: any;
 
   constructor() {
     this.title = '';

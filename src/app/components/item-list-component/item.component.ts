@@ -4,6 +4,7 @@ import { AuthService } from 'app/auth/auth.service';
 
 import { Item } from '@models/item';
 import { ItemService } from '@services/item-service/item.service';
+import {DomSanitizer} from "@angular/platform-browser";
 
 
 @Component({
@@ -13,10 +14,11 @@ import { ItemService } from '@services/item-service/item.service';
 })
 export class ItemComponent implements OnInit {
 
-  items: Item[];
+  items: any;
+  itemsDto: any = new Array();
 
-  constructor(private router: Router, private itemService: ItemService, private auth : AuthService) {
 
+  constructor(private router: Router, private itemService: ItemService, private _sanitizer: DomSanitizer, private auth : AuthService) {
   }
 
   getUserIdIfAuth()
@@ -32,14 +34,11 @@ export class ItemComponent implements OnInit {
     this.itemService.getItems()
       .subscribe(data => {
         this.items = data;
-        for (let i = 0; i < this.items.length; i++) {
-          let description = this.items[i].description;
-          if (description.length > 50) {
-            this.items[i].description = description.substr(0, 50) + '...';
-          }
+        for(let i = 0; i < this.items.length; i++) {
+          let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,'+ this.items[i].thumbnailDto.imageBase64);
+          this.itemsDto.push({itemId: this.items[i].itemId, title: this.items[i].title, src: imageSrc });
         }
-        console.log(data);
       });
   }
-
 }
+

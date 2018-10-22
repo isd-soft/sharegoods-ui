@@ -1,26 +1,15 @@
+<!--<app-add-item></app-add-item>-->
+
 <div class="container">
-  <table class="table table-hover">
-    <thead>
-    <tr class="row">
-      <th class="col-md-3" scope="col">Title</th>
-      <th class="col-md-4" scope="col">Description</th>
-      <th class="col-md-2" scope="col">Author</th>
-      <th class="col-md-2" scope="col">Created</th>
-      <th class="col-md-1" scope="col">Rating</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    <tr class="row" *ngFor="let item of items" a [routerLink]="[item.id]">
-      <td class="col-md-3"> {{ item.title }}</td>
-      <td class="col-md-4"> {{ item.description }}</td>
-      <td class="col-md-2"> {{ item.author }} </td>
-      <td class="col-md-2"> {{ item.dateTime }}</td>
-      <td class="col-md-1"> ***** </td>
-    </tr>
-    </tbody>
-  </table>
-
-  <a routerLink="../users/{{ getUserIdIfAuth() }}/additem"><button *ngIf="this.auth.isAuthenticated()" class="btn btn-primary pull-right"> Add post</button></a>
+  <div class="row">
+    <div class="gallery col-md-3" *ngFor="let item of itemsDto">
+      <div class="img-container">
+        <a [routerLink]="['/items/', item.itemId]">
+          <img alt="Image" [src]="item.src">
+        </a>
+      </div>
+      <div class="title">{{item.title}}</div>
+    </div>
+  </div>
 </div>
 

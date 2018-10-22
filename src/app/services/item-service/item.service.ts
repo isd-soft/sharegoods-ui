@@ -14,7 +14,7 @@ export class ItemService {
   private apiUrl = 'http://localhost:8080/';
 
   public getItems() {
-    return this.http.get<Item[]>(this.apiUrl + 'items');
+    return this.http.get(this.apiUrl + 'items');
   }
 
   public createItem(userId, formData) {
@@ -25,5 +25,7 @@ export class ItemService {
   public getItem(itemId) {
     return this.http.get(this.apiUrl + 'items/' + itemId);
   }
+
+
 
 }

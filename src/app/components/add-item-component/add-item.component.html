@@ -1,5 +1,4 @@
 <div class="container">
-  <h2 align="center">Add new post</h2>
   <form #newItemForm="ngForm">
     <div class="form-group">
       <label for="title">Title: </label>
@@ -10,9 +9,8 @@
       <label for="description">Description: </label>
       <textarea class="form-control"
                 name="description"
-                rows="5"
+                rows="4"
                 id="description"
-                required
                 [(ngModel)]="item.description"></textarea>
     </div>
   </form>

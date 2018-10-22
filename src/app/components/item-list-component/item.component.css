@@ -1,4 +1,32 @@
-table tr:hover {
-  cursor:pointer;
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
 }
+
+.gallery  {
+  margin-top: 15px;
+  height: 200px;
+  padding: 10px;
+  margin-bottom: 25px;
+}
+
+.img-container {
+  height: 150px;
+  overflow: hidden;
+  margin: 5px;
+  background-color: #c5c5c5;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+.title {
+  text-align: center;
+  padding: 10px;
+}
+
 
