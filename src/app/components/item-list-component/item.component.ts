@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'app/auth/auth.service';
 
 import { Item } from '@models/item';
 import { ItemService } from '@services/item-service/item.service';
@@ -14,8 +15,18 @@ export class ItemComponent implements OnInit {
 
   items: Item[];
 
-  constructor(private router: Router, private itemService: ItemService) {
+  constructor(private router: Router, private itemService: ItemService, private auth : AuthService) {
+
   }
+
+  getUserIdIfAuth()
+  {
+    if(this.auth.isAuthenticated())
+    {
+      return this.auth.getCurrentUser().id;
+    }
+  }
+
 
   ngOnInit() {
     this.itemService.getItems()

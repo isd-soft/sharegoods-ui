@@ -21,6 +21,6 @@
     </tbody>
   </table>
 
-  <a routerLink="../users/1/additem"><button class="btn btn-primary pull-right"> Add post</button></a>
+  <a routerLink="../users/{{ getUserIdIfAuth() }}/additem"><button *ngIf="this.auth.isAuthenticated()" class="btn btn-primary pull-right"> Add post</button></a>
 </div>
 
