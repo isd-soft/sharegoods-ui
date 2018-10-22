@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ImageUploadModule } from 'angular2-image-upload';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { Config } from './config'
 
 import { UserComponent } from '@components/user-list-component/user.component';
 import { ItemComponent } from '@components/item-list-component/item.component';
@@ -18,6 +19,9 @@ import { LayoutComponent } from '@core/components/layout/layout.component';
 import { NavComponent } from '@core/components/nav/nav.component';
 import { ItemDetailsComponent } from "./components/item-details-component/item-details.component";
 import { LightboxModule } from "ngx-lightbox";
+import { TokenInterceptor } from './auth/token.interceptor';
+import { AuthService } from './auth/auth.service';
+import { LoginComponent } from './components/login-component/login.component';
 
 
 @NgModule({
@@ -32,7 +36,8 @@ import { LightboxModule } from "ngx-lightbox";
     HeaderComponent,
     LayoutComponent,
     NavComponent,
-    HomePageComponent
+    HomePageComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,8 @@ import { LightboxModule } from "ngx-lightbox";
     AppRoutingModule,
     HttpClientModule,
     ImageUploadModule.forRoot(),
-    LightboxModule
+    LightboxModule,
+    FormsModule
   ],
   exports: [
     FooterComponent,
@@ -49,7 +55,15 @@ import { LightboxModule } from "ngx-lightbox";
     NavComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
+  providers: [
+    Config,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
