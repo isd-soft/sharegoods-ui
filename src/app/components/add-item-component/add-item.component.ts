@@ -22,9 +22,9 @@ export class AddItemComponent implements OnInit {
   itemId: Number;
 
   constructor(
-    private router: Router, 
-    private itemService: ItemService, 
-    private route: ActivatedRoute, 
+    private router: Router,
+    private itemService: ItemService,
+    private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private auth : AuthService) {
       if(!auth.isAuthenticated()) {
@@ -45,6 +45,7 @@ export class AddItemComponent implements OnInit {
     for (let i = 0; i < this.uploadedImages.length; i++) {
       this.formData.append('file', this.uploadedImages[i].file);
     }
+
     this.itemService.createItem(this.userId, this.formData)
       .subscribe(data => {
           this.itemCreated = true;
