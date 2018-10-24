@@ -40,5 +40,9 @@ export class ItemComponent implements OnInit {
         }
       });
   }
+
+  sort(value) {
+    console.log("Sorting by: ", value);
+  }
 }
 

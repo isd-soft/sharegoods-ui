@@ -16,9 +16,9 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     const token = this.getToken();
-    if (token) return true; 
+    if (token) return true;
     return false;
-  } 
+  }
 
   public setToken (email:string, password:string) {
     sessionStorage.setItem('token', btoa(email + ':' + password));
@@ -39,6 +39,10 @@ export class AuthService {
 
   public removeToken () {
     sessionStorage.removeItem('token');
+  }
+
+  public removeUser () {
+    sessionStorage.removeItem('user');
   }
 
   public isLoginDataValid (email, password) {

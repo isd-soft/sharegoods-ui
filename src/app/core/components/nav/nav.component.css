@@ -23,3 +23,7 @@ ul {
   border: none;
   padding: 6px;
 }
+
+.active-dropdown {
+  cursor: pointer;
+}
