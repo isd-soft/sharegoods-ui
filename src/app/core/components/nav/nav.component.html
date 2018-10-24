@@ -8,13 +8,56 @@
         <li class="nav-item" *ngFor="let item of navItems" routerLinkActive="activated">
           <a class="nav-link" routerLink={{item.url}}>{{item.name}}</a>
         </li>
-        <li class="nav-item" *ngIf="!this.auth.isAuthenticated()" routerLinkActive="activated">
-            <a class="nav-link" routerLink="/login">Login</a>
-          </li>
-          <li class="nav-item" *ngIf="!this.auth.isAuthenticated()" routerLinkActive="activated">
-            <a class="nav-link" routerLink="/register">Register</a>
-          </li>
       </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item" *ngIf="!this.auth.isAuthenticated()" routerLinkActive="activated">
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+        <li class="nav-item" *ngIf="!this.auth.isAuthenticated()" routerLinkActive="activated">
+          <a class="nav-link" routerLink="/register">Register</a>
+        </li>
+
+        <li class="nav-item dropdown" *ngIf="this.auth.isAuthenticated()" routerLinkActive="activated">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user fa-lg"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item disabled"> Signed in as</a>
+            <a class="dropdown-item disabled"><b>{{this.auth.getCurrentUser().firstName + ' ' + this.auth.getCurrentUser().lastName}}</b></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item active-dropdown">My profile</a>
+            <a class="dropdown-item active-dropdown">My items</a>
+            <div class="dropdown-divider"></div>
+
+            <!-- Button trigger modal -->
+            <a class="dropdown-item active-dropdown" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          </div>
+        </li>
+      </ul>
+
     </div>
   </div>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <a [routerLink]="['/items']">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="logout()">Logout</button>
+        </a>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
