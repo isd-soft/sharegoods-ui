@@ -15,13 +15,9 @@ export class NavComponent implements OnInit {
       name: 'Users',
       url: '/users'
     },
-    {
-      name: 'Posts',
-      url: '/items'
-    },
   ];
 
-  constructor(private auth : AuthService) {
+  constructor(private auth: AuthService) {
   }
 
   ngOnInit() {

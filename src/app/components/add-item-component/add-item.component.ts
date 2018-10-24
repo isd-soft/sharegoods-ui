@@ -26,10 +26,11 @@ export class AddItemComponent implements OnInit {
     private itemService: ItemService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private auth : AuthService) {
-      if(!auth.isAuthenticated()) {
-        router.navigate(['items']);
+    private auth: AuthService) {
+    if (auth.isAuthenticated()) {
+      return;
     }
+    router.navigate(['items']);
   }
 
   ngOnInit() {
