@@ -16,7 +16,6 @@
   height: 150px;
   overflow: hidden;
   margin: 5px;
-  background-color: #c5c5c5;
 }
 
 img {
@@ -29,4 +28,16 @@ img {
   padding: 10px;
 }
 
+.fa-sort {
+  padding-left: 10px;
+}
+
+.sort {
+  vertical-align: middle;
+  padding: 5px;
+}
+
+.container {
+  margin-top: 15px;
+}
 

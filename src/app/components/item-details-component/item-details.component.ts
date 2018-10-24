@@ -19,6 +19,7 @@ export class ItemDetailsComponent implements OnInit {
   itemDetails: any;
   itemDto: Item = new Item();
   imagesSrc: any = new Array();
+  isAuthorOnline: boolean;
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
               private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig) {
@@ -34,14 +35,16 @@ export class ItemDetailsComponent implements OnInit {
 
     this.itemService.getItem(this.itemId)
       .subscribe( data => {
+        console.log(data);
         this.itemDetails = data;
         this.itemDto = this.itemDetails.itemDto;
+        this.isAuthorOnline = this.itemDetails.isAuthorOnline;
         let imageDtoList = this.itemDetails.imageDtoList;
         for(let i = 0; i < imageDtoList.length; i++) {
           let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,'+ imageDtoList[i].imageBase64);
           this.imagesSrc.push(imageSrc);
-          const album = {src: imageSrc, thumb: 'assets/img/image' + (i+1) + '-thumb.jpg'};
-          //const album = {src: imageSrc, thumb: imageSrc};
+          //const album = {src: imageSrc, thumb: 'assets/img/image' + (i+1) + '-thumb.jpg'};
+          const album = {src: imageSrc};
           this.albums.push(album);
           };
         },
@@ -53,7 +56,7 @@ export class ItemDetailsComponent implements OnInit {
           { this.router.navigate(['items']) }
           else
           { alert("Some error has occured " + err.status) }
-          
+
         });
   }
 

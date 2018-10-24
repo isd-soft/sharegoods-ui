@@ -26,6 +26,8 @@ export class ItemService {
     return this.http.get(this.apiUrl + 'items/' + itemId);
   }
 
-
+  // public getItems(sortByValue) {
+  //   return this.http.get(this.apiUrl + 'items');
+  // }
 
 }
