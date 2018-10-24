@@ -2,7 +2,7 @@
   <form #newItemForm="ngForm">
     <div class="form-group">
       <label for="title">Title: </label>
-      <input name="title" class="form-control" id="title" required [(ngModel)]="item.title">
+      <input name="title" class="form-control" id="title" maxlength="50" placeholder="max 50 characters" required [(ngModel)]="item.title">
     </div>
 
     <div class="form-group">

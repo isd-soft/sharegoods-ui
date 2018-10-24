@@ -26,6 +26,8 @@ img {
 .title {
   text-align: center;
   padding: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .fa-sort {
