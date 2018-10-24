@@ -11,7 +11,6 @@ import { Router } from "@angular/router";
 export class NavComponent implements OnInit {
 
   public navItems: Array<NavBarLink> = [
-
     {
       name: 'Users',
       url: '/users'

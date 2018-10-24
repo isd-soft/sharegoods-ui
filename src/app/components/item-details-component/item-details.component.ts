@@ -35,7 +35,6 @@ export class ItemDetailsComponent implements OnInit {
 
     this.itemService.getItem(this.itemId)
       .subscribe( data => {
-        console.log(data);
         this.itemDetails = data;
         this.itemDto = this.itemDetails.itemDto;
         this.isAuthorOnline = this.itemDetails.isAuthorOnline;
@@ -43,7 +42,6 @@ export class ItemDetailsComponent implements OnInit {
         for(let i = 0; i < imageDtoList.length; i++) {
           let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,'+ imageDtoList[i].imageBase64);
           this.imagesSrc.push(imageSrc);
-          //const album = {src: imageSrc, thumb: 'assets/img/image' + (i+1) + '-thumb.jpg'};
           const album = {src: imageSrc};
           this.albums.push(album);
           };
