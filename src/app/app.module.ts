@@ -22,6 +22,7 @@ import { LightboxModule } from "ngx-lightbox";
 import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthService } from './auth/auth.service';
 import { LoginComponent } from './components/login-component/login.component';
+import { AddCommentComponent } from './components/add-comment-component/add-comment.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { LoginComponent } from './components/login-component/login.component';
     LayoutComponent,
     NavComponent,
     HomePageComponent,
-    LoginComponent
+    LoginComponent,
+    AddCommentComponent
   ],
   imports: [
     BrowserModule,

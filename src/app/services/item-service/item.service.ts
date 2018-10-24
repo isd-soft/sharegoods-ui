@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '@env/environment';
 
 import { Item } from '@models/item';
 
@@ -8,24 +9,25 @@ import { Item } from '@models/item';
 })
 export class ItemService {
 
+  private apiUrl = environment.apiUrl;
+
   constructor(private http: HttpClient) {
   }
 
-  private apiUrl = 'http://localhost:8080/';
-
   public getItems() {
-    return this.http.get(this.apiUrl + 'items');
+    return this.http.get(this.apiUrl + `items`);
+  }
+
+  public getComments(itemId) {
+    return this.http.get(this.apiUrl + `items/${itemId}`);
   }
 
   public createItem(userId, formData) {
-    const createItemUrl = this.apiUrl + 'users/' + userId + '/items';
+    const createItemUrl = this.apiUrl + `users/${userId}/items`;
     return this.http.post<Item>(createItemUrl, formData);
   }
 
   public getItem(itemId) {
-    return this.http.get(this.apiUrl + 'items/' + itemId);
+    return this.http.get(this.apiUrl + `items/${itemId}`);
   }
-
-
-
 }

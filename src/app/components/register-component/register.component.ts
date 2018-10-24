@@ -33,7 +33,7 @@ export class RegisterComponent {
           this.router.navigate(['login/newuser']);
         },
         err => {
-          if (err.status == 409) {
+          if (err.status == '409') {
             this.emailNotUnique = true;
           } else {
             alert('Some error occured: ' + err.status);
