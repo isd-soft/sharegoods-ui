@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Item } from '@models/item';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ItemService } from '@services/item-service/item.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from 'ngx-lightbox';
 import { Subscription } from 'rxjs/Subscription';
+import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from 'ngx-lightbox';
+
+import { Item } from '@models/item';
+import { ItemService } from '@services/item-service/item.service';
 
 @Component({
   selector: 'app-item-details',
@@ -43,15 +44,14 @@ export class ItemDetailsComponent implements OnInit {
             const album = {src: imageSrc, thumb: 'assets/img/image' + (i + 1) + '-thumb.jpg'};
             this.albums.push(album);
           }
-          ;
         },
         err => {
           console.log('Error occured to get item');
           if (err.status == '404') {
-  this.router.navigate(['items']);
-} else {
-  alert('Some error has occured ' + err.status);
-}
+            this.router.navigate(['items']);
+          } else {
+            alert('Some error has occured ' + err.status);
+          }
         });
   }
 
