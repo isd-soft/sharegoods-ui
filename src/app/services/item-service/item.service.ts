@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '@env/environment';
+import { Observable } from 'rxjs';
 
+import { environment } from '@env/environment';
+import { Comment } from '@models/comment';
 import { Item } from '@models/item';
 
 @Injectable({
@@ -18,6 +20,11 @@ export class ItemService {
 
   public getComments(itemId) {
     return this.http.get(environment.apiUrl + `/items/${itemId}`);
+  }
+
+  public addComment(comment: Comment): Observable<Comment> {
+    const addCommentUrl = environment.apiUrl + `/items/{id}/addComment`;
+    return this.http.post<Comment>(addCommentUrl, comment);
   }
 
   public createItem(userId, formData) {

@@ -22,12 +22,11 @@ export class AddItemComponent implements OnInit {
   itemCreated = false;
   itemId: Number;
 
-  constructor(
-    private router: Router,
-    private itemService: ItemService,
-    private route: ActivatedRoute,
-    private sanitizer: DomSanitizer,
-    private auth: AuthService) {
+  constructor(private router: Router,
+              private itemService: ItemService,
+              private route: ActivatedRoute,
+              private sanitizer: DomSanitizer,
+              private auth: AuthService) {
     if (auth.isAuthenticated()) {
       return;
     }
@@ -55,7 +54,8 @@ export class AddItemComponent implements OnInit {
           this.router.navigate(['/items', this.itemId]);
         },
         err => {
-          console.log('Error occured to create new item');
+          console.log('Error occurred to create new item');
         });
+
   }
 }
