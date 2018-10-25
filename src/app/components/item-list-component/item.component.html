@@ -39,6 +39,7 @@
         </a>
       </div>
       <div class="title">{{item.title}} {{item.rating}}</div>
+      <ngb-rating [(rate)]="item.rating" [readonly]="true" max="5"></ngb-rating>
     </div>
   </div>
 

@@ -9,7 +9,7 @@
   margin-top: 15px;
   height: 200px;
   padding: 10px;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 }
 
 .img-container {
@@ -30,6 +30,9 @@ img {
   text-overflow: ellipsis;
 }
 
+.rating {
+  padding: 10px;
+}
 .fa-sort, .fa-sort-desc, .fa-sort-asc {
   padding-left: 10px;
 }
@@ -47,4 +50,5 @@ img {
 .sortby {
   margin-top: 50px;
 }
+
 
