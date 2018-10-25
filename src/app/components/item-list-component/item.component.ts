@@ -15,7 +15,12 @@ export class ItemComponent implements OnInit {
 
   items: any;
   itemsDto: any = [];
+  ratingOrder = 'Desc';
+  dateOrder = 'Asc';
+  titleOrder = 'Desc';
 
+  // for button arrows
+  sortingOptions = {value: 'Rating', direction: 'Desc'};
 
   constructor(private router: Router,
               private itemService: ItemService,
@@ -29,20 +34,30 @@ export class ItemComponent implements OnInit {
     }
   }
 
-
   ngOnInit() {
-    this.itemService.getItems()
+    this.itemService.getSortedItems('Rating', 'Desc')
       .subscribe(data => {
+        console.log(data);
         this.items = data;
         for (let i = 0; i < this.items.length; i++) {
           const imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + this.items[i].thumbnailDto.imageBase64);
-          this.itemsDto.push({itemId: this.items[i].itemId, title: this.items[i].title, src: imageSrc});
+          this.itemsDto.push({itemId: this.items[i].itemId, title: this.items[i].title, src: imageSrc, rating: this.items[i].rating});
         }
       });
   }
 
-  sort(value) {
-    console.log('Sorting by: ', value);
+  sort(value, direction) {
+    this.sortingOptions = {value: value, direction: direction};
+    this.itemsDto = [];
+    this.itemService.getSortedItems(value, direction)
+      .subscribe(data => {
+        this.items = data;
+        for (let i = 0; i < this.items.length; i++) {
+          const imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + this.items[i].thumbnailDto.imageBase64);
+          this.itemsDto.push({itemId: this.items[i].itemId, title: this.items[i].title, src: imageSrc, rating: this.items[i].rating});
+        }
+      });
   }
+
 }
 
