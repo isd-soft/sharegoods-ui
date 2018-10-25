@@ -1,29 +1,42 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { StarService } from '@services/star-service/star.service';
 import { Observable } from 'rxjs/Observable';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-star-review',
   templateUrl: './star-review.component.html',
   styleUrls: ['./star-review.component.css']
 })
+
 export class StarReviewComponent implements OnInit {
 
-  @Input() userId;
-  @Input() itemId;
+  @Input() rating: Number;
+  @Input() itemId: Number;
+  @Input() userId: Number;
+  @Output() ratingClick: EventEmitter<Number> = new EventEmitter();
 
-  stars: Observable<any>;
-  avgRating: Observable<any>;
+  constructor(private starService: StarService,
+              private route: ActivatedRoute) { }
 
-  constructor(private starService: StarService) { }
+  creatingRating(index: Number) {
+    this.rating = index;
+    this.ratingClick.emit(this.rating);
+  }
 
   ngOnInit() {
-    this.starService.creatingRating(1,2,5).subscribe(itemDto => {
-      console.log(itemDto);
-    },
+    this.route.params.subscribe(params => {
+      this.userId = params.userId;
+      this.itemId = params.itemId;
+    });
+
+    this.starService.createRating(1, 1, 1).subscribe(itemDto => {
+        console.log(itemDto);
+      },
       eror => {
-      console.error(eror);
+        console.error(eror);
       });
+
   }
 //console.log(JSON.parse(itemDto).rating);
 }

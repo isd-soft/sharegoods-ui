@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-import { Item } from '@models/item';
-
-export interface Star {
-  userId: any;
-  movieId: any;
-  value: number;
-
-}
-
+import {environment} from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +11,14 @@ export class StarService {
 
   private apiUrl = 'http://localhost:8080/';
 
-  public creatingRating(userId, itemId, rating) {
-    return this.http.get(this.apiUrl + 'users/' + userId + '/items/' + itemId + '/rating/' + rating);
+  public createRating(userId, itemId, rating) {
+    const createRatingUrl = environment.apiUrl + '/users/${userId}/items/${itemId}/rating/${rating}';
+    return this.http.post(createRatingUrl, rating);
   }
 }
+
+//  public createItem(userId, formData) {
+//     const createItemUrl = environment.apiUrl + `/users/${userId}/items`;
+//     return this.http.post<Item>(createItemUrl, formData);
+//   }
 
