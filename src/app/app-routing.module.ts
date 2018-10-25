@@ -21,10 +21,6 @@ const routes: Routes = [
     component: ItemComponent
   },
   {
-    path: 'users',
-    component: UserComponent
-  },
-  {
     path: 'items',
     component: ItemComponent
   },

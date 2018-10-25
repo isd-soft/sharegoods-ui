@@ -59,7 +59,12 @@ export class ChatService
 
         // Get author data, create new chat user (also need to pass corresponding room id)
         let user = message.otherUser;
-        this.adapter.addUser(message.chatRoomId, user);
+        this.adapter.addUser(user);
+
+        // Get a room!
+        this.adapter.addRoom(message.chatRoomId, message.otherUser.id);
+        console.log("Current rooms");
+        console.log(this.adapter.getRoomsForUsers());
 
         // Subscribe to messages from this user's room
         this.joinRoom(message.chatRoomId);
@@ -73,7 +78,8 @@ export class ChatService
         messageToShow.toId = this.currentUser.id;
         messageToShow.fromId = receivedMessage.sender;
         messageToShow.message = receivedMessage.content;
-         
+        
+
         console.log("Message to show object:");
         console.log(messageToShow);
 

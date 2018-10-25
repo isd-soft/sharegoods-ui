@@ -21,16 +21,30 @@ export class ItemDetailsComponent implements OnInit {
   itemDetails: any;
   itemDto: Item = new Item();
   imagesSrc: any = new Array();
+  showContactAuthorButton : boolean = false;
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
               private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig,
               private auth : AuthService, private chat : ChatComponent) {
   }
 
+  showContactAUthorButton() {
+    if(this.auth.isAuthenticated()) {
+        if(this.auth.getCurrentUser().id != this.itemDto.id) {
+          this.showContactAuthorButton = true;
+          return;
+        }
+    }
+    this.showContactAuthorButton = false;
+    return;
+  }
+
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
+
+    
 
      // set default config
     this._lighboxConfig.fadeDuration = 1;
@@ -47,6 +61,9 @@ export class ItemDetailsComponent implements OnInit {
           //const album = {src: imageSrc, thumb: imageSrc};
           this.albums.push(album);
           };
+
+          this.showContactAUthorButton();
+
         },
         err => {
 
@@ -72,7 +89,7 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   startChat() {
-    this.chat.getChatService().requestChatRoom(this.auth.getCurrentUser().id, 4); // instead of 4 should be this.itemDto.id
+    this.chat.getChatService().requestChatRoom(this.auth.getCurrentUser().id, this.itemDto.id);
   }
 
 }
