@@ -9,7 +9,6 @@
           <a class="nav-link" routerLink={{item.url}}>{{item.name}}</a>
         </li>
       </ul>
-
       <ul class="navbar-nav ml-auto">
         <li class="nav-item" *ngIf="!this.auth.isAuthenticated()" routerLinkActive="activated">
           <a class="nav-link" routerLink="/login">Login</a>
@@ -17,9 +16,14 @@
         <li class="nav-item" *ngIf="!this.auth.isAuthenticated()" routerLinkActive="activated">
           <a class="nav-link" routerLink="/register">Register</a>
         </li>
-
         <li class="nav-item dropdown" *ngIf="this.auth.isAuthenticated()" routerLinkActive="activated">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle"
+             href="#"
+             id="navbarDropdown"
+             role="button"
+             data-toggle="dropdown"
+             aria-haspopup="true"
+             aria-expanded="false">
             <i class="fa fa-user fa-lg"></i>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -29,19 +33,22 @@
             <a class="dropdown-item active-dropdown">My profile</a>
             <a class="dropdown-item active-dropdown">My items</a>
             <div class="dropdown-divider"></div>
-
             <!-- Button trigger modal -->
             <a class="dropdown-item active-dropdown" data-toggle="modal" data-target="#logoutModal">Logout</a>
           </div>
         </li>
       </ul>
-
     </div>
   </div>
 </nav>
 
 <!-- Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+<div class="modal fade"
+     id="logoutModal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="logoutModalLabel"
+     aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'app/auth/auth.service';
 import { NavBarLink } from '@models/navbar-link';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -14,14 +14,10 @@ export class NavComponent implements OnInit {
     {
       name: 'Users',
       url: '/users'
-    },
-    {
-      name: 'Posts',
-      url: '/items'
     }
   ];
 
-  constructor(private auth : AuthService,  private router : Router) {
+  constructor(private auth: AuthService, private router: Router) {
   }
 
   ngOnInit() {
