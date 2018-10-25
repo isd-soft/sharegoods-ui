@@ -15,25 +15,25 @@ import { AuthService } from 'app/auth/auth.service';
 export class ChatComponent implements OnInit {
 
   // ChatAdapter is needed for ng-chat module
-  public adapter: ChatAdapter = new Adapter();
-
-  //private chatService : ChatService;
+  public adapter = new Adapter();
   public userId;
   
-  constructor(private chatService : ChatService, private auth : AuthService) { 
+  constructor(private chatService : ChatService,
+              private auth : AuthService) { 
   }
 
   ngOnInit() {
+    this.adapter.setChatComponent(this);
+    this.chatService = this.chatService;
     this.chatService.setAdapter(this.adapter);
-    this.auth.isAuthenticatedObservable().subscribe(this.onAuthUpdate.bind(this));
+    this.auth.isAuthenticatedObservable().subscribe(this.onAuthUpdate.bind(this), error => { console.log(error);});
   }
 
-  onAuthUpdate() {
+   onAuthUpdate(data) {
     if(this.auth.isAuthenticated()) {
       this.userId = this.auth.getCurrentUser().id;
-      console.log("Hello? CurrentUserId: " + this.userId);
     }
-  }
+  } 
 
   setUserId(userId) {
     this.userId = userId
@@ -45,5 +45,5 @@ export class ChatComponent implements OnInit {
 
   getChatService() {
     return this.chatService;
-  }
+  }  
 }

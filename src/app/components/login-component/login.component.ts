@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
           this.auth.setToken(this.model.email,  this.model.password);
           this.authFailed = false;
           this.authSuccess = true;          
-          
+
           // Connect to chat server
           this.chat.getChatService().establishSocket();
           

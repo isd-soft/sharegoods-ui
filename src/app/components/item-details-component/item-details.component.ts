@@ -72,7 +72,6 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   startChat() {
-    this.chat.getChatService().establishSocket();
     this.chat.getChatService().requestChatRoom(this.auth.getCurrentUser().id, 4); // instead of 4 should be this.itemDto.id
   }
 

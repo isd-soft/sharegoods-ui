@@ -25,6 +25,12 @@ export class TokenInterceptor implements HttpInterceptor {
                     Authorization: "Basic " + this.auth.getToken()
                 }
             });
+            console.log("Hello, interceptor here!");
+            console.log(request);
+        }
+        else {
+            console.log("Hello, NOT INTERCEPTED:");
+            console.log(request);
         }
         
         return next.handle(request).pipe(tap(
@@ -35,6 +41,7 @@ export class TokenInterceptor implements HttpInterceptor {
             },
             (err: any) => {
                 if (err instanceof HttpErrorResponse) {
+                    console.log("Hello, interceptor here!");
                     console.log(err);
                     if (err.status === 401) {
                         this.router.navigate(['login']);

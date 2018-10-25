@@ -29,9 +29,10 @@ export class ChatService
 
     establishSocket() {
         // Check if connection already exists ?
-        let socket = new SockJS('http://172.17.41.124:8080/ws');
+        //let socket = new SockJS('http://172.17.41.124:8080/ws');
+        let socket = new SockJS('http://localhost:8080/ws');        
         this.stompClient = Stomp.over(socket);
-        this.stompClient.connect({}, this.onConnected.bind(this));
+        this.stompClient.connect({Authorization : "Basic " + this.auth.getToken()}, this.onConnected.bind(this));
 
         this.setCurrentUser();
     }
@@ -45,7 +46,7 @@ export class ChatService
 
     // Chat Room should be requested upon "Contact author" button clicked
     requestChatRoom(userId, itemId) {
-        this.http.get('http://172.17.41.124:8080/users/' + userId + '/accessItem/' + itemId).subscribe((x) => console.log(x));
+        this.http.get('http://localhost:8080/users/' + userId + '/accessItem/' + itemId).subscribe((x) => console.log(x));
     }
 
     onSystemMessageReceived(payload) {
@@ -57,7 +58,7 @@ export class ChatService
         }
 
         // Get author data, create new chat user (also need to pass corresponding room id)
-        let user = message.author;
+        let user = message.otherUser;
         this.adapter.addUser(message.chatRoomId, user);
 
         // Subscribe to messages from this user's room
@@ -72,11 +73,11 @@ export class ChatService
         messageToShow.toId = this.currentUser.id;
         messageToShow.fromId = receivedMessage.sender;
         messageToShow.message = receivedMessage.content;
-        
+         
         console.log("Message to show object:");
         console.log(messageToShow);
 
-        this.adapter.sendMessage(messageToShow);
+        this.adapter.getMessage(messageToShow);
     }
 
     joinRoom(chatRoomId) {

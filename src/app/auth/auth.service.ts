@@ -1,39 +1,29 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Observable, of, from } from 'rxjs';
+import { Observable, of, from, BehaviorSubject } from 'rxjs';
 import { Config } from 'app/config';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from 'app/models/user';
 
 @Injectable()
-export class AuthService implements OnInit {
+export class AuthService {
 
   constructor (
     private config : Config,
     private http: HttpClient
   ) {  }
 
-  ngOnInit() {
+  data = new BehaviorSubject<any[]>([]);
+  array = new Array();
+
+  public addToSessionStorage(key,value) {
+    sessionStorage.setItem(key,value);
+    this.array[key] = value;
+    this.data.next(this.array);
   }
-
-  //public sessionStorageItems = new Array;
-
-  // ALSO need to add for removing from array
-  // AND in token and user getters request from list not from sessionstorage directly
-
-/*   public addToSessionStorage(key : string, value : string) {
-    
-    sessionStorage.setItem(key.toString(),value);
-    console.log("Session storage: ");
-    console.log(sessionStorage);
-
-    this.sessionStorageItems[key] = value;
-    console.log("Session Storage Items Updated: Key " + key + " Value " + value);
-    console.log(this.sessionStorageItems);
-  } */
 
   public isAuthenticatedObservable () {
-    return Observable.of(sessionStorage);
-  }
+    return this.data;
+  } 
 
   public isAuthenticated(): boolean {
     const token = this.getToken();
@@ -42,8 +32,7 @@ export class AuthService implements OnInit {
   } 
 
   public setToken (email:string, password:string) {
-    sessionStorage.setItem('token', btoa(email + ':' + password));
-    console.log(sessionStorage);
+    this.addToSessionStorage('token', btoa(email + ':' + password));
   }
 
   public getToken(): string {
@@ -54,10 +43,8 @@ export class AuthService implements OnInit {
     sessionStorage.removeItem('token');
   }
 
-
-
   public setCurrentUser (user : User) {
-    sessionStorage.setItem('user', JSON.stringify(user));
+    this.addToSessionStorage('user', JSON.stringify(user));
   }
 
   public getCurrentUser(): User {

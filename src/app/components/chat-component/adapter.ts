@@ -1,8 +1,15 @@
 import { ChatAdapter, User, Message, UserStatus } from 'ng-chat';
 import { Observable } from "rxjs/Rx";
+import { ChatMessageServer } from '@models/ChatMessageServer';
 
 export class Adapter extends ChatAdapter
 {
+
+    private chatComponent;
+
+    public setChatComponent(chat) {
+        this.chatComponent = chat;
+    }
     public users: User[] = [
      {
         id: 33,
@@ -32,16 +39,23 @@ export class Adapter extends ChatAdapter
         return Observable.of([]);
     }
     
+    getMessage(message: Message): void {
+        let user = this.users.find(x => x.id == message.fromId);
+        this.onMessageReceived(user, message);
+    }
+
     sendMessage(message: Message): void {
-//        let replyMessage = new Message();
-        
-//        replyMessage.fromId = message.toId;
-//        replyMessage.toId = message.fromId;
-//        replyMessage.message = message.message;
-        
-//        let user = this.users.find(x => x.id == replyMessage.fromId);
+        console.log(message);
+
+        let newMessage = new ChatMessageServer;
+        newMessage.sender = message.fromId;
+        newMessage.content = message.message;
+        newMessage.type = "CHAT";
+
+        this.chatComponent.getChatService().sendMessage(10, JSON.stringify(newMessage));
 
         let user = this.users.find(x => x.id == message.fromId);
         this.onMessageReceived(user, message);
+        
     }
 }
