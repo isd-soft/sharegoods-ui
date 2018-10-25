@@ -1,5 +1,7 @@
 <!--<app-add-item></app-add-item>-->
 <div class="container">
+
+  <!--sorting-->
   <div class="row">
     <div class="sort">Sort by:</div>
     <div class="btn-group">
@@ -15,6 +17,7 @@
     </div>
   </div>
 
+  <!--images list-->
   <div class="row">
     <div class="gallery col-md-3" *ngFor="let item of itemsDto">
       <div class="img-container">
@@ -25,6 +28,7 @@
       <div class="title">{{item.title}}</div>
     </div>
   </div>
+
 </div>
 
 
