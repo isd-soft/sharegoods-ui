@@ -23,6 +23,9 @@ import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthService } from './auth/auth.service';
 import { LoginComponent } from './components/login-component/login.component';
 
+import { NgChatModule } from 'ng-chat';
+import { ChatComponent } from './components/chat-component/chat.component';
+import { ChatService } from './services/chat-service';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,8 @@ import { LoginComponent } from './components/login-component/login.component';
     LayoutComponent,
     NavComponent,
     HomePageComponent,
-    LoginComponent
+    LoginComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +50,8 @@ import { LoginComponent } from './components/login-component/login.component';
     HttpClientModule,
     ImageUploadModule.forRoot(),
     LightboxModule,
-    FormsModule
+    FormsModule,
+    NgChatModule
   ],
   exports: [
     FooterComponent,
@@ -56,6 +61,7 @@ import { LoginComponent } from './components/login-component/login.component';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    ChatService,
     Config,
     AuthService,
     {

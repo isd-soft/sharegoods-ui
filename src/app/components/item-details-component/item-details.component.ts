@@ -5,6 +5,8 @@ import { ItemService } from "../../services/item-service/item.service";
 import { DomSanitizer } from "@angular/platform-browser";
 import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from "ngx-lightbox";
 import { Subscription } from "rxjs/Rx";
+import { ChatComponent } from 'app/components/chat-component/chat.component';
+import { AuthService } from 'app/auth/auth.service';
 
 @Component({
   selector: 'app-item-details',
@@ -21,7 +23,8 @@ export class ItemDetailsComponent implements OnInit {
   imagesSrc: any = new Array();
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
-              private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig) {
+              private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig,
+              private auth : AuthService, private chat : ChatComponent) {
   }
 
   ngOnInit() {
@@ -66,6 +69,11 @@ export class ItemDetailsComponent implements OnInit {
     if (event.id === LIGHTBOX_EVENT.CLOSE) {
       this._subscription.unsubscribe();
     }
+  }
+
+  startChat() {
+    this.chat.getChatService().establishSocket();
+    this.chat.getChatService().requestChatRoom(this.auth.getCurrentUser().id, 4); // instead of 4 should be this.itemDto.id
   }
 
 }

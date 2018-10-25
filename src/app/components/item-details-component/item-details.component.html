@@ -5,6 +5,8 @@
   <h6>Author {{itemDto.author}}</h6>
   <h6>Date {{itemDto.dateTime}}</h6>
 
+  <button (click)="startChat()">CONTACT AUTHOR</button>
+
   <div class="row">
     <div class="img-row col-sm-3" *ngFor="let image of albums; let i=index">
       <img class="img-frame img-responsive margin" style="width:100%; height:auto; overflow:hidden" alt="Image" [src]="image.src" (click)="open(i)"/>
