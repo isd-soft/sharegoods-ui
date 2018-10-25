@@ -19,12 +19,12 @@ export class StarReviewComponent implements OnInit {
 
   ngOnInit() {
     this.starService.creatingRating(1,2,5).subscribe(itemDto => {
-      console.log(JSON.parse(itemDto).rating);
+      console.log(itemDto);
     },
       eror => {
       console.error(eror);
       });
   }
-
+//console.log(JSON.parse(itemDto).rating);
 }
 

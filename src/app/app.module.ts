@@ -1,13 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ImageUploadModule } from 'angular2-image-upload';
+import { LightboxModule } from 'ngx-lightbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { Config } from './config'
-
 import { UserComponent } from '@components/user-list-component/user.component';
 import { ItemComponent } from '@components/item-list-component/item.component';
 import { RegisterComponent } from '@components/register-component/register.component';
@@ -18,11 +17,11 @@ import { HeaderComponent } from '@core/components/header/header.component';
 import { LayoutComponent } from '@core/components/layout/layout.component';
 import { NavComponent } from '@core/components/nav/nav.component';
 import { ItemDetailsComponent } from "./components/item-details-component/item-details.component";
-import { LightboxModule } from "ngx-lightbox";
 import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthService } from './auth/auth.service';
 import { LoginComponent } from './components/login-component/login.component';
 import { StarReviewComponent } from './components/star-review-component/star-review.component';
+import { AddCommentComponent } from '@components/add-comment-component/add-comment.component';
 
 
 @NgModule({
@@ -39,7 +38,8 @@ import { StarReviewComponent } from './components/star-review-component/star-rev
     NavComponent,
     HomePageComponent,
     LoginComponent,
-    StarReviewComponent
+    StarReviewComponent,
+    AddCommentComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +58,6 @@ import { StarReviewComponent } from './components/star-review-component/star-rev
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
-    Config,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,

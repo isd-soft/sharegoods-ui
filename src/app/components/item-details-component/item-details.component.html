@@ -1,19 +1,23 @@
-
 <div class="container">
   <h2>{{itemDto.title}} </h2>
   <p>{{itemDto.description}}</p>
   <h6>Author {{itemDto.author}}</h6>
-  <h6>Date {{itemDto.dateTime  | date: 'MMM d, y, HH:mm'}}</h6>
+  <h6>Date {{itemDto.dateTime | date: 'MMM d, y, HH:mm'}}</h6>
 
   <div class="row">
     <div class="img-row col-sm-3" *ngFor="let image of albums; let i=index">
-      <img class="img-frame img-responsive margin" style="width:100%; height:auto; overflow:hidden" alt="Image" [src]="image.src" (click)="open(i)"/>
+      <img class="img-frame img-responsive margin"
+           style="width:100%; height:auto; overflow:hidden"
+           alt="Image"
+           [src]="image.src"
+           (click)="open(i)"/>
     </div>
   </div>
-
+  <app-add-comment></app-add-comment>
 </div>
 
 <app-star-review></app-star-review>
+
 
 
 
