@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { environment } from '@env/environment';
 
 import { Item } from '@models/item';
@@ -12,12 +12,9 @@ export class ItemService {
   constructor(private http: HttpClient) {
   }
 
-  public getItems() {
-    return this.http.get(environment.apiUrl + `/items`);
-  }
-
-  public getComments(itemId) {
-    return this.http.get(environment.apiUrl + `/items/${itemId}`);
+  public getSortedItems(value, direction) {
+    const params = new HttpParams().set('value', value).set('direction', direction);
+    return this.http.get(environment.apiUrl + '/items', {params: params});
   }
 
   public createItem(userId, formData) {
@@ -29,8 +26,8 @@ export class ItemService {
     return this.http.get(environment.apiUrl + `/items/${itemId}`);
   }
 
-  // public getItems(sortByValue) {
-  //   return this.http.get(this.apiUrl + 'items');
-  // }
+  public getComments(itemId) {
+    return this.http.get(environment.apiUrl + `/items/${itemId}`);
+  }
 
 }

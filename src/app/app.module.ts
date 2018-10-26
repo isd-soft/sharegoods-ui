@@ -4,6 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ImageUploadModule } from 'angular2-image-upload';
 import { LightboxModule } from 'ngx-lightbox';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthService } from './auth/auth.service';
 import { LoginComponent } from '@components/login-component/login.component';
 import { AddCommentComponent } from '@components/add-comment-component/add-comment.component';
+
 
 
 @NgModule({
@@ -46,7 +48,8 @@ import { AddCommentComponent } from '@components/add-comment-component/add-comme
     HttpClientModule,
     ImageUploadModule.forRoot(),
     LightboxModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   exports: [
     FooterComponent,
