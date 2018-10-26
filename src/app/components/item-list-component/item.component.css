@@ -9,7 +9,8 @@
   margin-top: 15px;
   height: 200px;
   padding: 10px;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
+
 }
 
 .img-container {
@@ -30,16 +31,38 @@ img {
   text-overflow: ellipsis;
 }
 
-.fa-sort {
+.rating {
+  padding: 10px;
+}
+.fa-sort, .fa-sort-desc, .fa-sort-asc {
   padding-left: 10px;
 }
 
 .sort {
   vertical-align: middle;
   padding: 5px;
+  margin-left: 10px;
 }
 
 .container {
   margin-top: 15px;
+}
+
+.sortby {
+  margin-top: 50px;
+}
+
+.star {
+  position: relative;
+  display: inline-block;
+  color: #d3d3d3;
+  font-size: 120%;
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: #446a7a;
 }
 

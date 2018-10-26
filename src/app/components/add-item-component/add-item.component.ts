@@ -16,7 +16,6 @@ export class AddItemComponent implements OnInit {
   @ViewChild(ImageUploadComponent) imageUploadComponent;
 
   item: Item = new Item();
-  userId: string;
   formData: FormData = new FormData();
   uploadedImages: any;
   itemCreated = false;
@@ -34,9 +33,6 @@ export class AddItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.userId = params.userId;
-    });
   }
 
   createItem(): void {
@@ -47,7 +43,7 @@ export class AddItemComponent implements OnInit {
       this.formData.append('file', this.uploadedImages[i].file);
     }
 
-    this.itemService.createItem(this.userId, this.formData)
+    this.itemService.createItem(this.auth.getCurrentUser().id, this.formData)
       .subscribe(data => {
           this.itemCreated = true;
           this.itemId = data['id'];
@@ -58,4 +54,5 @@ export class AddItemComponent implements OnInit {
         });
 
   }
+
 }
