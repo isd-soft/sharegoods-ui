@@ -39,7 +39,7 @@
           <img alt="Image" [src]="item.src">
         </a>
       </div>
-      <div class="title">{{item.title}} {{item.rating}}
+      <div class="title">{{item.title}}
         <div>
           <ngb-rating  [(rate)]="item.rating" [readonly]="true" max="5" [starTemplate]="t"></ngb-rating>
           <ng-template #t let-fill="fill">
