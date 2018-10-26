@@ -34,13 +34,9 @@ export class ChatService
 
     establishSocket(email,pass) {
         // Check if connection already exists ?
-        //let socket = new SockJS('http://172.17.41.124:8080/ws');
         let socket = new SockJS('http://localhost:8080/ws');        
         this.stompClient = Stomp.over(socket);
-        //this.stompClient.connect({login:"oxana@gmail.com", passcode:"123"}, this.onConnected.bind(this));
         this.stompClient.connect({login:email,passcode:pass}, this.onConnected.bind(this));
-        
-
         this.setCurrentUser();
     }
 
@@ -51,7 +47,6 @@ export class ChatService
         console.log(this.personalChannel);
     }
 
-    // Chat Room should be requested upon "Contact author" button clicked
     requestChatRoom(currentUserId, itemUserId) {
         if (this.adapter.getUserById(itemUserId) == null) {
             this.http.get('http://localhost:8080/users/' + currentUserId + '/accessItem/' + itemUserId).subscribe((x) => console.log(x));
@@ -66,10 +61,9 @@ export class ChatService
 
         if(message.type == "REMOVE") {
             this.adapter.deleteRoomsAndUsers(message.chatRoomId);
-            // Close window with this user?
-            return
+            // Close window with this user!
+            return;
         }
-
 
         // Get user data, check if same for current user
         if(message.user.id != this.currentUser.id) {
@@ -113,14 +107,8 @@ export class ChatService
         this.adapter.getMessage(messageToShow);
     }
 
-    
-
     joinRoom(chatRoomId) {
         this.stompClient.subscribe("/channel/" + chatRoomId, this.onChatMessageReceived.bind(this));
-        
-        // temp sending test messageing to room at join
-        //let testMessage = '{"sender": 2, "content":"Hello room ' + chatRoomId + '","type":"CHAT"}';
-        //this.sendMessage(chatRoomId, testMessage);
     }
 
     sendMessage(chatRoomId, message) {

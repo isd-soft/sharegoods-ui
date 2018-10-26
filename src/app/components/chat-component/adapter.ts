@@ -67,7 +67,7 @@ export class Adapter extends ChatAdapter
         this.deleteUserById(interlocutor);
     }
 
-    invert (obj) {
+    invert(obj) {
         var new_obj = [];
         for (var prop in obj) {
           if(obj.hasOwnProperty(prop)) {
@@ -77,8 +77,6 @@ export class Adapter extends ChatAdapter
         console.error(new_obj);
         return new_obj;
       }
-
-
 
     listFriends(): Observable<User[]> {
         return Observable.of(this.users);
