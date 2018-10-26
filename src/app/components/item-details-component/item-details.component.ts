@@ -6,6 +6,7 @@ import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from 
 
 import { Item } from '@models/item';
 import { ItemService } from '@services/item-service/item.service';
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-item-details',
@@ -21,9 +22,10 @@ export class ItemDetailsComponent implements OnInit {
   itemDto: Item = new Item();
   imagesSrc: any = [];
   isAuthorOnline: boolean;
+  itemComments: any;
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
-              private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig) {
+              private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig, private auth: AuthService ) {
   }
 
   ngOnInit() {
@@ -45,16 +47,13 @@ export class ItemDetailsComponent implements OnInit {
             const album = {src: imageSrc};
             this.albums.push(album);
           }
-
         },
         err => {
-
           if (err.status == '404') {
             this.router.navigate(['items']);
           } else {
             alert('Some error has occured ' + err.status);
           }
-
         });
   }
 

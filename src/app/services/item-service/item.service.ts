@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import { environment } from '@env/environment';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
+import { environment } from '@env/environment';
 import { Item } from '@models/item';
 
 @Injectable({
@@ -26,8 +27,15 @@ export class ItemService {
     return this.http.get(environment.apiUrl + `/items/${itemId}`);
   }
 
+  public addComment(itemId, userId, comment): Observable<any> {
+    const addCommentUrl = environment.apiUrl + `/items/${itemId}/addComment`;
+    const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    const body = new HttpParams().set('userId', userId).set('comment', comment);
+    return this.http.post(addCommentUrl, body, {headers: header});
+  }
+
   public getComments(itemId) {
-    return this.http.get(environment.apiUrl + `/items/${itemId}`);
+    return this.http.get(environment.apiUrl + `/items/${itemId}/comments`);
   }
 
 }
