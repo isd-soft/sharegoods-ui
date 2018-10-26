@@ -19,7 +19,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row" *ngIf="auth.isAuthenticated()">
   <div class="col-md-1"></div>
   <form class="col-md-6">
     <div class="form-group">

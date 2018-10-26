@@ -35,7 +35,7 @@ export class ItemService {
   }
 
   public getComments(itemId) {
-    return this.http.get(environment.apiUrl + `/items/${itemId}`);
+    return this.http.get(environment.apiUrl + `/items/${itemId}/comments`);
   }
 
 }

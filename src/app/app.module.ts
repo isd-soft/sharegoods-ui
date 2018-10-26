@@ -23,8 +23,6 @@ import { AuthService } from './auth/auth.service';
 import { LoginComponent } from '@components/login-component/login.component';
 import { CommentComponent } from "./components/comment-component/comment.component";
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
