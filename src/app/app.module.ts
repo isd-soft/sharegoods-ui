@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ImageUploadModule } from 'angular2-image-upload';
 import { LightboxModule } from 'ngx-lightbox';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,12 +17,12 @@ import { FooterComponent } from '@core/components/footer/footer.component';
 import { HeaderComponent } from '@core/components/header/header.component';
 import { LayoutComponent } from '@core/components/layout/layout.component';
 import { NavComponent } from '@core/components/nav/nav.component';
-import { ItemDetailsComponent } from "./components/item-details-component/item-details.component";
+import { ItemDetailsComponent } from '@components/item-details-component/item-details.component';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthService } from './auth/auth.service';
-import { LoginComponent } from './components/login-component/login.component';
+import { LoginComponent } from '@components/login-component/login.component';
+import { CommentComponent } from "./components/comment-component/comment.component";
 import { StarReviewComponent } from './components/star-review-component/star-review.component';
-import { AddCommentComponent } from '@components/add-comment-component/add-comment.component';
 
 
 @NgModule({
@@ -40,7 +40,7 @@ import { AddCommentComponent } from '@components/add-comment-component/add-comme
     HomePageComponent,
     LoginComponent,
     StarReviewComponent,
-    AddCommentComponent
+    CommentComponent
   ],
   imports: [
     BrowserModule,

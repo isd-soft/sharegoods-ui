@@ -1,4 +1,18 @@
 .btn {
-  margin-top: 2%;
-  margin-bottom: 5%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.container {
+  margin-top: 25px;
+}
+
+.form-group {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.title {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
