@@ -6,14 +6,12 @@ export class Comment {
   id?: Number;
   item: Item;
   user: User;
-  date_time: Timestamp<Date>;
+  dateTime?: Timestamp<Date>;
   comment: String;
 
-  constructor(id: Number, item: Item, user: User, dateTime: Timestamp<Date>, comment: String) {
-    this.id = id;
+  constructor(item: Item, user: User, comment: String) {
     this.item = item;
     this.user = user;
-    this.date_time = dateTime;
     this.comment = comment;
   }
 }
