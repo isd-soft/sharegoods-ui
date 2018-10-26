@@ -7,12 +7,12 @@ export class Comment {
   item: Item;
   user: User;
   dateTime?: Timestamp<Date>;
-  text: String;
+  comment: String;
 
-  constructor(item: Item, user: User, text: String) {
+  constructor(item: Item, user: User, comment: String) {
     this.item = item;
     this.user = user;
-    this.text = text;
+    this.comment = comment;
   }
 }
 

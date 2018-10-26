@@ -20,7 +20,7 @@ import { ItemDetailsComponent } from '@components/item-details-component/item-de
 import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthService } from './auth/auth.service';
 import { LoginComponent } from '@components/login-component/login.component';
-import { AddCommentComponent } from '@components/add-comment-component/add-comment.component';
+import { CommentComponent } from "./components/comment-component/comment.component";
 
 
 @NgModule({
@@ -37,7 +37,7 @@ import { AddCommentComponent } from '@components/add-comment-component/add-comme
     NavComponent,
     HomePageComponent,
     LoginComponent,
-    AddCommentComponent
+    CommentComponent
   ],
   imports: [
     BrowserModule,
