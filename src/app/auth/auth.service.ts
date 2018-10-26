@@ -2,7 +2,9 @@ import { Injectable, OnInit } from '@angular/core';
 import { Observable, of, from, BehaviorSubject } from 'rxjs';
 import { Config } from 'app/config';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
 import { User } from 'app/models/user';
+import { environment } from '@env/environment';
 
 @Injectable()
 export class AuthService {
@@ -27,9 +29,8 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     const token = this.getToken();
-    if (token) return true; 
-    return false;
-  } 
+    return !!token;
+  }
 
   public setToken (email:string, password:string) {
     this.addToSessionStorage('token', btoa(email + ':' + password));
@@ -48,16 +49,19 @@ export class AuthService {
   }
 
   public getCurrentUser(): User {
-    let user : User = JSON.parse(sessionStorage.getItem('user'));
+    const user: User = JSON.parse(sessionStorage.getItem('user'));
     return user;
   }
 
-  
-  public isLoginDataValid (email, password) {
-    let url = this.config.serverUrl + '/users/login';
-    let header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-    let body = new HttpParams().set('email', email).set('password', password);
+  public removeUser () {
+    sessionStorage.removeItem('user');
+  }
 
-    return this.http.post<User>(url, body, { headers: header });
+  public isLoginDataValid(email, password) {
+    const url = environment.apiUrl + '/users/login';
+    const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    const body = new HttpParams().set('email', email).set('password', password);
+
+    return this.http.post<User>(url, body, {headers: header});
   }
 }

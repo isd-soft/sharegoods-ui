@@ -22,6 +22,7 @@ export class ItemDetailsComponent implements OnInit {
   itemDto: Item = new Item();
   imagesSrc: any = new Array();
   showContactAuthorButton : boolean = false;
+  itemComments: any;
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
               private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig,
@@ -59,8 +60,7 @@ export class ItemDetailsComponent implements OnInit {
         for(let i = 0; i < imageDtoList.length; i++) {
           let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,'+ imageDtoList[i].imageBase64);
           this.imagesSrc.push(imageSrc);
-          const album = {src: imageSrc, thumb: 'assets/img/image' + (i+1) + '-thumb.jpg'};
-          //const album = {src: imageSrc, thumb: imageSrc};
+          const album = {src: imageSrc};
           this.albums.push(album);
           };
 
@@ -68,20 +68,17 @@ export class ItemDetailsComponent implements OnInit {
 
         },
         err => {
-
-          console.log("Error occured to get item");
-
-          if(err.status == 404)
-          { this.router.navigate(['items']) }
-          else
-          { alert("Some error has occured " + err.status) }
-          
+          if (err.status == '404') {
+            this.router.navigate(['items']);
+          } else {
+            alert('Some error has occured ' + err.status);
+          }
         });
   }
 
   open(index: number): void {
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
-    this._lightbox.open(this.albums, index, { wrapAround: true, showImageNumberLabel: true });
+    this._lightbox.open(this.albums, index, {wrapAround: true, showImageNumberLabel: true});
   }
 
   private _onReceivedEvent(event: IEvent): void {

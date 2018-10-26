@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageUploadComponent } from 'angular2-image-upload';
+
 import { AuthService } from 'app/auth/auth.service';
 import { Item } from '@models/item';
 import { ItemService } from '@services/item-service/item.service';
@@ -15,27 +16,23 @@ export class AddItemComponent implements OnInit {
   @ViewChild(ImageUploadComponent) imageUploadComponent;
 
   item: Item = new Item();
-  userId: string;
   formData: FormData = new FormData();
   uploadedImages: any;
   itemCreated = false;
   itemId: Number;
 
-  constructor(
-    private router: Router, 
-    private itemService: ItemService, 
-    private route: ActivatedRoute, 
-    private sanitizer: DomSanitizer,
-    private auth : AuthService) {
-      if(!auth.isAuthenticated()) {
-        router.navigate(['items']);
+  constructor(private router: Router,
+              private itemService: ItemService,
+              private route: ActivatedRoute,
+              private sanitizer: DomSanitizer,
+              private auth: AuthService) {
+    if (auth.isAuthenticated()) {
+      return;
     }
+    router.navigate(['items']);
   }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.userId = params.userId;
-    });
   }
 
   createItem(): void {
@@ -45,14 +42,17 @@ export class AddItemComponent implements OnInit {
     for (let i = 0; i < this.uploadedImages.length; i++) {
       this.formData.append('file', this.uploadedImages[i].file);
     }
-    this.itemService.createItem(this.userId, this.formData)
+
+    this.itemService.createItem(this.auth.getCurrentUser().id, this.formData)
       .subscribe(data => {
           this.itemCreated = true;
           this.itemId = data['id'];
           this.router.navigate(['/items', this.itemId]);
         },
         err => {
-          console.log('Error occured to create new item');
+          console.log('Error occurred to create new item');
         });
+
   }
+
 }

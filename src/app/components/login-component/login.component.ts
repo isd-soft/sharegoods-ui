@@ -11,10 +11,10 @@ import { ChatComponent } from 'app/components/chat-component/chat.component';
 })
 export class LoginComponent implements OnInit {
 
-  private model : any = {};
-  private authFailed : boolean = false;
-  private authSuccess : boolean = false;
-  private registerSuccess : boolean = false;
+  private model: any = {};
+  private authFailed = false;
+  private authSuccess = false;
+  private registerSuccess = false;
 
   constructor(
     private router : Router,
@@ -29,8 +29,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      if(params['newuser']) {
-        this.registerSuccess = true;            
+      if (params['newuser']) {
+        this.registerSuccess = true;
       }
     });
   }
@@ -48,14 +48,13 @@ export class LoginComponent implements OnInit {
           this.chat.getChatService().establishSocket(this.model.email, this.model.password);
           
           this.router.navigate(['items']);
-      },
-      err => {
-        if(err.status = 404) {
-          this.authFailed = true;
-        }
-        else {
-          alert("Some error occured: " + err.error);
-        }
-      });
+        },
+        err => {
+          if (err.status == '404') {
+            this.authFailed = true;
+          } else {
+            alert('Some error occured: ' + err.error);
+          }
+        });
   }
 }
