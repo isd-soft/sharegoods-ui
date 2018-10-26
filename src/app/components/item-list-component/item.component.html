@@ -30,6 +30,7 @@
     </div>
   </div>
 
+
   <!--images list-->
   <div class="row">
     <div class="gallery col-md-3" *ngFor="let item of itemsDto">
@@ -38,10 +39,21 @@
           <img alt="Image" [src]="item.src">
         </a>
       </div>
-      <div class="title">{{item.title}} {{item.rating}}</div>
-      <ngb-rating [(rate)]="item.rating" [readonly]="true" max="5"></ngb-rating>
+      <div class="title">{{item.title}} {{item.rating}}
+        <div>
+          <ngb-rating  [(rate)]="item.rating" [readonly]="true" max="5" [starTemplate]="t"></ngb-rating>
+          <ng-template #t let-fill="fill">
+          <span class="star" [class.full]="fill === 100">
+            <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+          </span>
+          </ng-template>
+        </div>
+      </div>
+
     </div>
   </div>
+
+
 
 </div>
 

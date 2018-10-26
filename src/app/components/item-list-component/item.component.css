@@ -10,6 +10,7 @@
   height: 200px;
   padding: 10px;
   margin-bottom: 30px;
+
 }
 
 .img-container {
@@ -51,4 +52,17 @@ img {
   margin-top: 50px;
 }
 
+.star {
+  position: relative;
+  display: inline-block;
+  color: #d3d3d3;
+  font-size: 120%;
+}
+
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: #446a7a;
+}
 
