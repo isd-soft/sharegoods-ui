@@ -12,8 +12,8 @@ export class NavComponent implements OnInit {
 
   public navItems: Array<NavBarLink> = [
     {
-      name: 'Users',
-      url: '/users'
+      name: 'Posts',
+      url: '/items'
     }
   ];
 
