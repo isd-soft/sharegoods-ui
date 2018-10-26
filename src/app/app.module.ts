@@ -20,7 +20,11 @@ import { NavComponent } from '@core/components/nav/nav.component';
 import { ItemDetailsComponent } from '@components/item-details-component/item-details.component';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthService } from './auth/auth.service';
-import { LoginComponent } from '@components/login-component/login.component';
+import { LoginComponent } from './components/login-component/login.component';
+
+import { NgChatModule } from 'ng-chat';
+import { ChatComponent } from './components/chat-component/chat.component';
+import { ChatService } from './services/chat-service';
 import { CommentComponent } from "./components/comment-component/comment.component";
 
 @NgModule({
@@ -37,6 +41,7 @@ import { CommentComponent } from "./components/comment-component/comment.compone
     NavComponent,
     HomePageComponent,
     LoginComponent,
+    ChatComponent,
     CommentComponent
   ],
   imports: [
@@ -47,6 +52,7 @@ import { CommentComponent } from "./components/comment-component/comment.compone
     ImageUploadModule.forRoot(),
     LightboxModule,
     FormsModule,
+    NgChatModule,
     NgbModule
   ],
   exports: [
@@ -57,6 +63,7 @@ import { CommentComponent } from "./components/comment-component/comment.compone
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    ChatService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,
