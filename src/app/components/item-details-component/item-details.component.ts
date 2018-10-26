@@ -19,6 +19,7 @@ export class ItemDetailsComponent implements OnInit {
   private _subscription: Subscription;
   itemId: Number;
   itemDetails: any;
+  userIsOnline;
   itemDto: Item = new Item();
   imagesSrc: any = new Array();
   showContactAuthorButton : boolean = false;
@@ -55,6 +56,7 @@ export class ItemDetailsComponent implements OnInit {
     this.itemService.getItem(this.itemId)
       .subscribe( data => {
         this.itemDetails = data;
+        this.userIsOnline = this.itemDetails.userIsOnline;
         this.itemDto = this.itemDetails.itemDto;
         let imageDtoList = this.itemDetails.imageDtoList;
         for(let i = 0; i < imageDtoList.length; i++) {

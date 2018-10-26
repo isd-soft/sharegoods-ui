@@ -1,6 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Observable, of, from, BehaviorSubject } from 'rxjs';
-import { Config } from 'app/config';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { User } from 'app/models/user';
@@ -10,7 +9,6 @@ import { environment } from '@env/environment';
 export class AuthService {
 
   constructor (
-    private config : Config,
     private http: HttpClient
   ) {  }
 
