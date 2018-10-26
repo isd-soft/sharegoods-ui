@@ -13,12 +13,8 @@ import { ItemDetailsComponent } from "./components/item-details-component/item-d
 const routes: Routes = [
    {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'items',
     pathMatch: 'full',
-  },
-  {
-    path: 'home',
-    component: ItemComponent
   },
   {
     path: 'items',

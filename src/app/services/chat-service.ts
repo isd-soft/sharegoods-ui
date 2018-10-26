@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, OnInit, Output, EventEmitter } from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { HttpClient } from '@angular/common/http';
@@ -15,6 +15,7 @@ export class ChatService
     private personalChannel;
     private currentUser;
     private adapter;
+    private chatComponent;
 
     constructor(private http: HttpClient, private auth: AuthService) {
     }
@@ -23,16 +24,22 @@ export class ChatService
         this.adapter = adapter;
     }
 
+    setChatComponent(chatComponent) {
+        this.chatComponent = chatComponent;
+    }
+
     setCurrentUser() {
         this.currentUser = this.auth.getCurrentUser();
     }
 
-    establishSocket() {
+    establishSocket(email,pass) {
         // Check if connection already exists ?
         //let socket = new SockJS('http://172.17.41.124:8080/ws');
         let socket = new SockJS('http://localhost:8080/ws');        
         this.stompClient = Stomp.over(socket);
-        this.stompClient.connect({Authorization : "Basic " + this.auth.getToken()}, this.onConnected.bind(this));
+        //this.stompClient.connect({login:"oxana@gmail.com", passcode:"123"}, this.onConnected.bind(this));
+        this.stompClient.connect({login:email,passcode:pass}, this.onConnected.bind(this));
+        
 
         this.setCurrentUser();
     }
@@ -45,12 +52,24 @@ export class ChatService
     }
 
     // Chat Room should be requested upon "Contact author" button clicked
-    requestChatRoom(userId, itemId) {
-        this.http.get('http://localhost:8080/users/' + userId + '/accessItem/' + itemId).subscribe((x) => console.log(x));
+    requestChatRoom(currentUserId, itemUserId) {
+        if (this.adapter.getUserById(itemUserId) == null) {
+            this.http.get('http://localhost:8080/users/' + currentUserId + '/accessItem/' + itemUserId).subscribe((x) => console.log(x));
+        } else {
+            this.openChatWindow(itemUserId);
+        }
     }
 
     onSystemMessageReceived(payload) {
+
         let message = JSON.parse(payload.body);
+
+        if(message.type == "REMOVE") {
+            this.adapter.deleteRoomsAndUsers(message.chatRoomId);
+            // Close window with this user?
+            return
+        }
+
 
         // Get user data, check if same for current user
         if(message.user.id != this.currentUser.id) {
@@ -58,8 +77,8 @@ export class ChatService
         }
 
         // Get author data, create new chat user (also need to pass corresponding room id)
-        let user = message.otherUser;
-        this.adapter.addUser(user);
+        let userDetails = message.otherUser;
+        this.adapter.addUser(userDetails);
 
         // Get a room!
         this.adapter.addRoom(message.chatRoomId, message.otherUser.id);
@@ -68,6 +87,14 @@ export class ChatService
 
         // Subscribe to messages from this user's room
         this.joinRoom(message.chatRoomId);
+
+        // Open chat window for initiator 
+        this.openChatWindow(userDetails.id);
+    }
+
+    openChatWindow(userId) {
+        let user = this.adapter.getUserById(userId);
+        this.chatComponent.openChatWindow(user);
     }
 
     onChatMessageReceived(payload) {
@@ -86,9 +113,11 @@ export class ChatService
         this.adapter.getMessage(messageToShow);
     }
 
+    
+
     joinRoom(chatRoomId) {
         this.stompClient.subscribe("/channel/" + chatRoomId, this.onChatMessageReceived.bind(this));
-
+        
         // temp sending test messageing to room at join
         //let testMessage = '{"sender": 2, "content":"Hello room ' + chatRoomId + '","type":"CHAT"}';
         //this.sendMessage(chatRoomId, testMessage);

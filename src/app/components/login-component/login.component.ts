@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
           this.authSuccess = true;          
 
           // Connect to chat server
-          this.chat.getChatService().establishSocket();
+          this.chat.getChatService().establishSocket(this.model.email, this.model.password);
           
           this.router.navigate(['items']);
       },

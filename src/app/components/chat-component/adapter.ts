@@ -20,7 +20,23 @@ export class Adapter extends ChatAdapter
                         status: UserStatus.Online});
     }
 
-    public deleteUser() {}
+    public getUserById(userId) {
+        for (var i=0; i < this.users.length; i++) {
+            if (this.users[i].id === userId) {
+                return this.users[i];
+            }
+        }
+        return null;
+    }
+
+    public deleteUserById(userId) {
+        for (var i=0; i < this.users.length; i++) {
+            if (this.users[i].id == userId) {
+                 this.users.splice(i,1);
+                 console.error("Users updated: " + this.users);
+            }
+        }
+    }
 
     public roomsForUsers = new Array;
 
@@ -31,6 +47,38 @@ export class Adapter extends ChatAdapter
     public getRoomsForUsers() {
         return this.roomsForUsers;
     }
+
+    public deleteRoomsAndUsers(roomId) {
+
+        // from rooms array
+
+        console.error("Rooms now: ");
+        console.error(this.roomsForUsers);
+
+        let invertedRoomsForUsers = this.invert(this.roomsForUsers);
+        let interlocutor = invertedRoomsForUsers[roomId];
+
+        console.error("interlocutor: " + interlocutor);
+        this.roomsForUsers.splice(interlocutor,1);
+        
+        console.error("Rooms Updated: " + this.roomsForUsers);
+
+        // from user list
+        this.deleteUserById(interlocutor);
+    }
+
+    invert (obj) {
+        var new_obj = [];
+        for (var prop in obj) {
+          if(obj.hasOwnProperty(prop)) {
+            new_obj[obj[prop]] = prop;
+          }
+        }
+        console.error(new_obj);
+        return new_obj;
+      }
+
+
 
     listFriends(): Observable<User[]> {
         return Observable.of(this.users);

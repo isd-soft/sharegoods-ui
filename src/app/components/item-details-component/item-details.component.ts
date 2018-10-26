@@ -28,12 +28,14 @@ export class ItemDetailsComponent implements OnInit {
               private auth : AuthService, private chat : ChatComponent) {
   }
 
-  showContactAUthorButton() {
+  checkIfShowContactAuthorButton() {
     if(this.auth.isAuthenticated()) {
-        if(this.auth.getCurrentUser().id != this.itemDto.id) {
+      if(this.itemDetails.userIsOnline) {
+        if(this.auth.getCurrentUser().id != this.itemDto.userId) {
           this.showContactAuthorButton = true;
           return;
         }
+      }
     }
     this.showContactAuthorButton = false;
     return;
@@ -62,7 +64,7 @@ export class ItemDetailsComponent implements OnInit {
           this.albums.push(album);
           };
 
-          this.showContactAUthorButton();
+          this.checkIfShowContactAuthorButton();
 
         },
         err => {
@@ -89,7 +91,7 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   startChat() {
-    this.chat.getChatService().requestChatRoom(this.auth.getCurrentUser().id, this.itemDto.id);
+    this.chat.getChatService().requestChatRoom(this.auth.getCurrentUser().id, this.itemDto.userId);
   }
 
 }
