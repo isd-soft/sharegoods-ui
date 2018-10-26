@@ -16,7 +16,7 @@ export class AddItemComponent implements OnInit {
   @ViewChild(ImageUploadComponent) imageUploadComponent;
 
   item: Item = new Item();
-  userId: string;
+  userId: Number;
   formData: FormData = new FormData();
   uploadedImages: any;
   itemCreated = false;

@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ImageUploadModule } from 'angular2-image-upload';
@@ -48,7 +49,8 @@ import { AddCommentComponent } from '@components/add-comment-component/add-comme
     HttpClientModule,
     ImageUploadModule.forRoot(),
     LightboxModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   exports: [
     FooterComponent,

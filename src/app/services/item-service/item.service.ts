@@ -29,8 +29,7 @@ export class ItemService {
     return this.http.get(environment.apiUrl + `/items/${itemId}`);
   }
 
-  // public getItems(sortByValue) {
-  //   return this.http.get(this.apiUrl + 'items');
-  // }
-
+  public createRating(userId, itemId, rating) {
+    return this.http.get(environment.apiUrl + `/users/${userId}/items/${itemId}/rating/${rating}`);
+  }
 }
