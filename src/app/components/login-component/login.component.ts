@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
 import { AuthService } from 'app/auth/auth.service';
+import { User } from 'app/models/user';
+import { ChatComponent } from 'app/components/chat-component/chat.component';
 
 @Component({
   selector: 'login',
@@ -16,13 +17,14 @@ export class LoginComponent implements OnInit {
   private registerSuccess = false;
 
   constructor(
-    private router: Router,
-    private auth: AuthService,
-    private route: ActivatedRoute
-  ) {
-    if (auth.isAuthenticated()) {
-      router.navigate(['items']);
-    }
+    private router : Router,
+    private auth : AuthService,
+    private route : ActivatedRoute,
+    private chat : ChatComponent
+    ) {
+      if(auth.isAuthenticated()) {
+        router.navigate(['items']);
+      }
   }
 
   ngOnInit() {
@@ -38,11 +40,13 @@ export class LoginComponent implements OnInit {
     this.auth.isLoginDataValid(this.model.email, this.model.password)
       .subscribe(user => {
           this.auth.setCurrentUser(user);
-          this.auth.setToken(this.model.email, this.model.password);
-
+          this.auth.setToken(this.model.email,  this.model.password);
           this.authFailed = false;
-          this.authSuccess = true;
+          this.authSuccess = true;          
 
+          // Connect to chat server
+          this.chat.getChatService().establishSocket(this.model.email, this.model.password);
+          
           this.router.navigate(['items']);
         },
         err => {
