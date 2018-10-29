@@ -21,7 +21,7 @@ export class CommentComponent implements OnInit {
   comment: String;
   itemId: any;
   userId: Number;
-  comments = [];
+  comments: any;
 
   constructor(private router: Router,
               private itemService: ItemService,
