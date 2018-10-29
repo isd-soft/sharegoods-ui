@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Adapter } from 'app/components/chat-component/adapter';
 import { AuthService } from 'app/auth/auth.service';
 import { Message } from 'ng-chat';
+import { environment } from 'environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -34,7 +35,7 @@ export class ChatService
 
     establishSocket(email,pass) {
         // Check if connection already exists ?
-        let socket = new SockJS('http://localhost:8080/ws');        
+        let socket = new SockJS(environment.chatApiUrl + '/ws');        
         this.stompClient = Stomp.over(socket);
         this.stompClient.connect({login:email,passcode:pass}, this.onConnected.bind(this));
         this.setCurrentUser();
@@ -49,7 +50,7 @@ export class ChatService
 
     requestChatRoom(currentUserId, itemUserId) {
         if (this.adapter.getUserById(itemUserId) == null) {
-            this.http.get('http://localhost:8080/users/' + currentUserId + '/accessItem/' + itemUserId).subscribe((x) => console.log(x));
+            this.http.get(environment.chatApiUrl + '/users/' + currentUserId + '/accessItem/' + itemUserId).subscribe((x) => console.log(x));
         } else {
             this.openChatWindow(itemUserId);
         }
