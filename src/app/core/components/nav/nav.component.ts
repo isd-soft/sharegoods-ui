@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'app/auth/auth.service';
 import { NavBarLink } from '@models/navbar-link';
 import { Router } from '@angular/router';
-import {SearchService} from "../../../services/search-service/search.service";
+import { SearchService } from "../../../services/search-service/search.service";
 
 @Component({
   selector: 'app-nav',

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Item } from "../../models/item";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ItemService } from "../../services/item-service/item.service";
 import { DomSanitizer } from "@angular/platform-browser";
 import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from "ngx-lightbox";
 import { Subscription } from "rxjs/Rx";
+
+import { ItemService } from "@services/item-service/item.service";
+import { Item } from "@models/item";
 import { ChatComponent } from 'app/components/chat-component/chat.component';
 import { AuthService } from 'app/auth/auth.service';
 
@@ -21,8 +22,8 @@ export class ItemDetailsComponent implements OnInit {
   itemDetails: any;
   userIsOnline;
   itemDto: Item = new Item();
-  imagesSrc: any = new Array();
-  showContactAuthorButton : boolean = false;
+  imagesSrc: any = [];
+  showContactAuthorButton = false;
   itemComments: any;
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
@@ -48,7 +49,7 @@ export class ItemDetailsComponent implements OnInit {
       this.itemId = params.itemId;
     });
 
-    
+
 
      // set default config
     this._lighboxConfig.fadeDuration = 1;

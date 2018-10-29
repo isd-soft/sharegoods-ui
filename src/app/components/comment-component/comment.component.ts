@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, takeUntil } from 'rxjs/operators';
+import { Subject, throwError } from 'rxjs';
 
 
 import { AuthService } from 'app/auth/auth.service';
-import { Comment } from '@models/comment';
 import { ItemService } from '@services/item-service/item.service';
-import { User } from '@models/user';
-import { Subject, throwError } from 'rxjs';
-import { catchError, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-comment',

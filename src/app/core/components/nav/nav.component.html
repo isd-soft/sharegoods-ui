@@ -7,7 +7,7 @@
     </a>
 
     <div class="collapse navbar-collapse block">
-       <!--navbar left side-->
+      <!--navbar left side-->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item mr-sm-2" *ngFor="let item of navItems" routerLinkActive="activated">
           <a class="nav-link" routerLink={{item.url}}>{{item.name}}</a>
@@ -18,8 +18,8 @@
 
         <!--search-->
         <form class="form-inline my-2 my-lg-0">
-          <input  class="form-control search-aria" type="search" placeholder="Search" aria-label="Search"
-                  name="search" [(ngModel)]="searchTitle" (ngModelChange)="searchTitleChange()">
+          <input class="form-control search-aria" type="search" placeholder="Search" aria-label="Search"
+                 name="search" [(ngModel)]="searchTitle" (ngModelChange)="searchTitleChange()">
           <button class="btn btn-secondary my-2 my-sm-0 search-btn" type="submit" (click)="findItems()">
             <i class="fa fa-search"></i>
           </button>
@@ -48,7 +48,8 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item disabled"> Signed in as</a>
-            <a class="dropdown-item disabled"><b>{{this.auth.getCurrentUser().firstName + ' ' + this.auth.getCurrentUser().lastName}}</b></a>
+            <a class="dropdown-item disabled"><b>{{this.auth.getCurrentUser().firstName + ' ' +
+              this.auth.getCurrentUser().lastName}}</b></a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item active-dropdown">My profile</a>
             <a class="dropdown-item active-dropdown">My items</a>

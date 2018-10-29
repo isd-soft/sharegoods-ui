@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://172.17.41.113:8080',
-  chatApiUrl: 'http://172.17.41.113:8080'
+  apiUrl: 'http://localhost:8080',
+  chatApiUrl: 'http://localhost:8080'
 };
 
 /*
