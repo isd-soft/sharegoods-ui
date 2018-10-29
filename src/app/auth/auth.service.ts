@@ -30,6 +30,11 @@ export class AuthService {
     return !!token;
   }
 
+  public isAdmin(): boolean {
+    let result = this.getCurrentUser().role == "ADMIN" ? true : false;
+    return result;
+  }
+
   public setToken (email:string, password:string) {
     this.addToSessionStorage('token', btoa(email + ':' + password));
   }
