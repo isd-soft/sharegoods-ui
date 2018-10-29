@@ -22,10 +22,9 @@ export class ChatComponent implements OnInit {
   public userId;
   public title = "Chats";
   public isCollapsed = false;
-  
+
   constructor(private chatService : ChatService,
-              private auth : AuthService) { 
-                
+              private auth : AuthService) {
   }
 
   ngOnInit() {
@@ -44,17 +43,17 @@ export class ChatComponent implements OnInit {
     if(this.auth.isAuthenticated()) {
       this.userId = this.auth.getCurrentUser().id;
     }
-  } 
+  }
 
   setUserId(userId) {
     this.userId = userId
   }
-  
+
   getUserId() {
     return this.userId;
   }
 
   getChatService() {
     return this.chatService;
-  }  
+  }
 }
