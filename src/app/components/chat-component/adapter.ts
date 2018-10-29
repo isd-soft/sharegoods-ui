@@ -4,7 +4,6 @@ import { ChatMessageServer } from '@models/ChatMessageServer';
 
 export class Adapter extends ChatAdapter
 {
-
     private chatComponent;
 
     public setChatComponent(chat) {
@@ -51,7 +50,6 @@ export class Adapter extends ChatAdapter
     public deleteRoomsAndUsers(roomId) {
 
         // from rooms array
-
         console.error("Rooms now: ");
         console.error(this.roomsForUsers);
 
@@ -60,7 +58,7 @@ export class Adapter extends ChatAdapter
 
         console.error("interlocutor: " + interlocutor);
         this.roomsForUsers.splice(interlocutor,1);
-        
+
         console.error("Rooms Updated: " + this.roomsForUsers);
 
         // from user list
@@ -85,14 +83,13 @@ export class Adapter extends ChatAdapter
     getMessageHistory(userId: any): Observable<Message[]> {
         return Observable.of([]);
     }
-    
+
     getMessage(message: Message): void {
         let user = this.users.find(x => x.id == message.fromId);
         this.onMessageReceived(user, message);
     }
 
     sendMessage(message: Message): void {
-
         let roomId = this.roomsForUsers[message.toId];
         console.log("roomId: " + roomId)
 
@@ -105,6 +102,5 @@ export class Adapter extends ChatAdapter
 
         let user = this.users.find(x => x.id == message.fromId);
         this.onMessageReceived(user, message);
-        
     }
 }
