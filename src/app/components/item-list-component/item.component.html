@@ -1,7 +1,5 @@
 <app-add-item *ngIf="auth.isAuthenticated()"></app-add-item>
-
-<div class="container">
-
+<div class="container" *ngIf="foundItems; else itemsNotFound">
   <!--sorting-->
   <div class="row sortby">
     <div class="sort">Sort by:</div>
@@ -53,6 +51,10 @@
 
 </div>
 
-
+<ng-template #itemsNotFound>
+  <div class="container">
+    <h5> There are no items containing {{searchTitle}} </h5>
+  </div>
+</ng-template>
 
 
