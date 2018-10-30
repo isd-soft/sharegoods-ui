@@ -24,7 +24,6 @@ export class ItemDetailsComponent implements OnInit {
   itemDto: Item = new Item();
   imagesSrc: any = [];
   showContactAuthorButton = false;
-  itemComments: any;
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
               private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig,
@@ -48,8 +47,6 @@ export class ItemDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
-
-
 
      // set default config
     this._lighboxConfig.fadeDuration = 1;
