@@ -51,6 +51,7 @@ h5 {
 }
 .panel-body {
   padding: 15px;
+  overflow-wrap: break-word;
 }
 .panel-heading {
   padding: 10px 15px;
@@ -104,3 +105,4 @@ h5 {
   border-right-color:#ddd;
   border-width:8px;
 }
+

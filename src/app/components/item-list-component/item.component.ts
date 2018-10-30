@@ -61,7 +61,6 @@ export class ItemComponent implements OnInit {
             rating: this.items[i].rating
           });
         }
-        console.log("should be updated", this.itemsDto);
       });
   }
 

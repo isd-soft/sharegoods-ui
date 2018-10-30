@@ -1,5 +1,6 @@
 <h5>Comments</h5>
 
+<!--comments list-->
 <div class="row" *ngFor="let comment of comments">
   <div class="col-md-1 col-sm-1 col-class">
     <div class="thumbnail">
@@ -13,13 +14,13 @@
         <strong>{{comment.userName}}</strong> <span
         class="text-muted">{{comment.dateTime | date: 'MMM d, y, HH:mm'}}</span>
       </div>
-      <div class="panel-body">
-        {{comment.comment}}
+      <div class="panel-body" [innerHTML]="comment.comment">
       </div>
     </div>
   </div>
 </div>
 
+<!--add comment area-->
 <div class="row" *ngIf="auth.isAuthenticated()">
   <div class="col-md-1"></div>
   <form class="col-md-6">
@@ -31,7 +32,7 @@
               maxlength="250"
               [(ngModel)]="comment"
               placeholder="Write a comment..."
-              (keyup.enter)="addComment(comment)">
+              (keyup.enter)="addComment()">
     </textarea>
     </div>
   </form>
