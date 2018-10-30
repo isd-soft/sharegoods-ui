@@ -32,7 +32,10 @@ export class ItemService {
   /***** rating ****/
 
   public createRating(userId, itemId, rating) {
-    // return this.http.post(environment.apiUrl + `/users/${userId}/items/${itemId}/rating/${rating}`);
+    const addRatingUrl = environment.apiUrl + `/items/${itemId}/addRating/`;
+    const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    const body = new HttpParams().set('userId', userId).set('rating', rating);
+    return this.http.post(addRatingUrl, body, {headers: header});
   }
 
   public getAvgRating(itemId) {

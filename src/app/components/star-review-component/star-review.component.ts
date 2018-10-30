@@ -2,6 +2,8 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../../auth/auth.service';
 import {ItemService} from '@services/item-service/item.service';
+import {Subject, throwError} from 'rxjs';
+import {catchError, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-star-review',
@@ -11,11 +13,13 @@ import {ItemService} from '@services/item-service/item.service';
 
 export class StarReviewComponent implements OnInit {
 
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
-  readonly = false;
-  rating: Number;
+  readonly = true;
+  rating: any ;
   itemId: Number;
   userId: Number;
+  item: any;
 
   constructor(private itemService: ItemService,
               private route: ActivatedRoute,
@@ -24,13 +28,33 @@ export class StarReviewComponent implements OnInit {
   }
 
   onChange(event) {
-    this.itemService.createRating(this.userId, this.itemId, this.rating).subscribe(itemDto => {
-              console.log(itemDto);
-            },
-            eror => {
-              console.error(eror);
-            });
+    this.itemService.createRating(this.userId, this.itemId, this.rating).pipe(
+      takeUntil(this.destroy$),
+      catchError( err => {
+        return throwError(`Error accured adding Rating`, err);
+      })
+    ).subscribe ( () => {
+      this.itemService.getAvgRating(this.itemId)
+        .subscribe( itemDto => {
+          console.log(itemDto);
+          this.item = itemDto;
+          // this.rating = this.item.rating;
+        });
+    });
+
+    console.log(this.item);
   }
+
+  // getRatingAvg(itemDto) {
+  //   console.log(itemDto);
+  //   this.item = itemDto;
+  //   this.rating = this.item.rating;
+  // }
+  //
+  // onItemCreation() {
+  //   this.itemService.getAvgRating(this.itemId)
+  //     .subscribe(this.getRatingAvg.bind(this));
+  // }
 
 
 
@@ -40,12 +64,13 @@ export class StarReviewComponent implements OnInit {
     });
     this.userId = this.auth.getCurrentUser().id;
 
-    this.itemService.getAvgRating(this.itemId)
-      .subscribe(data => {
-        console.log(this.itemId);
-        console.log(data);
 
-      })
+    this.itemService.getAvgRating(this.itemId)
+      .subscribe(itemDto => {
+        console.log(this.itemId);
+        this.item = itemDto;
+        console.log(itemDto);
+      });
   }
 
 
