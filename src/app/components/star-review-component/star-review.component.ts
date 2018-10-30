@@ -11,9 +11,9 @@ import {ItemService} from '@services/item-service/item.service';
 
 export class StarReviewComponent implements OnInit {
 
-  hovered = 0;
+
   readonly = false;
-  rating: Number = 0;
+  rating: Number;
   itemId: Number;
   userId: Number;
 
@@ -33,13 +33,22 @@ export class StarReviewComponent implements OnInit {
   }
 
 
+
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
     this.userId = this.auth.getCurrentUser().id;
 
+    this.itemService.getAvgRating(this.itemId)
+      .subscribe(data => {
+        console.log(this.itemId);
+        console.log(data);
+
+      })
   }
+
+
 }
 
 //console.log(JSON.parse(itemDto).rating);
