@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { AuthService } from 'app/auth/auth.service';
@@ -18,7 +18,7 @@ export class ItemComponent implements OnInit {
   ratingOrder = 'Desc';
   dateOrder = 'Asc';
   titleOrder = 'Desc';
-
+  userId;
   searchTitle: string;
   foundItems = true;
 
@@ -26,10 +26,39 @@ export class ItemComponent implements OnInit {
   sortingOptions = {value: 'Rating', direction: 'Desc'};
 
   constructor(private router: Router,
+              private route: ActivatedRoute,
               private itemService: ItemService,
               private _sanitizer: DomSanitizer,
               private auth: AuthService,
               private search: SearchService) {
+  }
+
+
+  ngOnInit() {
+      // Initial values
+      this.search.changeMessage('');
+      this.sort('Rating','Desc');
+
+      // Get User Id From URL For Items By Specific User
+      this.route.params.subscribe(params => {
+          if (params['id'] != undefined) {
+            this.userId = +params['id'];
+            console.error("hello");
+          } else {
+            this.userId = undefined;
+          }
+          
+      });
+
+      // Initial call to get items
+      //this.getItems();
+      
+      // Subscribe to changes in search input and query server on change
+      this.search.currentMessage.subscribe(message => {
+        this.searchTitle = message;
+          this.getItems();
+          console.error("Hello wtf");
+      });
   }
 
   getUserIdIfAuth() {
@@ -38,57 +67,41 @@ export class ItemComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-      this.search.changeMessage('');
-      this.search.currentMessage.subscribe(message => {
-      this.searchTitle = message;
-      this.findByTitle('Rating', 'Desc');
+  sort(value, direction) {
+    this.setSortingOptions(value, direction);
+    this.getItems();
+  }
+
+  setSortingOptions(value, direction) {
+    this.sortingOptions = {value: value, direction: direction};
+  }
+
+  getItems() {
+    let service;
+    if (this.userId != undefined) { // typeof - it will check undefined, null, 0 and "" also
+      console.error("Hello 1");
+      service = this.itemService.getItemsByUser(this.userId, this.sortingOptions.value, this.sortingOptions.direction, this.searchTitle);
+    } else {
+      console.error("Hello 2");
+      service = this.itemService.getItems(this.sortingOptions.value, this.sortingOptions.direction, this.searchTitle);
+    }
+    this.subscribeToItems(service);
+  }
+
+  subscribeToItems(service) {
+    service.subscribe(data => {
+      this.itemsDto = [];
+      this.foundItems = true;
+      this.items = data;
+      for (let i = 0; i < this.items.length; i++) {
+        const imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + this.items[i].thumbnailDto.imageBase64);
+        this.itemsDto.push({itemId: this.items[i].itemId, title: this.items[i].title, src: imageSrc, rating: this.items[i].rating});
+      }
+    },
+    err => {
+      console.log("Error occured");
+      this.foundItems = false;
     });
   }
-
-  getItems(value, direction) {
-    this.itemsDto = [];
-    this.itemService.getSortedItems(value, direction)
-      .subscribe(data => {
-        this.foundItems = true;
-        this.items = data;
-        for (let i = 0; i < this.items.length; i++) {
-          const imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + this.items[i].thumbnailDto.imageBase64);
-          this.itemsDto.push({itemId: this.items[i].itemId, title: this.items[i].title, src: imageSrc, rating: this.items[i].rating});
-        }
-      });
-  }
-
-  sort(value, direction) {
-    if (this.searchTitle) {
-      this.findByTitle(value, direction);
-    } else {
-      this.sortingOptions = {value: value, direction: direction};
-      this.getItems(value, direction);
-    }
-  }
-
-  findByTitle(value, direction) {
-    if (this.searchTitle == '') {
-      this.sort('Rating', 'Desc');
-    } else {
-      this.sortingOptions = {value: value, direction: direction};
-      this.itemsDto = [];
-      this.itemService.getItemsByTitle(this.searchTitle, value, direction)
-        .subscribe(data => {
-            this.items = data;
-            this.foundItems = true;
-            for (let i = 0; i < this.items.length; i++) {
-              const imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + this.items[i].thumbnailDto.imageBase64);
-              this.itemsDto.push({itemId: this.items[i].itemId, title: this.items[i].title, src: imageSrc, rating: this.items[i].rating});
-            }
-          },
-          err => {
-            console.log("Error occured");
-            this.foundItems = false;
-          });
-    }
-  }
-
 }
 

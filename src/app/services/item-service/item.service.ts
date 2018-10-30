@@ -12,19 +12,29 @@ export class ItemService {
 
   constructor(private http: HttpClient) {
   }
-
-  public getSortedItems(value, direction) {
-    const params = new HttpParams().set('value', value).set('direction', direction);
-    return this.http.get(environment.apiUrl + '/items', {params: params});
-  }
-
+  
   public getItem(itemId) {
     return this.http.get(environment.apiUrl + `/items/${itemId}`);
   }
 
-  public getItemsByTitle(title, value, direction) {
-    const params = new HttpParams().set('title', title).set('value', value).set('direction', direction);
-    return this.http.get(environment.apiUrl + `/items/search`, {params: params});
+  public getItems(value, direction, searchQuery?) {
+    let params = new HttpParams().set('value', value).set('direction', direction);
+    
+    console.error(searchQuery);
+
+    if (searchQuery != undefined) {
+      params = params.append('search', searchQuery);
+    }
+    return this.http.get(environment.apiUrl + '/items', {params: params});
+  }
+
+  public getItemsByUser(userId, value, direction, searchQuery?) {
+    let params = new HttpParams().set('value', value).set('direction', direction);
+    
+    if (searchQuery != undefined) {
+      params = params.append('search', searchQuery);
+    }
+    return this.http.get(environment.apiUrl + '/users/' + userId + '/items', {params: params});
   }
 
   public createItem(userId, formData) {

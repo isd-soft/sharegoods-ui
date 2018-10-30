@@ -26,6 +26,7 @@ import { NgChatModule } from 'ng-chat';
 import { ChatComponent } from './components/chat-component/chat.component';
 import { ChatService } from './services/chat-service';
 import { CommentComponent } from "./components/comment-component/comment.component";
+import { UserItemsComponent } from './components/user-items/user-items.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { CommentComponent } from "./components/comment-component/comment.compone
     HomePageComponent,
     LoginComponent,
     ChatComponent,
-    CommentComponent
+    CommentComponent,
+    UserItemsComponent
   ],
   imports: [
     BrowserModule,

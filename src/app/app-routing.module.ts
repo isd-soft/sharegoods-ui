@@ -19,6 +19,10 @@ const routes: Routes = [
     component: UserComponent
   },
   {
+    path: 'users/:id/items',
+    component: ItemComponent
+  },
+  {
     path: 'items',
     component: ItemComponent
   },
