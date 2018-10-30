@@ -14,7 +14,8 @@
         <strong>{{comment.userName}}</strong> <span
         class="text-muted">{{comment.dateTime | date: 'MMM d, y, HH:mm'}}</span>
       </div>
-      <div class="panel-body" [innerHTML]="comment.comment">
+      <div class="panel-body">
+        {{comment.comment}}
       </div>
     </div>
   </div>

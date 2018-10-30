@@ -52,6 +52,7 @@ h5 {
 .panel-body {
   padding: 15px;
   overflow-wrap: break-word;
+  white-space: pre-line;
 }
 .panel-heading {
   padding: 10px 15px;
