@@ -15,12 +15,12 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'items',
-    component: ItemComponent
-  },
-  {
     path: 'users',
     component: UserComponent
+  },
+  {
+    path: 'items',
+    component: ItemComponent
   },
   {
     path: 'login',

@@ -20,7 +20,11 @@ import { NavComponent } from '@core/components/nav/nav.component';
 import { ItemDetailsComponent } from '@components/item-details-component/item-details.component';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthService } from './auth/auth.service';
-import { LoginComponent } from '@components/login-component/login.component';
+import { LoginComponent } from './components/login-component/login.component';
+
+import { NgChatModule } from 'ng-chat';
+import { ChatComponent } from './components/chat-component/chat.component';
+import { ChatService } from './services/chat-service';
 import { CommentComponent } from "./components/comment-component/comment.component";
 import { StarReviewComponent } from './components/star-review-component/star-review.component';
 
@@ -39,6 +43,7 @@ import { StarReviewComponent } from './components/star-review-component/star-rev
     NavComponent,
     HomePageComponent,
     LoginComponent,
+    ChatComponent,
     StarReviewComponent,
     CommentComponent
   ],
@@ -50,6 +55,7 @@ import { StarReviewComponent } from './components/star-review-component/star-rev
     ImageUploadModule.forRoot(),
     LightboxModule,
     FormsModule,
+    NgChatModule,
     NgbModule
   ],
   exports: [
@@ -60,6 +66,7 @@ import { StarReviewComponent } from './components/star-review-component/star-rev
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    ChatService,
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,

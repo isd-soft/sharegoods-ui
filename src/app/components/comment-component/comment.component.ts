@@ -36,8 +36,6 @@ export class CommentComponent implements OnInit {
 
     this.itemService.getComments(this.itemId)
       .subscribe(data => {
-        console.log(this.itemId);
-        console.log(data);
         this.comments = data;
       });
   }
@@ -52,7 +50,6 @@ export class CommentComponent implements OnInit {
       ).subscribe(() => {
         this.itemService.getComments(this.itemId)
           .subscribe(data => {
-            console.log(data);
             this.comment = '';
             this.comments = data;
           });

@@ -20,13 +20,18 @@ export class ItemService {
     return this.http.get(environment.apiUrl + '/items', {params: params});
   }
 
+  public getItem(itemId) {
+    return this.http.get(environment.apiUrl + `/items/${itemId}`);
+  }
+
+  public getItemsByTitle(title, value, direction) {
+    const params = new HttpParams().set('title', title).set('value', value).set('direction', direction);
+    return this.http.get(environment.apiUrl + `/items/search`, {params: params});
+  }
+
   public createItem(userId, formData) {
     const createItemUrl = environment.apiUrl + `/users/${userId}/items`;
     return this.http.post<Item>(createItemUrl, formData);
-  }
-
-  public getItem(itemId) {
-    return this.http.get(environment.apiUrl + `/items/${itemId}`);
   }
 
   /***** rating ****/
