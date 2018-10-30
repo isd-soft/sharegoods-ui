@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { AuthService } from 'app/auth/auth.service';
 import { ItemService } from '@services/item-service/item.service';
-import {SearchService} from "@services/search-service/search.service";
+import { SearchService } from "@services/search-service/search.service";
 
 @Component({
   selector: 'app-item',
@@ -39,23 +39,29 @@ export class ItemComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.search.changeMessage('');
-      this.search.currentMessage.subscribe(message => {
+    this.search.changeMessage('');
+    this.search.currentMessage.subscribe(message => {
       this.searchTitle = message;
       this.findByTitle('Rating', 'Desc');
     });
   }
 
   getItems(value, direction) {
-    this.itemsDto = [];
     this.itemService.getSortedItems(value, direction)
       .subscribe(data => {
+        this.itemsDto = [];
         this.foundItems = true;
         this.items = data;
         for (let i = 0; i < this.items.length; i++) {
           const imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + this.items[i].thumbnailDto.imageBase64);
-          this.itemsDto.push({itemId: this.items[i].itemId, title: this.items[i].title, src: imageSrc, rating: this.items[i].rating});
+          this.itemsDto.push({
+            itemId: this.items[i].itemId,
+            title: this.items[i].title,
+            src: imageSrc,
+            rating: this.items[i].rating
+          });
         }
+        console.log("should be updated", this.itemsDto);
       });
   }
 
@@ -80,7 +86,12 @@ export class ItemComponent implements OnInit {
             this.foundItems = true;
             for (let i = 0; i < this.items.length; i++) {
               const imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + this.items[i].thumbnailDto.imageBase64);
-              this.itemsDto.push({itemId: this.items[i].itemId, title: this.items[i].title, src: imageSrc, rating: this.items[i].rating});
+              this.itemsDto.push({
+                itemId: this.items[i].itemId,
+                title: this.items[i].title,
+                src: imageSrc,
+                rating: this.items[i].rating
+              });
             }
           },
           err => {

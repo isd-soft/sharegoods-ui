@@ -41,17 +41,17 @@ export class CommentComponent implements OnInit {
   addComment(comment): void {
     this.userId = this.auth.getCurrentUser().id;
     this.itemService.addComment(this.itemId, this.userId, comment).pipe(
-        takeUntil(this.destroy$),
-        catchError(err => {
-          return throwError(`Error occurred adding the comment!`, err);
-        })
-      ).subscribe(() => {
-        this.itemService.getComments(this.itemId)
-          .subscribe(data => {
-            this.comment = '';
-            this.comments = data;
-          });
+      takeUntil(this.destroy$),
+      catchError(err => {
+        return throwError(`Error occurred adding the comment!`, err);
+      })
+    ).subscribe(() => {
+      this.itemService.getComments(this.itemId)
+        .subscribe(data => {
+          this.comment = '';
+          this.comments = data;
         });
+    });
   }
 
 }
