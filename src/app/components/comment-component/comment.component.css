@@ -104,3 +104,13 @@ h5 {
   border-right-color:#ddd;
   border-width:8px;
 }
+
+.comment-action {
+  color: #333;
+  background-color: #f5f5f5;
+  border: 0 #f5f5f5;
+}
+
+.comment-action:hover {
+  background-color: #8ea59d;
+}

@@ -10,8 +10,14 @@
   <div class="col-md-6 col-class col-sm-5">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>{{comment.userName}}</strong> <span
-        class="text-muted">{{comment.dateTime | date: 'MMM d, y, HH:mm'}}</span>
+        <strong>{{comment.userName}}</strong>
+        <span class="text-muted"> {{comment.dateTime | date: 'MMM d, y, HH:mm'}} </span>
+        <button type="button" class="btn btn-secondary comment-action" data-toggle="tooltip" title="edit">
+          <i class="fa fa-pencil"></i>
+        </button>
+        <button type="button" class="btn btn-secondary comment-action" data-toggle="tooltip" title="delete">
+          <i class="fa fa-trash-o"></i>
+        </button>
       </div>
       <div class="panel-body">
         {{comment.comment}}
