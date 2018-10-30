@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Observable, of, from, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
+import { Router } from '@angular/router';
 import { User } from 'app/models/user';
 import { environment } from '@env/environment';
 
@@ -9,7 +9,8 @@ import { environment } from '@env/environment';
 export class AuthService {
 
   constructor (
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {  }
 
   data = new BehaviorSubject<any[]>([]);
@@ -33,6 +34,12 @@ export class AuthService {
   public isAdmin(): boolean {
     let result = this.getCurrentUser().role == "ADMIN" ? true : false;
     return result;
+  }
+
+  public redirectIfNotLoggedIn(redirectToComponent:string) {
+    if (!this.isAuthenticated()) {
+      this.router.navigate([redirectToComponent]);
+    }
   }
 
   public setToken (email:string, password:string) {

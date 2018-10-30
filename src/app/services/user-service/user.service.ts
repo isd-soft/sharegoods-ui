@@ -20,4 +20,8 @@ export class UserService {
     return this.http.post<User>(environment.apiUrl + '/users', user);
   }
 
+  public deleteUser(id) {
+    return this.http.delete(environment.apiUrl + '/users/' + id);
+  }
+
 }

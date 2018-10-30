@@ -1,18 +1,22 @@
 <div class="container">
   <table class="table table-hover">
-    <thead>
-    <tr class="row">
-      <th class="col-md-4" scope="col">Name</th>
-      <th class="col-md-4" scope="col">Email</th>
-    </tr>
-    </thead>
-    <tbody>
 
-    <tr class="row" *ngFor="let user of users">
-      <td class="col-md-4"> {{ user.firstName + ' ' + user.lastName }}</td>
-      <td class="col-md-4"> {{ user.email }}</td>
-    </tr>
+    <thead>
+      <tr class="row">
+        <th class="col-md-4" scope="col">Name</th>
+        <th class="col-md-4" scope="col">Email</th>
+        <th class="col-md-4" scope="col">Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr class="row" *ngFor="let user of users">
+        <td class="col-md-4"> {{ user.firstName + ' ' + user.lastName }}</td>
+        <td class="col-md-4"> {{ user.email }}</td>
+        <td class="col-md-4"> <button class="btn btn-success" *ngIf="user.id != auth.getCurrentUser().id" (click)="deleteUser(user.id)">Delete</button> </td>
+      </tr>
     </tbody>
+
   </table>
 </div>
 
