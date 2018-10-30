@@ -1,5 +1,5 @@
 import { Component, OnInit, Injectable, ViewChild } from '@angular/core';
-import { ChatAdapter, IChatController, User } from 'ng-chat';
+import { IChatController } from 'ng-chat';
 import { Adapter } from '@components/chat-component/adapter';
 import { ChatService } from '@services/chat-service';
 import { AuthService } from 'app/auth/auth.service';
@@ -23,15 +23,17 @@ export class ChatComponent implements OnInit {
   public title = "Chats";
   public isCollapsed = false;
 
-  constructor(private chatService : ChatService,
-              private auth : AuthService) {
+  constructor(private chatService: ChatService,
+              private auth: AuthService) {
   }
 
   ngOnInit() {
     this.adapter.setChatComponent(this);
     this.chatService.setChatComponent(this);
     this.chatService.setAdapter(this.adapter);
-    this.auth.isAuthenticatedObservable().subscribe(this.onAuthUpdate.bind(this), error => { console.log(error);});
+    this.auth.isAuthenticatedObservable().subscribe(this.onAuthUpdate.bind(this), error => {
+      console.log(error);
+    });
   }
 
   openChatWindow(user) {
@@ -40,7 +42,7 @@ export class ChatComponent implements OnInit {
   }
 
   onAuthUpdate(data) {
-    if(this.auth.isAuthenticated()) {
+    if (this.auth.isAuthenticated()) {
       this.userId = this.auth.getCurrentUser().id;
     }
   }
