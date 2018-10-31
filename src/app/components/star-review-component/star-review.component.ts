@@ -19,7 +19,7 @@ export class StarReviewComponent implements OnInit {
   rating: any ;
   itemId: Number;
   userId: Number;
-  item: any;
+  item: any = [];
   isAlert: boolean;
 
   constructor(private itemService: ItemService,
