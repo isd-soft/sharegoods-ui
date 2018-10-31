@@ -13,7 +13,7 @@ export class ItemService {
   constructor(private http: HttpClient) {
   }
 
-  /***** item ****/
+  /***** items *****/
 
   public getSortedItems(value, direction) {
     const params = new HttpParams().set('value', value).set('direction', direction);
@@ -34,6 +34,30 @@ export class ItemService {
     return this.http.post<Item>(createItemUrl, formData);
   }
 
+  /***** comments *****/
+
+  public addComment(itemId, userId, comment): Observable<any> {
+    const addCommentUrl = environment.apiUrl + `/items/${itemId}/addComment`;
+    const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    const body = new HttpParams().set('userId', userId).set('comment', comment);
+    return this.http.post(addCommentUrl, body, {headers: header});
+  }
+
+  public getComments(itemId) {
+    return this.http.get(environment.apiUrl + `/items/${itemId}/comments`);
+  }
+
+  public updateComment(itemId, commentId, comment) {
+    const updateCommentUrl = environment.apiUrl + `/items/${itemId}/comments/${commentId}`;
+    const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    const body = new HttpParams().set('comment', comment);
+    return this.http.put(updateCommentUrl, body, {headers: header})
+  }
+
+  public deleteComment(itemId, commentId) {
+    return this.http.delete(environment.apiUrl + `/items/${itemId}/comments/${commentId}`, {responseType:'text'});
+  }
+
   /***** rating ****/
 
   public createRating(userId, itemId, rating) {
@@ -50,17 +74,5 @@ export class ItemService {
     return this.http.get(environment.apiUrl + `/users/${userId}/items/${itemId}/checkRating`);
   }
 
-  /***** comment ****/
-
-  public addComment(itemId, userId, comment): Observable<any> {
-    const addCommentUrl = environment.apiUrl + `/items/${itemId}/addComment`;
-    const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-    const body = new HttpParams().set('userId', userId).set('comment', comment);
-    return this.http.post(addCommentUrl, body, {headers: header});
-  }
-
-  public getComments(itemId) {
-    return this.http.get(environment.apiUrl + `/items/${itemId}/comments`);
-  }
 
 }
