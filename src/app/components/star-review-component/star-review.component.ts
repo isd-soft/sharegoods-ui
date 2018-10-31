@@ -49,6 +49,9 @@ export class StarReviewComponent implements OnInit {
   }
 
   onChange(event) {
+    this.readonly = true;
+    if (this.readonly) {
+    }
     this.itemService.createRating(this.userId, this.itemId, this.rating).pipe(
       takeUntil(this.destroy$),
       catchError( err => {
