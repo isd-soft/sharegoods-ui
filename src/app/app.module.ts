@@ -27,6 +27,7 @@ import { ChatService } from '@services/chat-service';
 import { CommentComponent } from '@components/comment-component/comment.component';
 
 import { StarReviewComponent } from './components/star-review-component/star-review.component';
+import { EditItemComponent } from './components/edit-item-component/edit-item.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { StarReviewComponent } from './components/star-review-component/star-rev
     LoginComponent,
     ChatComponent,
     StarReviewComponent,
-    CommentComponent
+    CommentComponent,
+    EditItemComponent
   ],
   imports: [
     BrowserModule,

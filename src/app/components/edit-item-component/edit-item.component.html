@@ -1,0 +1,17 @@
+<div class="container">
+  <form #newItemForm="ngForm">
+    <div class="form-group row">
+      <input name="title"
+             class="form-control col-md-12 title"
+             id="title"
+             maxlength="50"
+             placeholder="Title of your post(max 50 characters)"
+             required
+             [(ngModel)]="title">
+
+      <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-info col-md-1 btn-create"
+              (click)="editItem()">Edit post
+      </button>
+    </div>
+  </form>
+</div>
