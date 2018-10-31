@@ -13,10 +13,15 @@
       <div class="panel-heading">
         <strong>{{comment.userName}}</strong>
         <span class="text-muted"> {{comment.dateTime | date: 'MMM d, y, HH:mm'}} </span>
-        <button type="button" class="btn btn-secondary comment-action" data-toggle="tooltip" title="edit">
+        <button *ngIf="this.userId == comment.userId" type="button"
+                class="btn btn-secondary comment-action"
+                data-toggle="tooltip"
+                title="edit">
           <i class="fa fa-pencil"></i>
         </button>
-        <button type="button" class="btn btn-secondary comment-action" data-toggle="tooltip" title="delete">
+        <button *ngIf="this.userId == comment.userId || auth.isAdmin()" type="button" class="btn btn-secondary comment-action"
+                data-toggle="tooltip" title="delete"
+                (click)="deleteComment(comment.id)">
           <i class="fa fa-trash-o"></i>
         </button>
       </div>

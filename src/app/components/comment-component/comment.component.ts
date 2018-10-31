@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, takeUntil } from 'rxjs/operators';
-import { Subject, throwError } from 'rxjs';
 
 import { AuthService } from 'app/auth/auth.service';
 import { ItemService } from '@services/item-service/item.service';
@@ -53,6 +51,19 @@ export class CommentComponent implements OnInit {
     this.itemService.getComments(this.itemId)
       .subscribe(data => {
         this.comments = data;
+        console.log("comments:", this.comments);
+      });
+  }
+
+  updateComment() {
+  }
+
+  deleteComment(commentId) {
+    this.itemService.deleteComment(this.itemId, commentId)
+      .subscribe(data => {
+        this.getComments();
+      },err => {
+        console.log(err);
       });
   }
 

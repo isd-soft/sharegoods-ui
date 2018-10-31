@@ -32,6 +32,8 @@ export class ItemService {
     return this.http.post<Item>(createItemUrl, formData);
   }
 
+  /***** comments *****/
+
   public addComment(itemId, userId, comment): Observable<any> {
     const addCommentUrl = environment.apiUrl + `/items/${itemId}/addComment`;
     const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
@@ -41,6 +43,17 @@ export class ItemService {
 
   public getComments(itemId) {
     return this.http.get(environment.apiUrl + `/items/${itemId}/comments`);
+  }
+
+  public updateComment(commentId, comment) {
+    const updateCommentUrl = environment.apiUrl + `/comments/${commentId}`;
+    const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    const body = new HttpParams().set('comment', comment);
+    return this.http.put(updateCommentUrl, body, {headers: header})
+  }
+
+  public deleteComment(itemId, commentId) {
+    return this.http.delete(environment.apiUrl + `/items/${itemId}/comments/${commentId}`, {responseType:'text'});
   }
 
 }
