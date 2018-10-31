@@ -1,0 +1,9 @@
+<ngb-rating [(rate)]="rating"  (hover)="hovered=$event" (leave)="hovered=0" [max]="5" [readonly]="readonly"
+            [(ngModel)]="rating" (ngModelChange)="onChange($event)"> </ngb-rating>
+<hr>
+<pre>
+Selected: <b>{{rating}}</b>
+Hovered: <b>{{hovered}}</b>
+AVG: <strong>{{item.rating}}</strong>
+</pre>
+

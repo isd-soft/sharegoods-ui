@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ImageUploadModule } from 'angular2-image-upload';
 import { LightboxModule } from 'ngx-lightbox';
 import { NgChatModule } from 'ng-chat';
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,7 +24,10 @@ import { TokenInterceptor } from '@auth/token.interceptor';
 import { LoginComponent } from '@components/login-component/login.component';
 import { ChatComponent } from '@components/chat-component/chat.component';
 import { ChatService } from '@services/chat-service';
-import { CommentComponent } from "@components/comment-component/comment.component";
+import { CommentComponent } from '@components/comment-component/comment.component';
+
+import { StarReviewComponent } from './components/star-review-component/star-review.component';
+
 
 @NgModule({
   declarations: [
@@ -41,6 +44,7 @@ import { CommentComponent } from "@components/comment-component/comment.componen
     HomePageComponent,
     LoginComponent,
     ChatComponent,
+    StarReviewComponent,
     CommentComponent
   ],
   imports: [
