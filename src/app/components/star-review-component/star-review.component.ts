@@ -15,7 +15,7 @@ export class StarReviewComponent implements OnInit {
 
   destroy$: Subject<boolean> = new Subject<boolean>();
 
-  readonly = true;
+  readonly = false;
   rating: any ;
   itemId: Number;
   userId: Number;
