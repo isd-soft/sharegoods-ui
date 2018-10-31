@@ -32,7 +32,8 @@ export class AuthService {
   }
 
   public isAdmin(): boolean {
-    let result = this.getCurrentUser().role == "ADMIN" ? true : false;
+    let result: boolean;
+    result = this.getCurrentUser().role == 'ADMIN';
     return result;
   }
 
