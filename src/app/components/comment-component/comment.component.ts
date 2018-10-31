@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
 import { AuthService } from 'app/auth/auth.service';
-import { Comment } from '@models/comment';
 import { ItemService } from '@services/item-service/item.service';
-import { User } from '@models/user';
-import { Subject, throwError } from 'rxjs';
-import { catchError, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-comment',
@@ -16,11 +11,9 @@ import { catchError, takeUntil } from 'rxjs/operators';
 })
 export class CommentComponent implements OnInit {
 
-  destroy$: Subject<boolean> = new Subject<boolean>();
-
-  comment: String;
-  itemId: any;
+  itemId: Number;
   userId: Number;
+  comment: String;
   comments: any;
 
   constructor(private router: Router,
@@ -34,26 +27,31 @@ export class CommentComponent implements OnInit {
       this.itemId = params.itemId;
     });
 
+    this.getComments();
+    this.userId = this.auth.getCurrentUser().id;
+  }
+
+  addComment() {
+    this.comment = this.comment.replace(/(\n|\r|\n)+$/g,'');
+    if (!this.comment) {
+      return;
+    }
+    let newComment = this.comment;
+    this.comment = '';
+    this.itemService.addComment(this.itemId, this.userId, newComment)
+      .subscribe(data => {
+          this.getComments();
+        },
+        err => {
+          console.log('Error occurred adding the comment');
+        });
+  }
+
+  getComments() {
     this.itemService.getComments(this.itemId)
       .subscribe(data => {
         this.comments = data;
       });
-  }
-
-  addComment(comment): void {
-    this.userId = this.auth.getCurrentUser().id;
-    this.itemService.addComment(this.itemId, this.userId, comment).pipe(
-        takeUntil(this.destroy$),
-        catchError(err => {
-          return throwError(`Error occurred adding the comment!`, err);
-        })
-      ).subscribe(() => {
-        this.itemService.getComments(this.itemId)
-          .subscribe(data => {
-            this.comment = '';
-            this.comments = data;
-          });
-        });
   }
 
 }
