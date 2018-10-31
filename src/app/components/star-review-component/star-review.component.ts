@@ -27,37 +27,6 @@ export class StarReviewComponent implements OnInit {
 
   }
 
-  onChange(event) {
-    this.itemService.createRating(this.userId, this.itemId, this.rating).pipe(
-      takeUntil(this.destroy$),
-      catchError( err => {
-        return throwError(`Error accured adding Rating`, err);
-      })
-    ).subscribe ( () => {
-      this.itemService.getAvgRating(this.itemId)
-        .subscribe( itemDto => {
-          console.log(itemDto);
-          this.item = itemDto;
-          // this.rating = this.item.rating;
-        });
-    });
-
-    console.log(this.item);
-  }
-
-  // getRatingAvg(itemDto) {
-  //   console.log(itemDto);
-  //   this.item = itemDto;
-  //   this.rating = this.item.rating;
-  // }
-  //
-  // onItemCreation() {
-  //   this.itemService.getAvgRating(this.itemId)
-  //     .subscribe(this.getRatingAvg.bind(this));
-  // }
-
-
-
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
@@ -69,13 +38,28 @@ export class StarReviewComponent implements OnInit {
       .subscribe(itemDto => {
         console.log(this.itemId);
         this.item = itemDto;
+        if (this.item.rating == null) {
+          this.item.rating = 0;
+          }
         console.log(itemDto);
       });
   }
 
-
+  onChange(event) {
+    this.itemService.createRating(this.userId, this.itemId, this.rating).pipe(
+      takeUntil(this.destroy$),
+      catchError( err => {
+        return throwError(`Error accured adding Rating`, err);
+      })
+    ).subscribe ( () => {
+      this.itemService.getAvgRating(this.itemId)
+        .subscribe( itemDto => {
+          this.item = itemDto;
+            console.log(itemDto);
+        });
+    });
+  }
 }
 
-//console.log(JSON.parse(itemDto).rating);
 
 
