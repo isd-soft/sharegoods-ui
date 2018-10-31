@@ -36,12 +36,15 @@ export class StarReviewComponent implements OnInit {
 
     this.itemService.getAvgRating(this.itemId)
       .subscribe(itemDto => {
-        console.log(this.itemId);
         this.item = itemDto;
         if (this.item.rating == null) {
           this.item.rating = 0;
           }
-        console.log(itemDto);
+      });
+
+    this.itemService.checkIfVoted(this.userId, this.itemId)
+      .subscribe(validationRating => {
+        this.readonly = !Boolean(validationRating);
       });
   }
 

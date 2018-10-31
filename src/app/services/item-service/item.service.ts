@@ -46,6 +46,10 @@ export class ItemService {
     return this.http.get(environment.apiUrl + `/items/${itemId}/rating/`);
   }
 
+  public checkIfVoted(userId, itemId) {
+    return this.http.get(environment.apiUrl + `/users/${userId}/items/${itemId}/checkRating`);
+  }
+
   /***** comment ****/
 
   public addComment(itemId, userId, comment): Observable<any> {
