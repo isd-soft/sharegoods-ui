@@ -51,11 +51,11 @@ export class ItemService {
     const updateCommentUrl = environment.apiUrl + `/items/${itemId}/comments/${commentId}`;
     const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     const body = new HttpParams().set('comment', comment);
-    return this.http.put(updateCommentUrl, body, {headers: header})
+    return this.http.put(updateCommentUrl, body, {headers: header});
   }
 
   public deleteComment(itemId, commentId) {
-    return this.http.delete(environment.apiUrl + `/items/${itemId}/comments/${commentId}`, {responseType:'text'});
+    return this.http.delete(environment.apiUrl + `/items/${itemId}/comments/${commentId}`, {responseType: 'text'});
   }
 
   /***** rating ****/

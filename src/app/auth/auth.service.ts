@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
-import { User } from 'app/models/user';
+import { User } from '@models/user';
 import { environment } from '@env/environment';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class AuthService {
   }
 
   data = new BehaviorSubject<any[]>([]);
-  array = new Array();
+  array = [];
 
   public addToSessionStorage(key, value) {
     sessionStorage.setItem(key, value);
