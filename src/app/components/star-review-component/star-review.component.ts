@@ -1,5 +1,5 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../auth/auth.service';
 import {ItemService} from '@services/item-service/item.service';
 import {Subject, throwError} from 'rxjs';
@@ -49,6 +49,7 @@ export class StarReviewComponent implements OnInit {
   }
 
   onChange(event) {
+
     this.readonly = true;
     if (this.readonly) {
     }
