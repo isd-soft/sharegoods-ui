@@ -13,6 +13,8 @@ export class ItemService {
   constructor(private http: HttpClient) {
   }
 
+  /***** item ****/
+
   public getSortedItems(value, direction) {
     const params = new HttpParams().set('value', value).set('direction', direction);
     return this.http.get(environment.apiUrl + '/items', {params: params});
@@ -31,6 +33,24 @@ export class ItemService {
     const createItemUrl = environment.apiUrl + `/users/${userId}/items`;
     return this.http.post<Item>(createItemUrl, formData);
   }
+
+  /***** rating ****/
+
+  public createRating(userId, itemId, rating) {
+    const addRatingUrl = environment.apiUrl + `/users/${userId}/items/${itemId}/addRating/${rating}`;
+    const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    return this.http.post(addRatingUrl, {headers: header});
+  }
+
+  public getAvgRating(itemId) {
+    return this.http.get(environment.apiUrl + `/items/${itemId}/rating/`);
+  }
+
+  public checkIfVoted(userId, itemId) {
+    return this.http.get(environment.apiUrl + `/users/${userId}/items/${itemId}/checkRating`);
+  }
+
+  /***** comment ****/
 
   public addComment(itemId, userId, comment): Observable<any> {
     const addCommentUrl = environment.apiUrl + `/items/${itemId}/addComment`;
