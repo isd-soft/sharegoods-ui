@@ -20,6 +20,7 @@ export class StarReviewComponent implements OnInit {
   itemId: Number;
   userId: Number;
   item: any;
+  isAlert: boolean;
 
   constructor(private itemService: ItemService,
               private route: ActivatedRoute,
@@ -49,22 +50,23 @@ export class StarReviewComponent implements OnInit {
   }
 
   onChange(event) {
-
-    this.readonly = true;
-    if (this.readonly) {
-    }
-    this.itemService.createRating(this.userId, this.itemId, this.rating).pipe(
-      takeUntil(this.destroy$),
-      catchError( err => {
-        return throwError(`Error accured adding Rating`, err);
-      })
-    ).subscribe ( () => {
-      this.itemService.getAvgRating(this.itemId)
-        .subscribe( itemDto => {
-          this.item = itemDto;
+    if (!this.readonly) {
+      this.itemService.createRating(this.userId, this.itemId, this.rating).pipe(
+        takeUntil(this.destroy$),
+        catchError( err => {
+          return throwError(`Error accured adding Rating`, err);
+        })
+      ).subscribe ( () => {
+        this.itemService.getAvgRating(this.itemId)
+          .subscribe( itemDto => {
+            this.item = itemDto;
             console.log(itemDto);
-        });
-    });
+            this.readonly = true;
+          });
+      });
+    } else {
+      this.isAlert = true;
+    }
   }
 }
 

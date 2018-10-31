@@ -1,3 +1,8 @@
+<div *ngIf="isAlert" class="alert alert-success alert-dismissible" role="alert">You already Voted, please stop pressing me to much!
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 <ngb-rating [(rate)]="rating"  (hover)="hovered=$event" (leave)="hovered=0" [max]="5" [readonly]="readonly"
             [(ngModel)]="rating" (ngModelChange)="onChange($event)"> </ngb-rating>
 <hr>
@@ -6,4 +11,5 @@ Selected: <b>{{rating}}</b>
 Hovered: <b>{{hovered}}</b>
 AVG: <strong>{{item.rating}}</strong>
 </pre>
+
 
