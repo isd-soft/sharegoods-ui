@@ -13,6 +13,6 @@ export class SearchService {
   }
 
   changeMessage(message: string) {
-    this.messageSource.next(message)
+    this.messageSource.next(message);
   }
 }
