@@ -1,6 +1,5 @@
 export class ChatMessageServer {
-    sender: string;
-    content: string;
-    type: string; 
-  }
-  
+  sender: string;
+  content: string;
+  type: string;
+}
