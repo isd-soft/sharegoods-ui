@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService } from 'app/auth/auth.service';
@@ -15,6 +15,7 @@ export class CommentComponent implements OnInit {
   userId: Number;
   comment: String;
   comments: any;
+  editCommentId = Number;
 
   constructor(private router: Router,
               private itemService: ItemService,
@@ -55,7 +56,17 @@ export class CommentComponent implements OnInit {
       });
   }
 
-  updateComment() {
+  editComment(comment) {
+    comment.comment = comment.comment.replace(/(\n|\r|\n)+$/g,'');
+    if (!comment.comment) {
+      return;
+    }
+    this.itemService.updateComment(this.itemId, comment.id, comment.comment)
+      .subscribe(data => {
+        this.editCommentId = null;
+      },err => {
+        console.log("Error occured updating comment:", err);
+      });
   }
 
   deleteComment(commentId) {
@@ -63,8 +74,12 @@ export class CommentComponent implements OnInit {
       .subscribe(data => {
         this.getComments();
       },err => {
-        console.log(err);
+        console.log("Error occured deleting comment:", err);
       });
+  }
+
+  isCommentAuthor(commentAuthorId) {
+    return this.userId == commentAuthorId;
   }
 
 }

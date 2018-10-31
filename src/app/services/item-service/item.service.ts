@@ -45,8 +45,8 @@ export class ItemService {
     return this.http.get(environment.apiUrl + `/items/${itemId}/comments`);
   }
 
-  public updateComment(commentId, comment) {
-    const updateCommentUrl = environment.apiUrl + `/comments/${commentId}`;
+  public updateComment(itemId, commentId, comment) {
+    const updateCommentUrl = environment.apiUrl + `/items/${itemId}/comments/${commentId}`;
     const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     const body = new HttpParams().set('comment', comment);
     return this.http.put(updateCommentUrl, body, {headers: header})

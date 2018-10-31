@@ -13,21 +13,43 @@
       <div class="panel-heading">
         <strong>{{comment.userName}}</strong>
         <span class="text-muted"> {{comment.dateTime | date: 'MMM d, y, HH:mm'}} </span>
-        <button *ngIf="this.userId == comment.userId" type="button"
+        <button *ngIf="isCommentAuthor(comment.userId)" type="button"
                 class="btn btn-secondary comment-action"
                 data-toggle="tooltip"
-                title="edit">
+                title="edit"
+                (click)="editCommentId = comment.id">
           <i class="fa fa-pencil"></i>
         </button>
-        <button *ngIf="this.userId == comment.userId || auth.isAdmin()" type="button" class="btn btn-secondary comment-action"
+        <button *ngIf="editCommentId == comment.id" type="button"
+                class="btn btn-secondary comment-action"
+                data-toggle="tooltip"
+                title="cancel editing"
+                (click)="editCommentId = null">
+          cancel
+        </button>
+        <button *ngIf="isCommentAuthor(comment.userId) || auth.isAdmin()" type="button"
+                class="btn btn-secondary comment-action"
                 data-toggle="tooltip" title="delete"
                 (click)="deleteComment(comment.id)">
           <i class="fa fa-trash-o"></i>
         </button>
       </div>
-      <div class="panel-body">
+
+      <div *ngIf="editCommentId != comment.id; else editArea" class="panel-body">
         {{comment.comment}}
       </div>
+      <ng-template #editArea>
+          <textarea autofocus
+                    name="editComment"
+                    class="form-control panel-body"
+                    id="editComment"
+                    maxlength="250"
+                    [(ngModel)]="comment.comment"
+                    placeholder="comment can't be empty"
+                    (focusout)="editComment(comment)"
+                    (keyup.enter)="editComment(comment)">
+        </textarea>
+      </ng-template>
     </div>
   </div>
 </div>
@@ -37,7 +59,8 @@
   <div class="col-md-1"></div>
   <form class="col-md-6">
     <div class="form-group">
-    <textarea name="comment"
+    <textarea #textarea
+              name="comment"
               class="form-control"
               id="comment"
               rows="2"
@@ -49,6 +72,8 @@
     </div>
   </form>
 </div>
+
+
 
 
 
