@@ -15,6 +15,7 @@ export class CommentComponent implements OnInit {
   userId: Number;
   comment: String;
   comments: any;
+  editCommentId = Number;
 
   constructor(private router: Router,
               private itemService: ItemService,
@@ -51,7 +52,34 @@ export class CommentComponent implements OnInit {
     this.itemService.getComments(this.itemId)
       .subscribe(data => {
         this.comments = data;
+        console.log("comments:", this.comments);
       });
+  }
+
+  editComment(comment) {
+    comment.comment = comment.comment.replace(/(\n|\r|\n)+$/g,'');
+    if (!comment.comment) {
+      return;
+    }
+    this.itemService.updateComment(this.itemId, comment.id, comment.comment)
+      .subscribe(data => {
+        this.editCommentId = null;
+      },err => {
+        console.log("Error occured updating comment:", err);
+      });
+  }
+
+  deleteComment(commentId) {
+    this.itemService.deleteComment(this.itemId, commentId)
+      .subscribe(data => {
+        this.getComments();
+      },err => {
+        console.log("Error occured deleting comment:", err);
+      });
+  }
+
+  isCommentAuthor(commentAuthorId) {
+    return this.userId == commentAuthorId;
   }
 
 }

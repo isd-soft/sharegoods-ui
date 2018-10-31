@@ -33,8 +33,12 @@ export class AuthService {
 
   public isAdmin(): boolean {
     let result: boolean;
-    result = this.getCurrentUser().role == 'ADMIN';
-    return result;
+    if (this.isAuthenticated()) {
+      result = this.getCurrentUser().role == 'ADMIN';
+      return result;
+    }
+    return false;
+
   }
 
   public setToken(email: string, password: string) {
