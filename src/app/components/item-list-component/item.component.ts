@@ -48,9 +48,6 @@ export class ItemComponent implements OnInit {
           }
           
       });
-
-      // Initial call to get items
-      //this.getItems();
       
       // Subscribe to changes in search input and query server on change
       this.search.currentMessage.subscribe(message => {
