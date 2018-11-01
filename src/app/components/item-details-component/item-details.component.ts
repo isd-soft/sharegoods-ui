@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild , ElementRef } from '@angular/core';
-import { Item } from "../../models/item";
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { ItemService } from "../../services/item-service/item.service";
 import { DomSanitizer } from "@angular/platform-browser";
 import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from "ngx-lightbox";
 import { Subscription } from "rxjs/Rx";
+
+import { ItemService } from "@services/item-service/item.service";
+import { Item } from "@models/item";
 import { ChatComponent } from 'app/components/chat-component/chat.component';
 import { AuthService } from 'app/auth/auth.service';
 import { DefaultErrorService } from 'app/services/default-error.service';
@@ -22,9 +23,8 @@ export class ItemDetailsComponent implements OnInit {
   itemDetails: any;
   userIsOnline;
   itemDto: Item = new Item();
-  imagesSrc: any = new Array();
-  showContactAuthorButton : boolean = false;
-  itemComments: any;
+  imagesSrc: any = [];
+  showContactAuthorButton = false;
 
   showSuccessfullyDeleted;
   showAlreadyDeleted;
@@ -47,9 +47,9 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   checkIfShowContactAuthorButton() {
-    if(this.auth.isAuthenticated()) {
-      if(this.itemDetails.userIsOnline) {
-        if(this.auth.getCurrentUser().id != this.itemDto.userId) {
+    if (this.auth.isAuthenticated()) {
+      if (this.itemDetails.userIsOnline) {
+        if (this.auth.getCurrentUser().id != this.itemDto.userId) {
           this.showContactAuthorButton = true;
           return;
         }
@@ -82,13 +82,12 @@ export class ItemDetailsComponent implements OnInit {
           };
 
           this.checkIfShowContactAuthorButton();
-
         },
         err => {
           if (err.status == '404') {
             this.router.navigate(['items']);
           } else {
-            alert('Some error has occured ' + err.status);
+            alert('Some error has occurred ' + err.status);
           }
         });
   }

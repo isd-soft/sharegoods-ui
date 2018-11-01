@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { AuthService } from 'app/auth/auth.service';
 import { ItemService } from '@services/item-service/item.service';
-import {SearchService} from "@services/search-service/search.service";
+import { SearchService } from "@services/search-service/search.service";
 
 @Component({
   selector: 'app-item',

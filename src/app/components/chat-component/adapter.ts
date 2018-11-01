@@ -2,108 +2,108 @@ import { ChatAdapter, User, Message, UserStatus } from 'ng-chat';
 import { Observable } from "rxjs/Rx";
 import { ChatMessageServer } from '@models/ChatMessageServer';
 
-export class Adapter extends ChatAdapter
-{
-    private chatComponent;
+export class Adapter extends ChatAdapter {
+  private chatComponent;
 
-    public setChatComponent(chat) {
-        this.chatComponent = chat;
+  public setChatComponent(chat) {
+    this.chatComponent = chat;
+  }
+
+  public users: User[] = [];
+
+  public addUser(user) {
+    this.users.push({
+      id: user.id,
+      displayName: user.name,
+      avatar: null,
+      status: UserStatus.Online
+    });
+  }
+
+  public getUserById(userId) {
+    for (var i = 0; i < this.users.length; i++) {
+      if (this.users[i].id === userId) {
+        return this.users[i];
+      }
     }
+    return null;
+  }
 
-    public users: User[] = [];
-
-    public addUser(user) {
-        this.users.push({id: user.id,
-                        displayName: user.name,
-                        avatar: null,
-                        status: UserStatus.Online});
+  public deleteUserById(userId) {
+    for (var i = 0; i < this.users.length; i++) {
+      if (this.users[i].id == userId) {
+        this.users.splice(i, 1);
+        console.error("Users updated: " + this.users);
+      }
     }
+  }
 
-    public getUserById(userId) {
-        for (var i=0; i < this.users.length; i++) {
-            if (this.users[i].id === userId) {
-                return this.users[i];
-            }
-        }
-        return null;
-    }
+  public roomsForUsers = new Array;
 
-    public deleteUserById(userId) {
-        for (var i=0; i < this.users.length; i++) {
-            if (this.users[i].id == userId) {
-                 this.users.splice(i,1);
-                 console.error("Users updated: " + this.users);
-            }
-        }
-    }
-
-    public roomsForUsers = new Array;
+  public getRoomsForUsers() {
+    return this.roomsForUsers;
+  }
 
     public addRoom(roomId, interlocutor) {
 
-        if(this.roomsForUsers[interlocutor] == roomId) { 
+        if(this.roomsForUsers[interlocutor] != roomId) { 
             this.roomsForUsers[interlocutor] = roomId;
         }
     }
+  public deleteRoomsAndUsers(roomId) {
 
-    public getRoomsForUsers() {
-        return this.roomsForUsers;
-    }
+    // from rooms array
+    console.error("Rooms now: ");
+    console.error(this.roomsForUsers);
 
-    public deleteRoomsAndUsers(roomId) {
+    let invertedRoomsForUsers = this.invert(this.roomsForUsers);
+    let interlocutor = invertedRoomsForUsers[roomId];
 
-        // from rooms array
-        console.error("Rooms now: ");
-        console.error(this.roomsForUsers);
+    console.error("interlocutor: " + interlocutor);
+    this.roomsForUsers.splice(interlocutor, 1);
 
-        let invertedRoomsForUsers = this.invert(this.roomsForUsers);
-        let interlocutor = invertedRoomsForUsers[roomId];
+    console.error("Rooms Updated: " + this.roomsForUsers);
 
-        console.error("interlocutor: " + interlocutor);
-        this.roomsForUsers.splice(interlocutor,1);
+    // from user list
+    this.deleteUserById(interlocutor);
+  }
 
-        console.error("Rooms Updated: " + this.roomsForUsers);
-
-        // from user list
-        this.deleteUserById(interlocutor);
-    }
-
-    invert(obj) {
-        var new_obj = [];
-        for (var prop in obj) {
-          if(obj.hasOwnProperty(prop)) {
-            new_obj[obj[prop]] = prop;
-          }
-        }
-        console.error(new_obj);
-        return new_obj;
+  invert(obj) {
+    var new_obj = [];
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop)) {
+        new_obj[obj[prop]] = prop;
       }
-
-    listFriends(): Observable<User[]> {
-        return Observable.of(this.users);
     }
+    console.error(new_obj);
+    return new_obj;
+  }
 
-    getMessageHistory(userId: any): Observable<Message[]> {
-        return Observable.of([]);
-    }
+  listFriends(): Observable<User[]> {
+    return Observable.of(this.users);
+  }
 
-    getMessage(message: Message): void {
-        let user = this.users.find(x => x.id == message.fromId);
-        this.onMessageReceived(user, message);
-    }
+  getMessageHistory(userId: any): Observable<Message[]> {
+    return Observable.of([]);
+  }
 
-    sendMessage(message: Message): void {
-        let roomId = this.roomsForUsers[message.toId];
-        console.log("roomId: " + roomId)
+  getMessage(message: Message): void {
+    let user = this.users.find(x => x.id == message.fromId);
+    this.onMessageReceived(user, message);
+  }
 
-        let newMessage = new ChatMessageServer;
-        newMessage.sender = message.fromId;
-        newMessage.content = message.message;
-        newMessage.type = "CHAT";
+  sendMessage(message: Message): void {
+    let roomId = this.roomsForUsers[message.toId];
+    console.log("roomId: " + roomId)
 
-        this.chatComponent.getChatService().sendMessage(roomId, JSON.stringify(newMessage));
+    let newMessage = new ChatMessageServer;
+    newMessage.sender = message.fromId;
+    newMessage.content = message.message;
+    newMessage.type = "CHAT";
 
-        let user = this.users.find(x => x.id == message.fromId);
-        this.onMessageReceived(user, message);
-    }
+    this.chatComponent.getChatService().sendMessage(roomId, JSON.stringify(newMessage));
+
+    let user = this.users.find(x => x.id == message.fromId);
+    this.onMessageReceived(user, message);
+  }
 }

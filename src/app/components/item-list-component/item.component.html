@@ -14,22 +14,28 @@
               (click)="ratingOrder == 'Desc' ? ratingOrder = 'Asc' : ratingOrder = 'Desc'; sort('Rating', ratingOrder);
                       dateOrder='Asc'; titleOrder='Desc';">Rating
         <i *ngIf="sortingOptions.value != 'Rating'" class="fa fa-sort" aria-hidden="true"></i>
-        <i *ngIf="sortingOptions.value == 'Rating' && sortingOptions.direction == 'Desc'" class="fa fa-sort-desc" aria-hidden="true"></i>
-        <i *ngIf="sortingOptions.value == 'Rating' && sortingOptions.direction == 'Asc'" class="fa fa-sort-asc" aria-hidden="true"></i>
+        <i *ngIf="sortingOptions.value == 'Rating' && sortingOptions.direction == 'Desc'" class="fa fa-sort-desc"
+           aria-hidden="true"></i>
+        <i *ngIf="sortingOptions.value == 'Rating' && sortingOptions.direction == 'Asc'" class="fa fa-sort-asc"
+           aria-hidden="true"></i>
       </button>
       <button type="button" class="btn btn-secondary btn-sm"
               (click)="dateOrder == 'Desc' ? dateOrder = 'Asc' : dateOrder = 'Desc'; sort('DateTime', dateOrder);
                       ratingOrder='Asc'; titleOrder='Desc'">Date
         <i *ngIf="sortingOptions.value != 'DateTime'" class="fa fa-sort" aria-hidden="true"></i>
-        <i *ngIf="sortingOptions.value == 'DateTime' && sortingOptions.direction == 'Desc'" class="fa fa-sort-desc" aria-hidden="true"></i>
-        <i *ngIf="sortingOptions.value == 'DateTime' && sortingOptions.direction == 'Asc'" class="fa fa-sort-asc" aria-hidden="true"></i>
+        <i *ngIf="sortingOptions.value == 'DateTime' && sortingOptions.direction == 'Desc'" class="fa fa-sort-desc"
+           aria-hidden="true"></i>
+        <i *ngIf="sortingOptions.value == 'DateTime' && sortingOptions.direction == 'Asc'" class="fa fa-sort-asc"
+           aria-hidden="true"></i>
       </button>
       <button type="button" class="btn btn-secondary btn-sm"
               (click)="titleOrder == 'Desc' ? titleOrder = 'Asc' : titleOrder = 'Desc'; sort('Title', titleOrder);
                       ratingOrder='Asc'; dateOrder='Asc'">Title
         <i *ngIf="sortingOptions.value != 'Title'" class="fa fa-sort" aria-hidden="true"></i>
-        <i *ngIf="sortingOptions.value == 'Title' && sortingOptions.direction == 'Desc'" class="fa fa-sort-desc" aria-hidden="true"></i>
-        <i *ngIf="sortingOptions.value == 'Title' && sortingOptions.direction == 'Asc'" class="fa fa-sort-asc" aria-hidden="true"></i>
+        <i *ngIf="sortingOptions.value == 'Title' && sortingOptions.direction == 'Desc'" class="fa fa-sort-desc"
+           aria-hidden="true"></i>
+        <i *ngIf="sortingOptions.value == 'Title' && sortingOptions.direction == 'Asc'" class="fa fa-sort-asc"
+           aria-hidden="true"></i>
       </button>
     </div>
   </div>
@@ -44,7 +50,7 @@
       </div>
       <div class="title">{{item.title}}
         <div>
-          <ngb-rating  [(rate)]="item.rating" [readonly]="true" max="5" [starTemplate]="t"></ngb-rating>
+          <ngb-rating [(rate)]="item.rating" [readonly]="true" max="5" [starTemplate]="t"></ngb-rating>
           <ng-template #t let-fill="fill">
           <span class="star" [class.full]="fill === 100">
             <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
