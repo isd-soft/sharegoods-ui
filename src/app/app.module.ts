@@ -26,8 +26,9 @@ import { ChatComponent } from '@components/chat-component/chat.component';
 import { ChatService } from '@services/chat-service';
 import { CommentComponent } from '@components/comment-component/comment.component';
 
-import { StarReviewComponent } from './components/star-review-component/star-review.component';
-import { EditItemComponent } from './components/edit-item-component/edit-item.component';
+import { StarReviewComponent } from '@components/star-review-component/star-review.component';
+import { EditItemComponent } from '@components/edit-item-component/edit-item.component';
+import { ProfileComponent } from './components/profile-component/profile.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { EditItemComponent } from './components/edit-item-component/edit-item.co
     ChatComponent,
     StarReviewComponent,
     CommentComponent,
-    EditItemComponent
+    EditItemComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

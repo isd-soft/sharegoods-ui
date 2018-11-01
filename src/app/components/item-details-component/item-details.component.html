@@ -12,6 +12,7 @@
 
       <button *ngIf="showContactAuthorButton" (click)="startChat()" class="btn btn-info">CONTACT AUTHOR</button>
       <br>
+      <button *ngIf="isLoggedUserItem()" class="btn btn-info" (click)="editButtonPressed()"> Edit post  </button>
 
       <!--images-->
       <div class="img-row col-sm-3" *ngFor="let image of albums; let i=index">

@@ -37,6 +37,7 @@ export class AddItemComponent implements OnInit {
 
   createItem(): void {
     this.uploadedImages = this.imageUploadComponent.files;
+    console.log("files", this.imageUploadComponent.files);
     this.formData.append('title', this.item.title);
     this.formData.append('description', this.item.description);
     for (let i = 0; i < this.uploadedImages.length; i++) {

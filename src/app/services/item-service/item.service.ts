@@ -34,6 +34,10 @@ export class ItemService {
     return this.http.post<Item>(createItemUrl, formData);
   }
 
+  public updateItem(itemId, formData) {
+    return this.http.put<Item>(environment.apiUrl + `/items/${itemId}`, formData);
+  }
+
   /***** comments *****/
 
   public addComment(itemId, userId, comment): Observable<any> {

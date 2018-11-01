@@ -30,19 +30,6 @@ export class ItemDetailsComponent implements OnInit {
               private auth: AuthService, private chat: ChatComponent) {
   }
 
-  checkIfShowContactAuthorButton() {
-    if (this.auth.isAuthenticated()) {
-      if (this.itemDetails.userIsOnline) {
-        if (this.auth.getCurrentUser().id != this.itemDto.userId) {
-          this.showContactAuthorButton = true;
-          return;
-        }
-      }
-    }
-    this.showContactAuthorButton = false;
-    return;
-  }
-
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
@@ -72,6 +59,27 @@ export class ItemDetailsComponent implements OnInit {
             alert('Some error has occurred ' + err.status);
           }
         });
+  }
+
+  checkIfShowContactAuthorButton() {
+    if (this.auth.isAuthenticated()) {
+      if (this.itemDetails.userIsOnline) {
+        if (this.auth.getCurrentUser().id != this.itemDto.userId) {
+          this.showContactAuthorButton = true;
+          return;
+        }
+      }
+    }
+    this.showContactAuthorButton = false;
+    return;
+  }
+
+  isLoggedUserItem() {
+    return this.auth.isAuthenticated() && this.auth.getCurrentUser().id == this.itemDto.userId;
+  }
+
+  editButtonPressed() {
+    this.router.navigate(['items/' + this.itemId + '/edit']);
   }
 
   open(index: number): void {
