@@ -12,7 +12,7 @@ import {ItemService} from '@services/item-service/item.service';
 export class StarReviewComponent implements OnInit {
 
   readonly = false;
-  rating = 0 ;
+  rating = 0;
   yourVote: any = Number;
   itemId: Number;
   userId: Number;
@@ -32,43 +32,45 @@ export class StarReviewComponent implements OnInit {
     });
     this.userId = this.auth.getCurrentUser().id;
 
-    /***** Transform null avgRating into 0 ****/
-    this.itemService.getAvgRating(this.itemId)
-      .subscribe(itemDto => {
-        this.item = itemDto;
-        if (this.item.rating == null) {
-          this.item.rating = 0;
-          }
-      });
-
-    /***** Validation if Voted ****/
-    this.itemService.checkIfVoted(this.userId, this.itemId)
-      .subscribe(validationRating => {
-        this.readonly = !Boolean(validationRating);
-      });
+    /***** Get AvgRating and Transform null avgRating into 0 ****/
+    this.getAverageRating(this.itemId);
 
     /***** getUserRating and save it to the screen  ****/
     this.itemService.getUserRating(this.userId, this.itemId)
       .subscribe(ratingDto => {
-        this.yourVote = ratingDto;
-        console.log(ratingDto);
-      });
-  }
-  /***** CreateRating  ****/
-  onChange(event) {
-    if (!this.readonly) {
-      this.itemService.createRating(this.userId, this.itemId, this.rating).subscribe ( () => {
-        this.itemService.getAvgRating(this.itemId)
-          .subscribe( itemDto => {
-            this.item = itemDto;
-            this.readonly = true;
-          });
-        this.itemService.getUserRating(this.userId, this.itemId).subscribe( ratingDto => {
           this.yourVote = ratingDto;
+          this.readonly = true;
+        }, error => {
+          if (error.status == 404) {}
         });
-      });
+  }
+
+  /***** CreateRating  ****/
+  onRate() {
+    if (!this.readonly) {
+      this.itemService.createRating(this.userId, this.itemId, this.rating).subscribe(this.onCreateSuccess.bind(this),
+        error1 => {});
     } else {
       this.isAlert = true;
     }
   }
+
+  onCreateSuccess(itemDto) {
+    this.item = itemDto;
+    this.readonly = true;
+    this.itemService.getUserRating(this.userId, this.itemId).subscribe(ratingDto => {
+      this.yourVote = ratingDto;
+    }); this.getAverageRating(this.itemId);
+  }
+
+  getAverageRating(itemId) {
+    this.itemService.getAvgRating(itemId)
+      .subscribe(itemDto => {
+        this.item = itemDto;
+        if (this.item.rating == null) {
+          this.item.rating = 0;
+        }
+      });
+  }
+
 }
