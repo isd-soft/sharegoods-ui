@@ -16,10 +16,10 @@ export class StarReviewComponent implements OnInit {
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   readonly = false;
-  rating: any ;
+  rating = 0 ;
   itemId: Number;
   userId: Number;
-  item: any = [];
+  item: any = Number;
   isAlert: boolean;
 
   constructor(private itemService: ItemService,
@@ -51,16 +51,10 @@ export class StarReviewComponent implements OnInit {
 
   onChange(event) {
     if (!this.readonly) {
-      this.itemService.createRating(this.userId, this.itemId, this.rating).pipe(
-        takeUntil(this.destroy$),
-        catchError( err => {
-          return throwError(`Error accured adding Rating`, err);
-        })
-      ).subscribe ( () => {
+      this.itemService.createRating(this.userId, this.itemId, this.rating).subscribe ( () => {
         this.itemService.getAvgRating(this.itemId)
           .subscribe( itemDto => {
             this.item = itemDto;
-            console.log(itemDto);
             this.readonly = true;
           });
       });
@@ -69,6 +63,4 @@ export class StarReviewComponent implements OnInit {
     }
   }
 }
-
-
 
