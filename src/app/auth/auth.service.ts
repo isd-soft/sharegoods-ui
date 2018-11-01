@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { User } from 'app/models/user';
 import { BehaviorSubject } from 'rxjs';
 
-import { User } from '@models/user';
 import { environment } from '@env/environment';
 
 @Injectable()
 export class AuthService {
 
-  constructor(
-    private http: HttpClient
-  ) {
-  }
+  constructor (
+    private http: HttpClient,
+    private router: Router
+  ) {  }
 
   data = new BehaviorSubject<any[]>([]);
   array = [];
@@ -32,13 +33,17 @@ export class AuthService {
   }
 
   public isAdmin(): boolean {
-    let result: boolean;
     if (this.isAuthenticated()) {
-      result = this.getCurrentUser().role == 'ADMIN';
-      return result;
+      return this.getCurrentUser().role == "ADMIN";
+    } else {
+      return false;
     }
-    return false;
+  }
 
+  public redirectIfNotLoggedIn(redirectToComponent:string) {
+    if (!this.isAuthenticated()) {
+      this.router.navigate([redirectToComponent]);
+    }
   }
 
   public setToken(email: string, password: string) {

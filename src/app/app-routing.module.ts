@@ -6,6 +6,8 @@ import { ItemComponent } from '@components/item-list-component/item.component';
 import { RegisterComponent } from '@components/register-component/register.component';
 import { LoginComponent } from '@components/login-component/login.component';
 import { ItemDetailsComponent } from '@components/item-details-component/item-details.component';
+import { DefaultErrorComponent } from '@components/default-error-component/default-error.component';
+
 
 
 const routes: Routes = [
@@ -17,6 +19,10 @@ const routes: Routes = [
   {
     path: 'users',
     component: UserComponent
+  },
+  {
+    path: 'users/:id/items',
+    component: ItemComponent
   },
   {
     path: 'items',
@@ -41,6 +47,10 @@ const routes: Routes = [
   {
     path: 'items/:itemId',
     component: ItemDetailsComponent
+  },
+  {
+    path: 'error',
+    component: DefaultErrorComponent
   },
   {
     path: '**',

@@ -52,7 +52,7 @@
               this.auth.getCurrentUser().lastName}}</b></a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item active-dropdown">My profile</a>
-            <a class="dropdown-item active-dropdown">My items</a>
+            <a class="dropdown-item active-dropdown" href="/users/{{ auth.getCurrentUser().id }}/items">My items</a>
             <div class="dropdown-divider"></div>
 
             <!-- Button trigger modal -->
