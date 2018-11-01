@@ -51,8 +51,10 @@
             <a class="dropdown-item disabled"><b>{{this.auth.getCurrentUser().firstName + ' ' +
               this.auth.getCurrentUser().lastName}}</b></a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item active-dropdown">My profile</a>
-            <a class="dropdown-item active-dropdown" href="/users/{{ auth.getCurrentUser().id }}/items">My items</a>
+            <a [routerLink]="['/users/' + auth.getCurrentUser().id + '/profile']"
+               class="dropdown-item active-dropdown">My profile</a>
+            <a [routerLink]="['/users/' + auth.getCurrentUser().id + '/items']"
+               class="dropdown-item active-dropdown">My posts</a>
             <div class="dropdown-divider"></div>
 
             <!-- Button trigger modal -->

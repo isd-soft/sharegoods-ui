@@ -30,12 +30,11 @@ export class EditItemComponent implements OnInit {
 
     this.itemService.getItem(this.itemId)
       .subscribe(data => {
-          console.log("Get item:", data);
           this.itemDetails = data;
           this.itemDto = this.itemDetails.itemDto;
           let imageDtoList = this.itemDetails.imageDtoList;
           for (let i = 0; i < imageDtoList.length; i++) {
-            this.images.push({fileName: imageDtoList[i].name, url: 'http://localhost:8080/items/getImage/' + imageDtoList[i].id})
+            this.images.push({fileName: imageDtoList[i].name, url: 'http://localhost:8080/items/getImage/' + imageDtoList[i].id});
           }
         },
         err => {
@@ -47,32 +46,20 @@ export class EditItemComponent implements OnInit {
         });
   }
 
-
-  onRemoved(event){
-    console.log(event);
-  }
-
-  onUploadFinished(event) {
-    console.log(event);
-  }
-
-  onUploadStateChanged(event) {
-    console.log(event);
-  }
-
   editItem() {
     this.uploadedImages = this.imageUploadComponent.files;
     this.formData.append('title', this.itemDto.title);
     this.formData.append('description', this.itemDto.description);
-    console.log("uploadedImages", this.uploadedImages);
     for (let i = 0; i < this.uploadedImages.length; i++) {
-      this.formData.append('file', this.uploadedImages[i].file);
+      if (this.uploadedImages[i].src[0] == 'h') {
+        this.formData.append('uploadedImagesIds', this.uploadedImages[i].src.substr(37));
+      } else {
+        this.formData.append('file', this.uploadedImages[i].file);
+      }
     }
-
 
     this.itemService.updateItem(this.itemId, this.formData)
       .subscribe(data => {
-          this.itemId = data['id'];
           this.router.navigate(['/items', this.itemId]);
         },
         err => {
