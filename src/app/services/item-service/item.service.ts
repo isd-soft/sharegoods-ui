@@ -68,11 +68,15 @@ export class ItemService {
   }
 
   public getAvgRating(itemId) {
-    return this.http.get(environment.apiUrl + `/items/${itemId}/rating/`);
+    return this.http.get(environment.apiUrl + `/items/${itemId}/getAvgRating/`);
   }
 
   public checkIfVoted(userId, itemId) {
     return this.http.get(environment.apiUrl + `/users/${userId}/items/${itemId}/checkRating`);
+  }
+
+  public getUserRating(userId, itemId) {
+    return this.http.get(environment.apiUrl + `/users/${userId}/items/${itemId}/getRating/`);
   }
 
 

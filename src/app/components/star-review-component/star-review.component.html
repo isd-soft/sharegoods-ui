@@ -1,13 +1,20 @@
-<div *ngIf="isAlert" class="alert alert-success alert-dismissible" role="alert">You already Voted, please stop pressing me to much!
+<div *ngIf="isAlert" class="alert alert-success alert-dismissible" role="alert">You already voted with rating <{{yourVote.rating}}>, please stop pressing me to much!
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<ngb-rating [(rate)]="rating"  (hover)="hovered=$event" (leave)="hovered=0" [max]="5" [readonly]="readonly"
-            [(ngModel)]="rating" (ngModelChange)="onChange($event)"> </ngb-rating>
-<hr>
+<div>
+  <ngb-rating [(rate)]="rating"  (hover)="hovered=$event" (leave)="hovered=0" [max]="5" [readonly]="readonly"
+              [(ngModel)]="rating" (ngModelChange)="onChange($event)"> </ngb-rating>
+  <ng-template #t let-fill="fill">
+          <span class="star" [class.full]="fill === 100">
+            <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+          </span>
+  </ng-template>
+</div>
+
 <pre>
-Selected: <b>{{rating}}</b>
+Selected: <b>{{yourVote.rating}}</b>
 Hovered: <b>{{hovered}}</b>
 AVG: <strong>{{item.rating}}</strong>
 </pre>

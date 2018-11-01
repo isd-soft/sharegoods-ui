@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../auth/auth.service';
 import {ItemService} from '@services/item-service/item.service';
-import {Subject, throwError} from 'rxjs';
-import {catchError, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-star-review',
@@ -13,10 +11,9 @@ import {catchError, takeUntil} from 'rxjs/operators';
 
 export class StarReviewComponent implements OnInit {
 
-  destroy$: Subject<boolean> = new Subject<boolean>();
-
   readonly = false;
   rating = 0 ;
+  yourVote: any = Number;
   itemId: Number;
   userId: Number;
   item: any = Number;
@@ -29,12 +26,13 @@ export class StarReviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    /***** Checks if userId and itemId are real ****/
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
     this.userId = this.auth.getCurrentUser().id;
 
-
+    /***** Transform null avgRating into 0 ****/
     this.itemService.getAvgRating(this.itemId)
       .subscribe(itemDto => {
         this.item = itemDto;
@@ -43,12 +41,20 @@ export class StarReviewComponent implements OnInit {
           }
       });
 
+    /***** Validation if Voted ****/
     this.itemService.checkIfVoted(this.userId, this.itemId)
       .subscribe(validationRating => {
         this.readonly = !Boolean(validationRating);
       });
-  }
 
+    /***** getUserRating and save it to the screen  ****/
+    this.itemService.getUserRating(this.userId, this.itemId)
+      .subscribe(ratingDto => {
+        this.yourVote = ratingDto;
+        console.log(ratingDto);
+      });
+  }
+  /***** CreateRating  ****/
   onChange(event) {
     if (!this.readonly) {
       this.itemService.createRating(this.userId, this.itemId, this.rating).subscribe ( () => {
@@ -57,10 +63,12 @@ export class StarReviewComponent implements OnInit {
             this.item = itemDto;
             this.readonly = true;
           });
+        this.itemService.getUserRating(this.userId, this.itemId).subscribe( ratingDto => {
+          this.yourVote = ratingDto;
+        });
       });
     } else {
       this.isAlert = true;
     }
   }
 }
-
