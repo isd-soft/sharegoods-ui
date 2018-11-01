@@ -1,8 +1,9 @@
-import { Injectable, OnInit } from '@angular/core';
-import { Observable, of, from, BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { User } from 'app/models/user';
+import { BehaviorSubject } from 'rxjs';
+
 import { environment } from '@env/environment';
 
 @Injectable()
@@ -14,17 +15,17 @@ export class AuthService {
   ) {  }
 
   data = new BehaviorSubject<any[]>([]);
-  array = new Array();
+  array = [];
 
-  public addToSessionStorage(key,value) {
-    sessionStorage.setItem(key,value);
+  public addToSessionStorage(key, value) {
+    sessionStorage.setItem(key, value);
     this.array[key] = value;
     this.data.next(this.array);
   }
 
-  public isAuthenticatedObservable () {
+  public isAuthenticatedObservable() {
     return this.data;
-  } 
+  }
 
   public isAuthenticated(): boolean {
     const token = this.getToken();
@@ -45,7 +46,7 @@ export class AuthService {
     }
   }
 
-  public setToken (email:string, password:string) {
+  public setToken(email: string, password: string) {
     this.addToSessionStorage('token', btoa(email + ':' + password));
   }
 
@@ -53,11 +54,11 @@ export class AuthService {
     return sessionStorage.getItem('token');
   }
 
-  public removeToken () {
+  public removeToken() {
     sessionStorage.removeItem('token');
   }
 
-  public setCurrentUser (user : User) {
+  public setCurrentUser(user: User) {
     this.addToSessionStorage('user', JSON.stringify(user));
   }
 
@@ -66,7 +67,7 @@ export class AuthService {
     return user;
   }
 
-  public removeUser () {
+  public removeUser() {
     sessionStorage.removeItem('user');
   }
 

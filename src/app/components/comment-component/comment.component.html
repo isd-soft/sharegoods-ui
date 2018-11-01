@@ -1,5 +1,6 @@
 <h5>Comments</h5>
 
+<!--comments list-->
 <div class="row" *ngFor="let comment of comments">
   <div class="col-md-1 col-sm-1 col-class">
     <div class="thumbnail">
@@ -10,15 +11,50 @@
   <div class="col-md-6 col-class col-sm-5">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <strong>{{comment.userName}}</strong> <span class="text-muted">{{comment.dateTime | date: 'MMM d, y, HH:mm'}}</span>
+        <strong>{{comment.userName}}</strong>
+        <span class="text-muted"> {{comment.dateTime | date: 'MMM d, y, HH:mm'}} </span>
+        <button *ngIf="isCommentAuthor(comment.userId)" type="button"
+                class="btn btn-secondary comment-action"
+                data-toggle="tooltip"
+                title="edit"
+                (click)="editCommentId = comment.id">
+          <i class="fa fa-pencil"></i>
+        </button>
+        <button *ngIf="editCommentId == comment.id" type="button"
+                class="btn btn-secondary comment-action"
+                data-toggle="tooltip"
+                title="cancel editing"
+                (click)="editCommentId = null">
+          cancel
+        </button>
+        <button *ngIf="isCommentAuthor(comment.userId) || auth.isAdmin()" type="button"
+                class="btn btn-secondary comment-action"
+                data-toggle="tooltip" title="delete"
+                (click)="deleteComment(comment.id)">
+          <i class="fa fa-trash-o"></i>
+        </button>
       </div>
-      <div class="panel-body">
+
+      <div *ngIf="editCommentId != comment.id; else editArea" class="panel-body">
         {{comment.comment}}
       </div>
+      <ng-template #editArea>
+          <textarea autofocus
+                    name="editComment"
+                    class="form-control panel-body"
+                    id="editComment"
+                    maxlength="250"
+                    [(ngModel)]="comment.comment"
+                    placeholder="comment can't be empty"
+                    (focusout)="editComment(comment)"
+                    (keyup.enter)="editComment(comment)">
+        </textarea>
+      </ng-template>
     </div>
   </div>
 </div>
 
+<!--add comment area-->
 <div class="row" *ngIf="auth.isAuthenticated()">
   <div class="col-md-1"></div>
   <form class="col-md-6">
@@ -30,11 +66,13 @@
               maxlength="250"
               [(ngModel)]="comment"
               placeholder="Write a comment..."
-              (keyup.enter)="addComment(comment)">
+              (keyup.enter)="addComment()">
     </textarea>
     </div>
   </form>
 </div>
+
+
 
 
 

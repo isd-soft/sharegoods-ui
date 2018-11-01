@@ -21,6 +21,9 @@
       "@services/*": [
         "app/services/*"
       ],
+      "@auth/*": [
+        "app/auth/*"
+      ],
       "@env/*": [
         "environments/*"
       ]

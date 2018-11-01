@@ -4,7 +4,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ImageUploadModule } from 'angular2-image-upload';
 import { LightboxModule } from 'ngx-lightbox';
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgChatModule } from 'ng-chat';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,17 +19,14 @@ import { HeaderComponent } from '@core/components/header/header.component';
 import { LayoutComponent } from '@core/components/layout/layout.component';
 import { NavComponent } from '@core/components/nav/nav.component';
 import { ItemDetailsComponent } from '@components/item-details-component/item-details.component';
-import { TokenInterceptor } from './auth/token.interceptor';
-import { AuthService } from './auth/auth.service';
-import { LoginComponent } from './components/login-component/login.component';
-
-import { NgChatModule } from 'ng-chat';
-import { ChatComponent } from './components/chat-component/chat.component';
-import { ChatService } from './services/chat-service';
-import { CommentComponent } from "./components/comment-component/comment.component";
-import { UserItemsComponent } from './components/user-items/user-items.component';
+import { AuthService } from '@auth/auth.service';
+import { TokenInterceptor } from '@auth/token.interceptor';
+import { LoginComponent } from '@components/login-component/login.component';
+import { ChatComponent } from '@components/chat-component/chat.component';
+import { ChatService } from '@services/chat-service';
+import { CommentComponent } from '@components/comment-component/comment.component';
 import { DefaultErrorComponent } from './components/default-error-component/default-error.component';
-
+import { StarReviewComponent } from './components/star-review-component/star-review.component';
 
 @NgModule({
   declarations: [
@@ -45,9 +43,9 @@ import { DefaultErrorComponent } from './components/default-error-component/defa
     HomePageComponent,
     LoginComponent,
     ChatComponent,
-    CommentComponent,
-    UserItemsComponent,
-    DefaultErrorComponent
+    DefaultErrorComponent,
+    StarReviewComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,
@@ -68,7 +66,6 @@ import { DefaultErrorComponent } from './components/default-error-component/defa
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
-    DefaultErrorComponent,
     ChatService,
     AuthService,
     {

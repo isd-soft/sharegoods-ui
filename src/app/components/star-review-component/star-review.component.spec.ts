@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommentComponent } from './comment.component';
+import { StarReviewComponent } from './star-review.component';
 
-describe('AddCommentComponent', () => {
-  let component: CommentComponent;
-  let fixture: ComponentFixture<CommentComponent>;
+describe('StarReviewComponent', () => {
+  let component: StarReviewComponent;
+  let fixture: ComponentFixture<StarReviewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommentComponent ]
+      declarations: [ StarReviewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CommentComponent);
+    fixture = TestBed.createComponent(StarReviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

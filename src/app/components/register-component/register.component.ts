@@ -14,7 +14,6 @@ import { AuthService } from 'app/auth/auth.service';
 export class RegisterComponent {
 
   private emailNotUnique = false;
-
   user: User = new User();
 
   constructor(
