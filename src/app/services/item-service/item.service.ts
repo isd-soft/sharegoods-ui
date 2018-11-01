@@ -15,23 +15,36 @@ export class ItemService {
 
   /***** items *****/
 
-  public getSortedItems(value, direction) {
-    const params = new HttpParams().set('value', value).set('direction', direction);
-    return this.http.get(environment.apiUrl + '/items', {params: params});
-  }
-
   public getItem(itemId) {
     return this.http.get(environment.apiUrl + `/items/${itemId}`);
   }
 
-  public getItemsByTitle(title, value, direction) {
-    const params = new HttpParams().set('title', title).set('value', value).set('direction', direction);
-    return this.http.get(environment.apiUrl + `/items/search`, {params: params});
+  public getItems(value, direction, searchQuery?) {
+    let params = new HttpParams().set('value', value).set('direction', direction);
+
+    if (searchQuery != undefined) {
+      params = params.append('search', searchQuery);
+    }
+    return this.http.get(environment.apiUrl + '/items', {params: params});
+  }
+
+  public getItemsByUser(userId, value, direction, searchQuery?) {
+    let params = new HttpParams().set('value', value).set('direction', direction);
+
+    if (searchQuery != undefined) {
+      params = params.append('search', searchQuery);
+    }
+    return this.http.get(environment.apiUrl + '/users/' + userId + '/items', {params: params});
   }
 
   public createItem(userId, formData) {
     const createItemUrl = environment.apiUrl + `/users/${userId}/items`;
     return this.http.post<Item>(createItemUrl, formData);
+  }
+
+  public deleteItem(userId) {
+    const deleteItemUrl = environment.apiUrl + `/items/${userId}`;
+    return this.http.delete(deleteItemUrl, {responseType: 'text'});
   }
 
   public updateItem(itemId, formData) {
@@ -55,11 +68,11 @@ export class ItemService {
     const updateCommentUrl = environment.apiUrl + `/items/${itemId}/comments/${commentId}`;
     const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     const body = new HttpParams().set('comment', comment);
-    return this.http.put(updateCommentUrl, body, {headers: header})
+    return this.http.put(updateCommentUrl, body, {headers: header});
   }
 
   public deleteComment(itemId, commentId) {
-    return this.http.delete(environment.apiUrl + `/items/${itemId}/comments/${commentId}`, {responseType:'text'});
+    return this.http.delete(environment.apiUrl + `/items/${itemId}/comments/${commentId}`, {responseType: 'text'});
   }
 
   /***** rating ****/

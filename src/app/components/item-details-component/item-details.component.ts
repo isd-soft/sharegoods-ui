@@ -8,6 +8,7 @@ import { ItemService } from "@services/item-service/item.service";
 import { Item } from "@models/item";
 import { ChatComponent } from 'app/components/chat-component/chat.component';
 import { AuthService } from 'app/auth/auth.service';
+import { DefaultErrorService } from 'app/services/default-error.service';
 
 @Component({
   selector: 'app-item-details',
@@ -25,9 +26,13 @@ export class ItemDetailsComponent implements OnInit {
   imagesSrc: any = [];
   showContactAuthorButton = false;
 
+  showSuccessfullyDeleted;
+  showAlreadyDeleted;
+  showCouldNotDelete;
+
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
               private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig,
-              private auth: AuthService, private chat: ChatComponent) {
+              private auth: AuthService, private chat: ChatComponent, private errorService : DefaultErrorService) {
   }
 
   ngOnInit() {
@@ -44,6 +49,7 @@ export class ItemDetailsComponent implements OnInit {
           this.userIsOnline = this.itemDetails.userIsOnline;
           this.itemDto = this.itemDetails.itemDto;
           let imageDtoList = this.itemDetails.imageDtoList;
+
           for (let i = 0; i < imageDtoList.length; i++) {
             let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + imageDtoList[i].imageBase64);
             this.imagesSrc.push(imageSrc);
@@ -59,6 +65,17 @@ export class ItemDetailsComponent implements OnInit {
             alert('Some error has occurred ' + err.status);
           }
         });
+  }
+
+  isItemOfCurrentUser() {
+    if (this.auth.isAdmin()) {
+      return true;
+    } else if (this.auth.isAuthenticated()) {
+      if (this.auth.getCurrentUser().id == this.itemDto.userId) {
+        return true;
+      }
+      return false;
+    }
   }
 
   checkIfShowContactAuthorButton() {
@@ -97,4 +114,27 @@ export class ItemDetailsComponent implements OnInit {
     this.chat.getChatService().requestChatRoom(this.auth.getCurrentUser().id, this.itemDto.userId);
   }
 
+  deleteItem() {
+    this.itemService.deleteItem(this.itemId).subscribe(
+      data => {
+
+        this.showSuccessfullyDeleted = true;
+        setTimeout(() => {
+          this.router.navigate(['login']);
+        }, 2000);
+      },
+      error => {
+        if(error.status == 404) {
+          this.showAlreadyDeleted = true;
+          setTimeout(() => {
+            this.router.navigate(['login']);
+          }, 2000);
+        } else {
+          this.showCouldNotDelete = true;
+          setTimeout(() => {
+            this.errorService.displayErrorPage(error)
+          }, 2000);
+        }
+      });
+  }
 }

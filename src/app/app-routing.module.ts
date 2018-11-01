@@ -6,6 +6,7 @@ import { ItemComponent } from '@components/item-list-component/item.component';
 import { RegisterComponent } from '@components/register-component/register.component';
 import { LoginComponent } from '@components/login-component/login.component';
 import { ItemDetailsComponent } from '@components/item-details-component/item-details.component';
+import { DefaultErrorComponent } from '@components/default-error-component/default-error.component';
 import { EditItemComponent } from "@components/edit-item-component/edit-item.component";
 import { ProfileComponent } from "@components/profile-component/profile.component";
 
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'users',
     component: UserComponent
+  },
+  {
+    path: 'users/:id/items',
+    component: ItemComponent
   },
   {
     path: 'users/:id/profile',
@@ -47,6 +52,10 @@ const routes: Routes = [
   {
     path: 'items/:itemId/edit',
     component: EditItemComponent
+  },
+  {
+    path: 'error',
+    component: DefaultErrorComponent
   },
   {
     path: '**',

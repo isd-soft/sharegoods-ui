@@ -1,11 +1,29 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
+      <br><br>
+      <div *ngIf="showSuccessfullyDeleted" class="alert alert-success alert-dismissible" role="alert">Item has been deleted
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+          
+      <div *ngIf="showAlreadyDeleted" class="alert alert-warning alert-dismissible" role="alert">Item is already deleted
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div *ngIf="showCouldNotDelete" class="alert alert-danger alert-dismissible" role="alert">Item could not be deleted
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
       <!--item details-->
-      <h2>{{itemDto.title}} </h2>
+      <h2><button *ngIf="isItemOfCurrentUser()" type="button" class="btn btn-sm btn-warning" (click)="deleteItem()">Delete Item</button> {{itemDto.title}}</h2>
       <p>{{itemDto.description}}</p>
-      <h6>Author: {{itemDto.userName}}
+      <h6>Author: <a href="/users/{{itemDto.userId}}/items">{{itemDto.userName}}</a>&nbsp;
         <span *ngIf="userIsOnline" class="badge badge-success">Online</span>
         <span *ngIf="!userIsOnline" class="badge badge-danger">Offline</span></h6>
       <h6>Date {{itemDto.dateTime | date: 'MMM d, y, HH:mm'}}</h6>
@@ -22,6 +40,7 @@
              [src]="image.src"
              (click)="open(i)"/>
       </div>
+      
     </div>
   </div>
 

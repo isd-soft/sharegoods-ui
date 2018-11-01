@@ -21,11 +21,11 @@
       "@services/*": [
         "app/services/*"
       ],
-      "@env/*": [
-        "environments/*"
-      ],
       "@auth/*": [
         "app/auth/*"
+      ],
+      "@env/*": [
+        "environments/*"
       ]
     }
   },

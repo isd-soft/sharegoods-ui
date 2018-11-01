@@ -40,14 +40,16 @@ export class Adapter extends ChatAdapter {
 
   public roomsForUsers = new Array;
 
-  public addRoom(roomId, interlocutor) {
-    this.roomsForUsers[interlocutor] = roomId;
-  }
-
   public getRoomsForUsers() {
     return this.roomsForUsers;
   }
 
+    public addRoom(roomId, interlocutor) {
+
+        if(this.roomsForUsers[interlocutor] != roomId) { 
+            this.roomsForUsers[interlocutor] = roomId;
+        }
+    }
   public deleteRoomsAndUsers(roomId) {
 
     // from rooms array
