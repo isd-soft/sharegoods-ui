@@ -25,9 +25,8 @@ import { LoginComponent } from '@components/login-component/login.component';
 import { ChatComponent } from '@components/chat-component/chat.component';
 import { ChatService } from '@services/chat-service';
 import { CommentComponent } from '@components/comment-component/comment.component';
-
+import { DefaultErrorComponent } from './components/default-error-component/default-error.component';
 import { StarReviewComponent } from './components/star-review-component/star-review.component';
-
 
 @NgModule({
   declarations: [
@@ -44,6 +43,7 @@ import { StarReviewComponent } from './components/star-review-component/star-rev
     HomePageComponent,
     LoginComponent,
     ChatComponent,
+    DefaultErrorComponent,
     StarReviewComponent,
     CommentComponent
   ],
