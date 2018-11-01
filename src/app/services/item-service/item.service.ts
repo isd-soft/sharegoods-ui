@@ -20,8 +20,6 @@ export class ItemService {
   public getItems(value, direction, searchQuery?) {
     let params = new HttpParams().set('value', value).set('direction', direction);
     
-    console.error(searchQuery);
-
     if (searchQuery != undefined) {
       params = params.append('search', searchQuery);
     }
@@ -40,6 +38,11 @@ export class ItemService {
   public createItem(userId, formData) {
     const createItemUrl = environment.apiUrl + `/users/${userId}/items`;
     return this.http.post<Item>(createItemUrl, formData);
+  }
+
+  public deleteItem(userId) {
+    const deleteItemUrl = environment.apiUrl + `/items/${userId}`;
+    return this.http.delete(deleteItemUrl, {responseType: 'text'});
   }
 
   public addComment(itemId, userId, comment): Observable<any> {

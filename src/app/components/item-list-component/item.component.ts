@@ -37,13 +37,12 @@ export class ItemComponent implements OnInit {
   ngOnInit() {
       // Initial values
       this.search.changeMessage('');
-      this.sort('Rating','Desc');
+      this.setSortingOptions('Rating','Desc');
 
       // Get User Id From URL For Items By Specific User
       this.route.params.subscribe(params => {
           if (params['id'] != undefined) {
             this.userId = +params['id'];
-            console.error("hello");
           } else {
             this.userId = undefined;
           }
@@ -56,8 +55,7 @@ export class ItemComponent implements OnInit {
       // Subscribe to changes in search input and query server on change
       this.search.currentMessage.subscribe(message => {
         this.searchTitle = message;
-          this.getItems();
-          console.error("Hello wtf");
+        this.getItems();
       });
   }
 
@@ -79,10 +77,8 @@ export class ItemComponent implements OnInit {
   getItems() {
     let service;
     if (this.userId != undefined) { // typeof - it will check undefined, null, 0 and "" also
-      console.error("Hello 1");
       service = this.itemService.getItemsByUser(this.userId, this.sortingOptions.value, this.sortingOptions.direction, this.searchTitle);
     } else {
-      console.error("Hello 2");
       service = this.itemService.getItems(this.sortingOptions.value, this.sortingOptions.direction, this.searchTitle);
     }
     this.subscribeToItems(service);
@@ -99,7 +95,7 @@ export class ItemComponent implements OnInit {
       }
     },
     err => {
-      console.log("Error occured");
+      console.log("Error occured"); 
       this.foundItems = false;
     });
   }

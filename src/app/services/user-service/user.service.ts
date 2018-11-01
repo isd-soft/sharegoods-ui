@@ -21,7 +21,7 @@ export class UserService {
   }
 
   public deleteUser(id) {
-    return this.http.delete(environment.apiUrl + '/users/' + id);
+    return this.http.delete(environment.apiUrl + '/users/' + id, {responseType : 'text'});
   }
 
 }

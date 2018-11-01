@@ -32,8 +32,11 @@ export class AuthService {
   }
 
   public isAdmin(): boolean {
-    let result = this.getCurrentUser().role == "ADMIN" ? true : false;
-    return result;
+    if (this.isAuthenticated()) {
+      return this.getCurrentUser().role == "ADMIN";
+    } else {
+      return false;
+    }
   }
 
   public redirectIfNotLoggedIn(redirectToComponent:string) {

@@ -27,6 +27,8 @@ import { ChatComponent } from './components/chat-component/chat.component';
 import { ChatService } from './services/chat-service';
 import { CommentComponent } from "./components/comment-component/comment.component";
 import { UserItemsComponent } from './components/user-items/user-items.component';
+import { DefaultErrorComponent } from './components/default-error-component/default-error.component';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { UserItemsComponent } from './components/user-items/user-items.component
     LoginComponent,
     ChatComponent,
     CommentComponent,
-    UserItemsComponent
+    UserItemsComponent,
+    DefaultErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,7 @@ import { UserItemsComponent } from './components/user-items/user-items.component
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    DefaultErrorComponent,
     ChatService,
     AuthService,
     {
