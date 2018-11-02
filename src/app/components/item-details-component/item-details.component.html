@@ -52,10 +52,10 @@
       </button>
     </h6>
     <!--button actions-->
-    <button *ngIf="isLoggedUserItem()" class="btn btn-sm btn-info col-md-1" (click)="editButtonPressed()">
+    <button *ngIf="isLoggedUserItem()" class="btn btn-sm btn-info ml-auto" (click)="editButtonPressed()">
       Edit post
     </button>
-    <button *ngIf="isItemOfCurrentUser()" type="button" class="btn btn-sm btn-info col-md-1" (click)="deleteItem()">
+    <button *ngIf="isItemOfCurrentUser()" type="button" class="btn btn-sm btn-info ml-auto" (click)="deleteItem()">
       Delete post
     </button>
   </div>
