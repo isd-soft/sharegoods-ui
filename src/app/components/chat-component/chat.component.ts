@@ -31,9 +31,8 @@ export class ChatComponent implements OnInit {
     this.adapter.setChatComponent(this);
     this.chatService.setChatComponent(this);
     this.chatService.setAdapter(this.adapter);
-    this.auth.isAuthenticatedObservable().subscribe(this.onAuthUpdate.bind(this), error => {
-      console.log(error);
-    });
+    this.auth.isAuthenticatedObservable().subscribe(this.onAuthUpdate.bind(this), error => {console.log(error);});
+    if(this.auth.isAuthenticated){this.chatService.establishSocket(this.auth.getCurrentUser().email);}
   }
 
   openChatWindow(user) {
