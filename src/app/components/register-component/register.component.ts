@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { User } from '@models/user';
-import { UserService } from '@services/user-service/user.service';
-import { AuthService } from 'app/auth/auth.service';
+import {User} from '@models/user';
+import {UserService} from '@services/user-service/user.service';
+import {AuthService} from 'app/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -38,5 +38,17 @@ export class RegisterComponent {
             alert('Some error occured: ' + err.status);
           }
         });
+  }
+
+  validatePassword() {
+    let myPassword = this.user.password;
+
+    if ((/[a-z]/.test(myPassword)) && (/[A-Z]/.test(myPassword)) && (/[0-9]/.test(myPassword)) && (/[!@#$&*]/.test(myPassword))) {
+      console.log('good!');
+      return true;
+    } else {
+      console.error('bad');
+      return false;
+    }
   }
 }
