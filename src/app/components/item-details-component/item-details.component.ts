@@ -10,6 +10,8 @@ import { ChatComponent } from 'app/components/chat-component/chat.component';
 import { AuthService } from 'app/auth/auth.service';
 import { DefaultErrorService } from 'app/services/default-error.service';
 
+import { UserStatus } from 'ng-chat';
+
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
@@ -19,7 +21,7 @@ export class ItemDetailsComponent implements OnInit {
 
   public albums: any = [];
   private _subscription: Subscription;
-  itemId: Number;
+  itemId;
   itemDetails: any;
   userIsOnline;
   itemDto: Item = new Item();
@@ -90,6 +92,28 @@ export class ItemDetailsComponent implements OnInit {
             alert('Some error has occurred ' + err.status);
           }
         });
+
+    this.chat.adapter.usersObservable.subscribe(this.checkAuthorStatus.bind(this));
+  }
+
+  // INTENDED ONLY FOR USERS CONNECTED TO CHAT
+  // DOES NOT WORK EVEN FOR THEM YET
+  checkAuthorStatus(users) {
+    console.error("hello1");
+    console.log(this.itemId in users);
+    console.log(users);
+    if(this.itemId in users) {
+      if(users[this.itemId].status==UserStatus.Online) {
+        this.userIsOnline = true;
+        console.error("user online");
+      } else if (users.status==UserStatus.Offline) {
+        this.userIsOnline = false;
+        console.error("user offline");
+      } else {
+        console.error("ELSE");
+      }
+    }
+    
   }
 
   ngAfterViewInit() {

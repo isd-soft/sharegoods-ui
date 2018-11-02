@@ -1,5 +1,6 @@
 import { ChatAdapter, User, Message, UserStatus } from 'ng-chat';
 import { Observable } from "rxjs/Rx";
+import { of, BehaviorSubject } from "rxjs";
 import { ChatMessageServer } from '@models/ChatMessageServer';
 
 export class Adapter extends ChatAdapter {
@@ -10,14 +11,21 @@ export class Adapter extends ChatAdapter {
   }
 
   public users: User[] = [];
+  public usersSubject = new BehaviorSubject(this.users);
+  public usersObservable = this.usersSubject.asObservable();
+
+  public roomsForUsers = new Array;
 
   public addUser(user) {
-    this.users.push({
-      id: user.id,
-      displayName: user.name,
-      avatar: null,
-      status: UserStatus.Online
-    });
+    if(this.getUserById(user.id) == null){
+      this.users.push({
+        id: user.id,
+        displayName: user.name,
+        avatar: null,
+        status: UserStatus.Online
+      });
+    this.usersSubject.next(user);
+    }
   }
 
   public getUserById(userId) {
@@ -38,17 +46,17 @@ export class Adapter extends ChatAdapter {
     }
   }
 
-  public roomsForUsers = new Array;
-
   public getRoomsForUsers() {
     return this.roomsForUsers;
   }
 
     public addRoom(roomId, interlocutor) {
 
-        if(this.roomsForUsers[interlocutor] != roomId) { 
-            this.roomsForUsers[interlocutor] = roomId;
-        }
+      if(this.roomsForUsers[interlocutor] != roomId) { 
+          this.roomsForUsers[interlocutor] = roomId;
+          return true;
+      }
+        return false;
     }
   public deleteRoomsAndUsers(roomId) {
 
