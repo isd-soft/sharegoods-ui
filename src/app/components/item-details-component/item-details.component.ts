@@ -98,7 +98,7 @@ export class ItemDetailsComponent implements OnInit {
     return;
   }
 
-  
+
 
   // INTENDED ONLY FOR USERS CONNECTED TO CHAT
   // DOES NOT WORK EVEN FOR THEM YET
@@ -106,18 +106,19 @@ export class ItemDetailsComponent implements OnInit {
     console.error("hello1");
     console.log(this.itemId in users);
     console.log(users);
-    if(this.itemId in users) {
-      if(users[this.itemId].status==UserStatus.Online) {
+    if (this.itemId in users) {
+      if (users[this.itemId].status == UserStatus.Online) {
         this.userIsOnline = true;
         console.error("user online");
-      } else if (users.status==UserStatus.Offline) {
+      } else if (users.status == UserStatus.Offline) {
         this.userIsOnline = false;
         console.error("user offline");
       } else {
         console.error("ELSE");
       }
     }
-    
+  }
+
   isLoggedUserItem() {
     return this.auth.isAuthenticated() && this.auth.getCurrentUser().id == this.itemDto.userId;
   }
@@ -165,3 +166,5 @@ export class ItemDetailsComponent implements OnInit {
       });
   }
 }
+
+
