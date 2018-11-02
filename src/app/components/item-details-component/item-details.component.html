@@ -1,4 +1,6 @@
 <div class="container">
+
+  <!--info messages-->
   <div class="row">
     <div class="col-md-12">
       <br><br>
@@ -19,24 +21,44 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+    </div>
+  </div>
 
-      <!--item details-->
-      <h2>{{itemDto.title}}
-        <button *ngIf="isLoggedUserItem()" class="btn btn-sm btn-info" (click)="editButtonPressed()"> Edit post
-        </button>
-        <button *ngIf="isItemOfCurrentUser()" type="button" class="btn btn-sm btn-warning"
-                (click)="deleteItem()">Delete post</button>
-      </h2>
+
+  <!--item details-->
+
+  <h2>{{itemDto.title}}</h2>
+
+  <div class="row">
+    <h6 class="col-md-4">Date: {{itemDto.dateTime | date: 'MMM d, y, HH:mm'}}</h6>
+
+    <!--status-->
+    <h6 class="col-md-6">Author:
+      <a [routerLink]="['/users/' + itemDto.userId + '/items']">{{itemDto.userName}}</a>&nbsp;
+      <span *ngIf="userIsOnline" class="badge badge-success">Online</span>
+      <span *ngIf="!userIsOnline" class="badge badge-danger">Offline</span>
+      <button *ngIf="showContactAuthorButton" class="btn btn-sm btn-info btn-chat" (click)="startChat()">
+        Contact author
+      </button>
+    </h6>
+    <!--button actions-->
+    <button *ngIf="isLoggedUserItem()" class="btn btn-sm btn-info col-md-1" (click)="editButtonPressed()">
+      Edit post
+    </button>
+    <button *ngIf="isItemOfCurrentUser()" type="button" class="btn btn-sm btn-warning col-md-1" (click)="deleteItem()">
+      Delete post
+    </button>
+  </div>
+  <hr/>
+
+  <!--rate-->
+  <div class="row">
+      <app-star-review></app-star-review>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
       <p>{{itemDto.description}}</p>
-      <h6>Author: <a [routerLink]="['/users/' + itemDto.userId + '/items']">{{itemDto.userName}}</a>&nbsp;
-        <span *ngIf="userIsOnline" class="badge badge-success">Online</span>
-        <span *ngIf="!userIsOnline" class="badge badge-danger">Offline</span></h6>
-      <h6>Date {{itemDto.dateTime | date: 'MMM d, y, HH:mm'}}</h6>
-      <div><app-star-review></app-star-review></div>
-
-
-      <button *ngIf="showContactAuthorButton" (click)="startChat()" class="btn btn-info">CONTACT AUTHOR</button>
-      <br>
 
       <!--images-->
       <div class="img-row col-sm-3" *ngFor="let image of albums; let i=index">
@@ -46,10 +68,11 @@
              [src]="image.src"
              (click)="open(i)"/>
       </div>
-
     </div>
   </div>
+
   <app-comment></app-comment>
+
 </div>
 
 

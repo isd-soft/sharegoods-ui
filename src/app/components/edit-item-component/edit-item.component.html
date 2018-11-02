@@ -25,6 +25,9 @@
   <ng-template [ngIf]="maxExceeded">
     <div class="alert alert-danger">
       You can upload max 4 images
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
   </ng-template>
   <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-info pull-right" (click)="editItem()">
