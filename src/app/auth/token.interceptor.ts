@@ -42,7 +42,7 @@ export class TokenInterceptor implements HttpInterceptor {
             this.router.navigate(['login']);
           } else if (err.status == 0) {
             console.error('Server timeout');
-            this.router.navigate(['login']);
+            //this.router.navigate(['login']);
           }
         }
       }

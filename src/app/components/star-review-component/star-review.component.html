@@ -1,9 +1,23 @@
-<ngb-rating [(rate)]="rating"  (hover)="hovered=$event" (leave)="hovered=0" [max]="5" [readonly]="readonly"
-            [(ngModel)]="rating" (ngModelChange)="onChange($event)"> </ngb-rating>
-<hr>
-<pre>
-Selected: <b>{{rating}}</b>
-Hovered: <b>{{hovered}}</b>
-AVG: <strong>{{item.rating}}</strong>
-</pre>
+
+  <div *ngIf="isAlert" class="alert alert-success alert-dismissible" role="alert">You already voted with rating
+    <{{yourVote.rating}}>, please stop touching me to much!
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div>
+  Average rating: <strong>{{item.rating}}</strong>
+  </div>
+  <div>
+    <ngb-rating [(rate)]="rating" (hover)="hovered=$event" (leave)="hovered=0" [max]="5" [readonly]="readonly"
+                [(ngModel)]="rating" (click)="onRate()"></ngb-rating>
+    <ng-template #t let-fill="fill">
+          <span class="star" [class.full]="fill === 100">
+            <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+          </span>
+    </ng-template>
+  </div>
+
+
+
 
