@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@auth/auth.service';
 import { NavBarLink } from '@models/navbar-link';
 import { SearchService } from '@services/search-service/search.service';
+import { ChatComponent } from 'app/components/chat-component/chat.component';
+
 
 @Component({
   selector: 'app-nav',
@@ -21,7 +23,10 @@ export class NavComponent implements OnInit {
     }
   ];
 
-  constructor(private auth: AuthService, private router: Router, private search: SearchService) {
+  constructor(private auth: AuthService, 
+    private router: Router, 
+    private search: SearchService,
+    private chatComponent: ChatComponent) {
   }
 
   ngOnInit() {
@@ -31,7 +36,10 @@ export class NavComponent implements OnInit {
   logout() {
     this.auth.removeToken();
     this.auth.removeUser();
+    this.chatComponent.userId = null; 
+
     this.router.navigate(['items']);
+
   }
 
   findItems() {
