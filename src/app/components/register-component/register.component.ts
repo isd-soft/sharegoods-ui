@@ -43,7 +43,7 @@ export class RegisterComponent {
   validatePassword() {
     let myPassword = this.user.password;
 
-    if ((/[a-z]/.test(myPassword)) && (/[A-Z]/.test(myPassword)) && (/[0-9]/.test(myPassword)) && (/[!@#$&*]/.test(myPassword))) {
+    if ((/[a-z]/.test(myPassword)) && (/[A-Z]/.test(myPassword)) && (/[0-9]/.test(myPassword))) {
       console.log('good!');
       return true;
     } else {
