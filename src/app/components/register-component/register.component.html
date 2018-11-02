@@ -54,16 +54,15 @@
                  id="password"
                  required
                  [(ngModel)]="user.password"
-                 minlength="3"
-                 maxlength="100"
+                 minlength="4"
+                 maxlength="16"
                  placeholder="Enter password"
                  name="password"
                  #password="ngModel">
           <div *ngIf="password.touched && !password.valid" class="alert alert-danger">
-            Password is required, minimum 3 charachters
+            the password must contain at least one digit, one uppercase, one lowercase and symbol like !@#$&*
           </div>
         </div>
-
         <button type="submit" class="btn btn-success" [disabled]="newRegisterForm.form.invalid" (click)="createUser()">
           Register
         </button>
