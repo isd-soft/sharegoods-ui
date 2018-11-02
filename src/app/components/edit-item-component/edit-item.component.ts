@@ -72,5 +72,9 @@ export class EditItemComponent implements OnInit {
           console.log('Error occurred to edit the item');
         });
   }
+
+  cancelButtonPressed() {
+    this.router.navigate(['items/' + this.itemId]);
+  }
 }
 
