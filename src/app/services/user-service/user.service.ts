@@ -16,8 +16,16 @@ export class UserService {
     return this.http.get<User[]>(environment.apiUrl + '/users');
   }
 
+  public getUser(id) {
+    return this.http.get<User>(environment.apiUrl + `/users/${id}`);
+  }
+
   public createUser(user) {
     return this.http.post<User>(environment.apiUrl + '/users', user);
+  }
+
+  public updateUser(id, user) {
+    return this.http.put<User>(environment.apiUrl + `/users/${id}`, user);
   }
 
   public deleteUser(id) {

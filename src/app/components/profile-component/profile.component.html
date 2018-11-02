@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 col-sm-3">
+      <img class="img-responsive avatar rounded" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+    </div>
+    <form class="col-md-8" *ngIf="!updateClicked; else editProfile">
+      <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" class="form-control" [(ngModel)]="user.firstName" name="firstName" id="firstName" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" class="form-control" id="lastName" [(ngModel)]="user.lastName" name="lastName" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email address:</label>
+        <input type="text" class="form-control" id="email" [(ngModel)]="user.email" name="email" readonly>
+      </div>
+      <button class="btn btn-info" (click)="updateClicked = true"> Update profile</button>
+    </form>
+  </div>
+</div>
+
+<ng-template #editProfile>
+  <form #updateForm="ngForm" class="col-md-8">
+
+    <ng-template [ngIf]="this.emailNotUnique">
+      <div class="alert alert-danger">
+        User with this email already exists
+      </div>
+    </ng-template>
+
+    <div class="form-group">
+      <label for="firstName2">First Name:</label>
+      <input type="text" class="form-control" placeholder="First Name" [(ngModel)]="user.firstName" name="firstName2"
+             id="firstName2" required
+             [(ngModel)]="user.firstName" #firstName="ngModel" minlength="2">
+      <div *ngIf="firstName.touched && !firstName.valid" class="alert alert-danger">
+        First Name is required, minimum 2 characters
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName2">Last Name:</label>
+      <input type="text"
+             class="form-control"
+             id="lastName2"
+             required
+             [(ngModel)]="user.lastName"
+             placeholder="Last name"
+             name="lastName"
+             #lastName="ngModel"
+             minlength="2">
+      <div *ngIf="lastName.touched && !lastName.valid" class="alert alert-danger">
+        Last Name is required, minimum 2 characters
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email2">Email address:</label>
+      <input type="email" class="form-control" id="email2" required [(ngModel)]="user.email" placeholder="Email"
+             name="email2" #email="ngModel"
+             maxlength="100"
+             pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+      <div *ngIf="email.touched && !email.valid" class="alert alert-danger">
+        Email is required, e.g. name@domain.com
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password"
+             class="form-control"
+             id="password"
+             required
+             [(ngModel)]="user.password"
+             minlength="3"
+             maxlength="100"
+             placeholder="Enter password"
+             name="password"
+             #password="ngModel">
+      <div *ngIf="password.touched && !password.valid" class="alert alert-danger">
+        Password is required, minimum 3 charachters
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="updateForm.form.invalid" (click)="updateUser()">Save</button>
+    <button class="btn btn-danger" (click)="updateClicked = false; getUser()"> Cancel </button>
+  </form>
+</ng-template>
+
