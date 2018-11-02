@@ -1,9 +1,7 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../../auth/auth.service';
 import {ItemService} from '@services/item-service/item.service';
-import {Subject, throwError} from 'rxjs';
-import {catchError, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-star-review',
@@ -13,13 +11,13 @@ import {catchError, takeUntil} from 'rxjs/operators';
 
 export class StarReviewComponent implements OnInit {
 
-  destroy$: Subject<boolean> = new Subject<boolean>();
-
   readonly = false;
-  rating: any ;
+  rating = 0;
+  yourVote: any = Number;
   itemId: Number;
   userId: Number;
-  item: any;
+  item: any = Number;
+  isAlert: boolean;
 
   constructor(private itemService: ItemService,
               private route: ActivatedRoute,
@@ -28,44 +26,51 @@ export class StarReviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    /***** Checks if userId and itemId are real ****/
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
     this.userId = this.auth.getCurrentUser().id;
 
+    /***** Get AvgRating and Transform null avgRating into 0 ****/
+    this.getAverageRating(this.itemId);
 
-    this.itemService.getAvgRating(this.itemId)
+    /***** getUserRating and save it to the screen  ****/
+    this.itemService.getUserRating(this.userId, this.itemId)
+      .subscribe(ratingDto => {
+          this.yourVote = ratingDto;
+          this.readonly = true;
+        }, error => {
+          if (error.status == 404) {}
+        });
+  }
+
+  /***** CreateRating  ****/
+  onRate() {
+    if (!this.readonly) {
+      this.itemService.createRating(this.userId, this.itemId, this.rating).subscribe(this.onCreateSuccess.bind(this),
+        error1 => {});
+    } else {
+      this.isAlert = true;
+    }
+  }
+
+  onCreateSuccess(itemDto) {
+    this.item = itemDto;
+    this.readonly = true;
+    this.itemService.getUserRating(this.userId, this.itemId).subscribe(ratingDto => {
+      this.yourVote = ratingDto;
+    }); this.getAverageRating(this.itemId);
+  }
+
+  getAverageRating(itemId) {
+    this.itemService.getAvgRating(itemId)
       .subscribe(itemDto => {
         this.item = itemDto;
         if (this.item.rating == null) {
           this.item.rating = 0;
-          }
-      });
-
-    this.itemService.checkIfVoted(this.userId, this.itemId)
-      .subscribe(validationRating => {
-        this.readonly = !Boolean(validationRating);
+        }
       });
   }
 
-  onChange(event) {
-    this.readonly = true;
-    if (this.readonly) {
-    }
-    this.itemService.createRating(this.userId, this.itemId, this.rating).pipe(
-      takeUntil(this.destroy$),
-      catchError( err => {
-        return throwError(`Error accured adding Rating`, err);
-      })
-    ).subscribe ( () => {
-      this.itemService.getAvgRating(this.itemId)
-        .subscribe( itemDto => {
-          this.item = itemDto;
-            console.log(itemDto);
-        });
-    });
-  }
 }
-
-
-

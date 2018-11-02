@@ -32,6 +32,8 @@
         <span *ngIf="userIsOnline" class="badge badge-success">Online</span>
         <span *ngIf="!userIsOnline" class="badge badge-danger">Offline</span></h6>
       <h6>Date {{itemDto.dateTime | date: 'MMM d, y, HH:mm'}}</h6>
+      <div><app-star-review></app-star-review></div>
+
 
       <button *ngIf="showContactAuthorButton" (click)="startChat()" class="btn btn-info">CONTACT AUTHOR</button>
       <br>
@@ -47,12 +49,9 @@
 
     </div>
   </div>
-
   <app-comment></app-comment>
-
 </div>
 
-<!--<app-star-review></app-star-review>-->
 
 
 
