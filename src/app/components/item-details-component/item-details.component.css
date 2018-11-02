@@ -32,7 +32,7 @@
   position: absolute;
   display: inline-block;
   overflow: hidden;
-  color: #446a7a;
+  color: #029771;
 }
 
 ngb-rating {
@@ -53,6 +53,11 @@ h6 {
 
 .avg {
   padding-left: 15px;
+}
+
+.text-style {
+  overflow-wrap: break-word;
+  white-space: pre-line;
 }
 
 

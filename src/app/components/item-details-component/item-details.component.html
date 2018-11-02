@@ -24,7 +24,7 @@
   </div>
 
   <!--item details-->
-  <h2> {{itemDto.title}} </h2>
+  <h2 class="text-style"> {{itemDto.title}} </h2>
 
 
   <div class="row h-100">
@@ -37,6 +37,8 @@
         <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
       </span>
     </ng-template>
+  </div>
+  <div class="row h-100 avg">
     <app-star-review></app-star-review>
   </div>
 
@@ -64,7 +66,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <p>{{itemDto.description}}</p>
+      <div class="text-style">{{itemDto.description}}</div>
       <!--images-->
       <div class="img-row col-sm-3" *ngFor="let image of albums; let i=index">
         <img class="img-frame img-responsive margin"
