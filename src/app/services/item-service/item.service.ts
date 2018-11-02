@@ -12,14 +12,16 @@ export class ItemService {
 
   constructor(private http: HttpClient) {
   }
-  
+
+  /***** items *****/
+
   public getItem(itemId) {
     return this.http.get(environment.apiUrl + `/items/${itemId}`);
   }
 
   public getItems(value, direction, searchQuery?) {
     let params = new HttpParams().set('value', value).set('direction', direction);
-    
+
     if (searchQuery != undefined) {
       params = params.append('search', searchQuery);
     }
@@ -28,7 +30,7 @@ export class ItemService {
 
   public getItemsByUser(userId, value, direction, searchQuery?) {
     let params = new HttpParams().set('value', value).set('direction', direction);
-    
+
     if (searchQuery != undefined) {
       params = params.append('search', searchQuery);
     }
@@ -44,6 +46,11 @@ export class ItemService {
     const deleteItemUrl = environment.apiUrl + `/items/${userId}`;
     return this.http.delete(deleteItemUrl, {responseType: 'text'});
   }
+
+  public updateItem(itemId, formData) {
+    return this.http.put<Item>(environment.apiUrl + `/items/${itemId}`, formData);
+  }
+
   /***** comments *****/
 
   public addComment(itemId, userId, comment): Observable<any> {

@@ -32,7 +32,39 @@ export class ItemDetailsComponent implements OnInit {
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
               private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig,
-              private auth : AuthService, private chat : ChatComponent, private errorService : DefaultErrorService) {
+              private auth: AuthService, private chat: ChatComponent, private errorService : DefaultErrorService) {
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.itemId = params.itemId;
+    });
+
+    // set default config
+    this._lighboxConfig.fadeDuration = 1;
+
+    this.itemService.getItem(this.itemId)
+      .subscribe(data => {
+          this.itemDetails = data;
+          this.userIsOnline = this.itemDetails.userIsOnline;
+          this.itemDto = this.itemDetails.itemDto;
+          let imageDtoList = this.itemDetails.imageDtoList;
+
+          for (let i = 0; i < imageDtoList.length; i++) {
+            let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + imageDtoList[i].imageBase64);
+            this.imagesSrc.push(imageSrc);
+            const album = {src: imageSrc};
+            this.albums.push(album);
+          }
+          this.checkIfShowContactAuthorButton();
+        },
+        err => {
+          if (err.status == '404') {
+            this.router.navigate(['items']);
+          } else {
+            alert('Some error has occurred ' + err.status);
+          }
+        });
   }
 
   isItemOfCurrentUser() {
@@ -59,40 +91,12 @@ export class ItemDetailsComponent implements OnInit {
     return;
   }
 
-  ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.itemId = params.itemId;
-    });
-
-     // set default config
-    this._lighboxConfig.fadeDuration = 1;
-
-    this.itemService.getItem(this.itemId)
-      .subscribe( data => {
-        this.itemDetails = data;
-        this.userIsOnline = this.itemDetails.userIsOnline;
-        this.itemDto = this.itemDetails.itemDto;
-        let imageDtoList = this.itemDetails.imageDtoList;
-
-        for(let i = 0; i < imageDtoList.length; i++) {
-          let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,'+ imageDtoList[i].imageBase64);
-          this.imagesSrc.push(imageSrc);
-          const album = {src: imageSrc};
-          this.albums.push(album);
-          };
-
-          this.checkIfShowContactAuthorButton();
-        },
-        err => {
-          if (err.status == '404') {
-            this.router.navigate(['items']);
-          } else {
-            alert('Some error has occurred ' + err.status);
-          }
-        });
+  isLoggedUserItem() {
+    return this.auth.isAuthenticated() && this.auth.getCurrentUser().id == this.itemDto.userId;
   }
 
-  ngAfterViewInit() {
+  editButtonPressed() {
+    this.router.navigate(['items/' + this.itemId + '/edit']);
   }
 
   open(index: number): void {
@@ -113,12 +117,12 @@ export class ItemDetailsComponent implements OnInit {
   deleteItem() {
     this.itemService.deleteItem(this.itemId).subscribe(
       data => {
-        
+
         this.showSuccessfullyDeleted = true;
         setTimeout(() => {
           this.router.navigate(['login']);
         }, 2000);
-      }, 
+      },
       error => {
         if(error.status == 404) {
           this.showAlreadyDeleted = true;
@@ -130,7 +134,7 @@ export class ItemDetailsComponent implements OnInit {
           setTimeout(() => {
             this.errorService.displayErrorPage(error)
           }, 2000);
-        }   
+        }
       });
   }
 }
