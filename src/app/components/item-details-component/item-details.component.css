@@ -35,5 +35,22 @@
   margin-top: 25px;
 }
 
+h2{
+  padding: 0 15px;
+}
+
+ngb-rating {
+  padding-right: 5px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+h6 {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+
+
 
 

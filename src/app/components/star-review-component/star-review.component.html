@@ -1,30 +1,26 @@
+<div class="row">
+  <div class="col-md-12" *ngIf="auth.isAuthenticated() && !yourVote.rating">
+    <h6>Rate this post</h6>
+    <ngb-rating [(rate)]="rating" (hover)="hovered=$event" (leave)="hovered=0" [max]="5" [readonly]="readonly"
+                [(ngModel)]="rating" (click)="onRate()" [starTemplate]="t">
+    </ngb-rating>
+  </div>
 
-<div *ngIf="isAlert" class="alert alert-success alert-dismissible" role="alert">You already voted with rating
-  <{{yourVote.rating}}>, please stop touching me to much!
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+  <div class="col-md-12" *ngIf="auth.isAuthenticated() && yourVote.rating">
+    <h6>You rated</h6>
+    <ngb-rating [(rate)]="yourVote.rating" [max]="5" [readonly]="readonly" [(ngModel)]="rating" [starTemplate]="t"></ngb-rating>
+  </div>
 </div>
 
 
-<div class="col-md-12" *ngIf="auth.isAuthenticated() && !yourVote.rating"> Rate this post
-  <ngb-rating [(rate)]="rating" (hover)="hovered=$event" (leave)="hovered=0" [max]="5" [readonly]="readonly"
-              [(ngModel)]="rating" (click)="onRate()"></ngb-rating>
-  <ng-template #t let-fill="fill">
-    <span class="star" [class.full]="fill === 100">
-      <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-    </span>
-  </ng-template>
-</div>
+<ng-template #t let-fill="fill">
+  <span class="star" [class.full]="fill === 100">
+    <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+  </span>
+</ng-template>
 
-<div class="col-md-12" *ngIf="auth.isAuthenticated() && yourVote.rating"> You rated
-  <ngb-rating [(rate)]="yourVote.rating" [max]="5" [readonly]="readonly" [(ngModel)]="rating"></ngb-rating>
-  <ng-template #t let-fill="fill">
-    <span class="star" [class.full]="fill === 100">
-      <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-    </span>
-  </ng-template>
-</div>
+
+
 
 
 

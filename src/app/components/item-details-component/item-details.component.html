@@ -25,17 +25,17 @@
 
   <!--item details-->
 
-  <div class="row">
+  <div class="row h-100">
     <h2>
       {{itemDto.title}}
     </h2>
     <!--avg rating-->
     <ngb-rating [(rate)]="ratingComponent.item.rating" [readonly]="true" max="5" [starTemplate]="t"></ngb-rating>
-    <strong> {{ratingComponent.item.rating.toFixed(2)}}</strong>
+    <h6> {{ratingComponent.item.rating.toFixed(2)}}</h6>
     <ng-template #t let-fill="fill">
-          <span class="star" [class.full]="fill === 100">
-            <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-          </span>
+      <span class="star" [class.full]="fill === 100">
+        <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+      </span>
     </ng-template>
   </div>
 
@@ -55,15 +55,13 @@
     <button *ngIf="isLoggedUserItem()" class="btn btn-sm btn-info col-md-1" (click)="editButtonPressed()">
       Edit post
     </button>
-    <button *ngIf="isItemOfCurrentUser()" type="button" class="btn btn-sm btn-warning col-md-1" (click)="deleteItem()">
+    <button *ngIf="isItemOfCurrentUser()" type="button" class="btn btn-sm btn-info col-md-1" (click)="deleteItem()">
       Delete post
     </button>
   </div>
   <hr/>
 
-  <div class="row">
-      <app-star-review></app-star-review>
-  </div>
+  <app-star-review></app-star-review>
 
   <div class="row">
     <div class="col-md-12">
