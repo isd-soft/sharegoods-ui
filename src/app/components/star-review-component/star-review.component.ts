@@ -30,19 +30,22 @@ export class StarReviewComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
-    this.userId = this.auth.getCurrentUser().id;
 
-    /***** Get AvgRating and Transform null avgRating into 0 ****/
-    this.getAverageRating(this.itemId);
+    if (this.auth.isAuthenticated()) {
+      this.userId = this.auth.getCurrentUser().id;
 
-    /***** getUserRating and save it to the screen  ****/
-    this.itemService.getUserRating(this.userId, this.itemId)
-      .subscribe(ratingDto => {
+      /***** getUserRating and save it to the screen  ****/
+      this.itemService.getUserRating(this.userId, this.itemId)
+        .subscribe(ratingDto => {
           this.yourVote = ratingDto;
           this.readonly = true;
         }, error => {
           if (error.status == 404) {}
         });
+    }
+
+    /***** Get AvgRating and Transform null avgRating into 0 ****/
+    this.getAverageRating(this.itemId);
   }
 
   /***** CreateRating  ****/

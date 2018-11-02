@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from "ngx-lightbox";
@@ -9,6 +9,7 @@ import { Item } from "@models/item";
 import { ChatComponent } from 'app/components/chat-component/chat.component';
 import { AuthService } from 'app/auth/auth.service';
 import { DefaultErrorService } from 'app/services/default-error.service';
+import { StarReviewComponent } from "@components/star-review-component/star-review.component";
 
 @Component({
   selector: 'app-item-details',
@@ -16,6 +17,7 @@ import { DefaultErrorService } from 'app/services/default-error.service';
   styleUrls: ['./item-details.component.css']
 })
 export class ItemDetailsComponent implements OnInit {
+  @ViewChild(StarReviewComponent) ratingComponent;
 
   public albums: any = [];
   private _subscription: Subscription;

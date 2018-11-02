@@ -3,7 +3,6 @@
   <!--info messages-->
   <div class="row">
     <div class="col-md-12">
-      <br><br>
       <div *ngIf="showSuccessfullyDeleted" class="alert alert-success alert-dismissible" role="alert">Item has been deleted
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -24,42 +23,50 @@
     </div>
   </div>
 
-
   <!--item details-->
+  <h2 class="text-style"> {{itemDto.title}} </h2>
 
-  <h2>{{itemDto.title}}</h2>
+  <div class="row h-100">
+    <!--avg rating-->
+    <h6 class="avg"> Average rating: </h6>
+    <ngb-rating [(rate)]="ratingComponent.item.rating" [readonly]="true" max="5" [starTemplate]="t"></ngb-rating>
+    <h6> {{ratingComponent.item.rating.toFixed(2)}}</h6>
+    <ng-template #t let-fill="fill">
+      <span class="star" [class.full]="fill === 100">
+        <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+      </span>
+    </ng-template>
+  </div>
+
+  <div class="row h-100 avg">
+    <app-star-review></app-star-review>
+  </div>
 
   <div class="row">
-    <h6 class="col-md-4">Date: {{itemDto.dateTime | date: 'MMM d, y, HH:mm'}}</h6>
+    <h6 class="col-sm-4">Date: {{itemDto.dateTime | date: 'MMM d, y, HH:mm'}}</h6>
 
     <!--status-->
-    <h6 class="col-md-6">Author:
+    <h6 class="col-sm-6">Author:
       <a [routerLink]="['/users/' + itemDto.userId + '/items']">{{itemDto.userName}}</a>&nbsp;
       <span *ngIf="userIsOnline" class="badge badge-success">Online</span>
       <span *ngIf="!userIsOnline" class="badge badge-danger">Offline</span>
-      <button *ngIf="showContactAuthorButton" class="btn btn-sm btn-info btn-chat" (click)="startChat()">
+      <button *ngIf="showContactAuthorButton" class="btn btn-sm btn-info" (click)="startChat()">
         Contact author
       </button>
     </h6>
     <!--button actions-->
-    <button *ngIf="isLoggedUserItem()" class="btn btn-sm btn-info col-md-1" (click)="editButtonPressed()">
+    <button *ngIf="isLoggedUserItem()" class="btn btn-sm btn-info ml-auto" (click)="editButtonPressed()">
       Edit post
     </button>
-    <button *ngIf="isItemOfCurrentUser()" type="button" class="btn btn-sm btn-warning col-md-1" (click)="deleteItem()">
+    <button *ngIf="isItemOfCurrentUser()" type="button" class="btn btn-sm btn-info ml-auto" (click)="deleteItem()">
       Delete post
     </button>
   </div>
   <hr/>
 
-  <!--rate-->
-  <div class="row">
-      <app-star-review></app-star-review>
-  </div>
-
   <div class="row">
     <div class="col-md-12">
-      <p>{{itemDto.description}}</p>
-
+      <div class="text-style">{{itemDto.description}}</div>
       <!--images-->
       <div class="img-row col-sm-3" *ngFor="let image of albums; let i=index">
         <img class="img-frame img-responsive margin"
