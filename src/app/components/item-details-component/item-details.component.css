@@ -17,11 +17,23 @@
   transform: translateY(-5px);
 }
 
-.btn-chat {
-  margin-left: 10px;
+.star {
+  position: relative;
+  display: inline-block;
+  color: #d3d3d3;
+  font-size: 120%;
 }
 
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: #446a7a;
+}
 
+.container {
+  margin-top: 25px;
+}
 
 
 

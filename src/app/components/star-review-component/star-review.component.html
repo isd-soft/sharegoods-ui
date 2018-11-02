@@ -6,7 +6,8 @@
   </button>
 </div>
 
-<div class="col-md-12"> Rate post
+
+<div class="col-md-12" *ngIf="auth.isAuthenticated() && !yourVote.rating"> Rate this post
   <ngb-rating [(rate)]="rating" (hover)="hovered=$event" (leave)="hovered=0" [max]="5" [readonly]="readonly"
               [(ngModel)]="rating" (click)="onRate()"></ngb-rating>
   <ng-template #t let-fill="fill">
@@ -14,5 +15,16 @@
       <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
     </span>
   </ng-template>
-  Average rating: <strong>{{item.rating}}</strong>
 </div>
+
+<div class="col-md-12" *ngIf="auth.isAuthenticated() && yourVote.rating"> You rated
+  <ngb-rating [(rate)]="yourVote.rating" [max]="5" [readonly]="readonly" [(ngModel)]="rating"></ngb-rating>
+  <ng-template #t let-fill="fill">
+    <span class="star" [class.full]="fill === 100">
+      <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+    </span>
+  </ng-template>
+</div>
+
+
+
