@@ -52,7 +52,6 @@ export class AddItemComponent implements OnInit {
         err => {
           console.log('Error occurred to create new item');
         });
-
   }
 
 }

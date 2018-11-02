@@ -25,8 +25,11 @@ import { LoginComponent } from '@components/login-component/login.component';
 import { ChatComponent } from '@components/chat-component/chat.component';
 import { ChatService } from '@services/chat-service';
 import { CommentComponent } from '@components/comment-component/comment.component';
-import { DefaultErrorComponent } from './components/default-error-component/default-error.component';
-import { StarReviewComponent } from './components/star-review-component/star-review.component';
+import { StarReviewComponent } from '@components/star-review-component/star-review.component';
+import { EditItemComponent } from '@components/edit-item-component/edit-item.component';
+import { ProfileComponent } from '@components/profile-component/profile.component';
+import { DefaultErrorComponent } from '@components/default-error-component/default-error.component';
+
 
 @NgModule({
   declarations: [
@@ -45,7 +48,9 @@ import { StarReviewComponent } from './components/star-review-component/star-rev
     ChatComponent,
     DefaultErrorComponent,
     StarReviewComponent,
-    CommentComponent
+    CommentComponent,
+    EditItemComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

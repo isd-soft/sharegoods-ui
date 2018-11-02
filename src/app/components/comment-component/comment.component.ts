@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, takeUntil } from 'rxjs/operators';
+import { Subject, throwError } from 'rxjs';
 
 import { AuthService } from 'app/auth/auth.service';
 import { ItemService } from '@services/item-service/item.service';
@@ -57,6 +59,9 @@ export class CommentComponent implements OnInit {
   }
 
   editComment(comment) {
+    if (this.auth.getCurrentUser().id != comment.userId) {
+      this.router.navigate(['/items']);
+    }
     comment.comment = comment.comment.replace(/(\n|\r|\n)+$/g,'');
     if (!comment.comment) {
       return;
@@ -69,8 +74,11 @@ export class CommentComponent implements OnInit {
       });
   }
 
-  deleteComment(commentId) {
-    this.itemService.deleteComment(this.itemId, commentId)
+  deleteComment(comment) {
+    if (this.auth.getCurrentUser().id != comment.userId) {
+      this.router.navigate(['/items']);
+    }
+    this.itemService.deleteComment(this.itemId, comment.id)
       .subscribe(data => {
         this.getComments();
       },err => {

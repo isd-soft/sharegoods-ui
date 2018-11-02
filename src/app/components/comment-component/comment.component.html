@@ -1,5 +1,7 @@
 <h5>Comments</h5>
 
+<div *ngIf="comments.length == 0"  class="noComments">There aren't any comments yet</div>
+
 <!--comments list-->
 <div class="row" *ngFor="let comment of comments">
   <div class="col-md-1 col-sm-1 col-class">
@@ -30,7 +32,7 @@
         <button *ngIf="isCommentAuthor(comment.userId) || auth.isAdmin()" type="button"
                 class="btn btn-secondary comment-action"
                 data-toggle="tooltip" title="delete"
-                (click)="deleteComment(comment.id)">
+                (click)="deleteComment(comment)">
           <i class="fa fa-trash-o"></i>
         </button>
       </div>
