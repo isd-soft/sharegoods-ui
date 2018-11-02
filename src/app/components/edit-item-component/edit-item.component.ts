@@ -19,6 +19,7 @@ export class EditItemComponent implements OnInit {
 
   formData: FormData = new FormData();
   uploadedImages: any;
+  maxExceeded = false;
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute) {
   }
@@ -47,7 +48,12 @@ export class EditItemComponent implements OnInit {
   }
 
   editItem() {
+    this.maxExceeded = false;
     this.uploadedImages = this.imageUploadComponent.files;
+    if (this.uploadedImages.length > 4) {
+      this.maxExceeded = true;
+      return;
+    }
     this.formData.append('title', this.itemDto.title);
     this.formData.append('description', this.itemDto.description);
     for (let i = 0; i < this.uploadedImages.length; i++) {

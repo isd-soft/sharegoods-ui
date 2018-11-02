@@ -21,7 +21,12 @@
       </div>
 
       <!--item details-->
-      <h2><button *ngIf="isItemOfCurrentUser()" type="button" class="btn btn-sm btn-warning" (click)="deleteItem()">Delete Item</button> {{itemDto.title}}</h2>
+      <h2>{{itemDto.title}}
+        <button *ngIf="isLoggedUserItem()" class="btn btn-sm btn-info" (click)="editButtonPressed()"> Edit post
+        </button>
+        <button *ngIf="isItemOfCurrentUser()" type="button" class="btn btn-sm btn-warning"
+                (click)="deleteItem()">Delete post</button>
+      </h2>
       <p>{{itemDto.description}}</p>
       <h6>Author: <a [routerLink]="['/users/' + itemDto.userId + '/items']">{{itemDto.userName}}</a>&nbsp;
         <span *ngIf="userIsOnline" class="badge badge-success">Online</span>
@@ -30,7 +35,6 @@
 
       <button *ngIf="showContactAuthorButton" (click)="startChat()" class="btn btn-info">CONTACT AUTHOR</button>
       <br>
-      <button *ngIf="isLoggedUserItem()" class="btn btn-info" (click)="editButtonPressed()"> Edit post  </button>
 
       <!--images-->
       <div class="img-row col-sm-3" *ngFor="let image of albums; let i=index">
