@@ -1,5 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+src/main/resources/application.properties
+
 package-lock.json
 
 # compiled output
