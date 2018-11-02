@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from "ngx-lightbox";
@@ -9,6 +9,9 @@ import { Item } from "@models/item";
 import { ChatComponent } from 'app/components/chat-component/chat.component';
 import { AuthService } from 'app/auth/auth.service';
 import { DefaultErrorService } from 'app/services/default-error.service';
+import { StarReviewComponent } from "@components/star-review-component/star-review.component";
+
+import { UserStatus } from 'ng-chat';
 
 @Component({
   selector: 'app-item-details',
@@ -16,10 +19,11 @@ import { DefaultErrorService } from 'app/services/default-error.service';
   styleUrls: ['./item-details.component.css']
 })
 export class ItemDetailsComponent implements OnInit {
+  @ViewChild(StarReviewComponent) ratingComponent;
 
   public albums: any = [];
   private _subscription: Subscription;
-  itemId: Number;
+  itemId;
   itemDetails: any;
   userIsOnline;
   itemDto: Item = new Item();
@@ -40,22 +44,23 @@ export class ItemDetailsComponent implements OnInit {
       this.itemId = params.itemId;
     });
 
-    // set default config
+     // set default config
     this._lighboxConfig.fadeDuration = 1;
 
     this.itemService.getItem(this.itemId)
-      .subscribe(data => {
-          this.itemDetails = data;
-          this.userIsOnline = this.itemDetails.userIsOnline;
-          this.itemDto = this.itemDetails.itemDto;
-          let imageDtoList = this.itemDetails.imageDtoList;
+      .subscribe( data => {
+        this.itemDetails = data;
+        this.userIsOnline = this.itemDetails.userIsOnline;
+        this.itemDto = this.itemDetails.itemDto;
+        let imageDtoList = this.itemDetails.imageDtoList;
 
-          for (let i = 0; i < imageDtoList.length; i++) {
-            let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + imageDtoList[i].imageBase64);
-            this.imagesSrc.push(imageSrc);
-            const album = {src: imageSrc};
-            this.albums.push(album);
-          }
+        for(let i = 0; i < imageDtoList.length; i++) {
+          let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,'+ imageDtoList[i].imageBase64);
+          this.imagesSrc.push(imageSrc);
+          const album = {src: imageSrc};
+          this.albums.push(album);
+          };
+
           this.checkIfShowContactAuthorButton();
         },
         err => {
@@ -65,6 +70,8 @@ export class ItemDetailsComponent implements OnInit {
             alert('Some error has occurred ' + err.status);
           }
         });
+
+    this.chat.adapter.usersObservable.subscribe(this.checkAuthorStatus.bind(this));
   }
 
   isItemOfCurrentUser() {
@@ -91,6 +98,26 @@ export class ItemDetailsComponent implements OnInit {
     return;
   }
 
+  
+
+  // INTENDED ONLY FOR USERS CONNECTED TO CHAT
+  // DOES NOT WORK EVEN FOR THEM YET
+  checkAuthorStatus(users) {
+    console.error("hello1");
+    console.log(this.itemId in users);
+    console.log(users);
+    if(this.itemId in users) {
+      if(users[this.itemId].status==UserStatus.Online) {
+        this.userIsOnline = true;
+        console.error("user online");
+      } else if (users.status==UserStatus.Offline) {
+        this.userIsOnline = false;
+        console.error("user offline");
+      } else {
+        console.error("ELSE");
+      }
+    }
+    
   isLoggedUserItem() {
     return this.auth.isAuthenticated() && this.auth.getCurrentUser().id == this.itemDto.userId;
   }

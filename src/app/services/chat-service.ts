@@ -3,18 +3,20 @@ import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'app/auth/auth.service';
-import { Message } from 'ng-chat';
+import { Message, UserStatus } from 'ng-chat';
 import { environment } from '@env/environment';
+import { ChatMessageServer } from '@models/ChatMessageServer';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   private stompClient;
-  private personalChannel;
   private currentUser;
   private adapter;
   private chatComponent;
+  private requestedChatWithUser;
 
   constructor(private http: HttpClient, private auth: AuthService) {
   }
@@ -31,24 +33,29 @@ export class ChatService {
     this.currentUser = this.auth.getCurrentUser();
   }
 
-  establishSocket(email, pass) {
-    // Check if connection already exists ?
+  establishSocket(email) {
     const socket = new SockJS(environment.apiUrl + '/ws');
     this.stompClient = Stomp.over(socket);
-    this.stompClient.connect({login: email, passcode: pass}, this.onConnected.bind(this));
+    this.stompClient.connect({login: email, passcode: ""}, this.onConnected.bind(this));
     this.setCurrentUser();
   }
 
   onConnected() {
-    this.personalChannel = this.stompClient.subscribe('/channel/user/' + this.currentUser.id, this.onSystemMessageReceived.bind(this));
-
-    // What's in there I wonder?
-    console.log(this.personalChannel);
+    // Connect to personal system channel
+    this.stompClient.subscribe('/channel/user/' + this.currentUser.id, this.onSystemMessageReceived.bind(this));
+    
+    // Send any message to personal channel to get a list of existing rooms
+    let newMessage = new ChatMessageServer;
+    newMessage.sender = this.currentUser.id
+    newMessage.content = "hi"
+    newMessage.type = "CHAT";
+    this.stompClient.send('/app/chat/user/' + this.currentUser.id, {}, JSON.stringify(newMessage));
   }
 
   requestChatRoom(currentUserId, itemUserId) {
     if (this.adapter.getUserById(itemUserId) == null) {
-      this.http.get(environment.apiUrl + '/users/' + currentUserId + '/accessItem/' + itemUserId).subscribe((x) => console.log(x));
+      this.http.get(environment.apiUrl + '/users/' + currentUserId + '/otherUser/' + itemUserId).subscribe((x) => console.log(x));
+      this.requestedChatWithUser = itemUserId;
     } else {
       this.openChatWindow(itemUserId);
     }
@@ -58,9 +65,18 @@ export class ChatService {
 
     const message = JSON.parse(payload.body);
 
+    if (message.type == 'STATUS') {
+      let user = this.adapter.getUserById(message.user.id);
+      if (message.user.status == 'online') {
+        user.status = UserStatus.Online;
+      } else {
+        user.status = UserStatus.Offline;
+      }
+      return;
+    }
+
     if (message.type == 'REMOVE') {
       this.adapter.deleteRoomsAndUsers(message.chatRoomId);
-      // Close window with this user!
       return;
     }
 
@@ -74,15 +90,18 @@ export class ChatService {
     this.adapter.addUser(userDetails);
 
     // Get a room!
-    this.adapter.addRoom(message.chatRoomId, message.otherUser.id);
-    console.log('Current rooms');
-    console.log(this.adapter.getRoomsForUsers());
+    let a: boolean = this.adapter.addRoom(message.chatRoomId, message.otherUser.id);
 
     // Subscribe to messages from this user's room
-    this.joinRoom(message.chatRoomId);
+    if (a) {
+      this.joinRoom(message.chatRoomId);
+    }
 
-    // Open chat window for initiator
-    this.openChatWindow(userDetails.id);
+    // Open chat window if requested a new chat with this user
+    if (this.requestedChatWithUser == userDetails.id) {
+      this.openChatWindow(userDetails.id);
+      this.requestedChatWithUser = null;
+    }
   }
 
   openChatWindow(userId) {

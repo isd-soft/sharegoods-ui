@@ -15,9 +15,11 @@
       <textarea class="form-control col-md-12"
                 name="description"
                 rows="4"
+                maxlength="250"
                 id="description"
-                placeholder="Edit description"
-                [(ngModel)]="itemDto.description"></textarea>
+                placeholder="Edit description(max 250 characters)"
+                [(ngModel)]="itemDto.description">
+      </textarea>
     </div>
   </form>
 
@@ -30,9 +32,13 @@
       </button>
     </div>
   </ng-template>
+
+  <button class="btn btn-danger pull-right" (click)="cancelButtonPressed()"> Cancel </button>
   <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-info pull-right" (click)="editItem()">
     Update post
   </button>
+
+
 
 </div>
 

@@ -9,8 +9,8 @@
   margin-top: 15px;
   height: 200px;
   padding: 10px;
-  margin-bottom: 30px;
-
+  margin-top:30px;
+  margin-bottom: 50px;
 }
 
 .img-container {
@@ -63,6 +63,6 @@ img {
   position: absolute;
   display: inline-block;
   overflow: hidden;
-  color: #446a7a;
+  color: darkorange;
 }
 
