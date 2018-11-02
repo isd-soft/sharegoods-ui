@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from "ngx-lightbox";
@@ -9,6 +9,7 @@ import { Item } from "@models/item";
 import { ChatComponent } from 'app/components/chat-component/chat.component';
 import { AuthService } from 'app/auth/auth.service';
 import { DefaultErrorService } from 'app/services/default-error.service';
+import { StarReviewComponent } from "@components/star-review-component/star-review.component";
 
 import { UserStatus } from 'ng-chat';
 
@@ -18,6 +19,7 @@ import { UserStatus } from 'ng-chat';
   styleUrls: ['./item-details.component.css']
 })
 export class ItemDetailsComponent implements OnInit {
+  @ViewChild(StarReviewComponent) ratingComponent;
 
   public albums: any = [];
   private _subscription: Subscription;
@@ -34,31 +36,7 @@ export class ItemDetailsComponent implements OnInit {
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
               private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig,
-              private auth : AuthService, private chat : ChatComponent, private errorService : DefaultErrorService) {
-  }
-
-  isItemOfCurrentUser() {
-    if (this.auth.isAdmin()) {
-      return true;
-    } else if (this.auth.isAuthenticated()) {
-      if (this.auth.getCurrentUser().id == this.itemDto.userId) {
-        return true;
-      }
-      return false;
-    }
-  }
-
-  checkIfShowContactAuthorButton() {
-    if (this.auth.isAuthenticated()) {
-      if (this.itemDetails.userIsOnline) {
-        if (this.auth.getCurrentUser().id != this.itemDto.userId) {
-          this.showContactAuthorButton = true;
-          return;
-        }
-      }
-    }
-    this.showContactAuthorButton = false;
-    return;
+              private auth: AuthService, private chat: ChatComponent, private errorService : DefaultErrorService) {
   }
 
   ngOnInit() {
@@ -96,6 +74,32 @@ export class ItemDetailsComponent implements OnInit {
     this.chat.adapter.usersObservable.subscribe(this.checkAuthorStatus.bind(this));
   }
 
+  isItemOfCurrentUser() {
+    if (this.auth.isAdmin()) {
+      return true;
+    } else if (this.auth.isAuthenticated()) {
+      if (this.auth.getCurrentUser().id == this.itemDto.userId) {
+        return true;
+      }
+      return false;
+    }
+  }
+
+  checkIfShowContactAuthorButton() {
+    if (this.auth.isAuthenticated()) {
+      if (this.itemDetails.userIsOnline) {
+        if (this.auth.getCurrentUser().id != this.itemDto.userId) {
+          this.showContactAuthorButton = true;
+          return;
+        }
+      }
+    }
+    this.showContactAuthorButton = false;
+    return;
+  }
+
+  
+
   // INTENDED ONLY FOR USERS CONNECTED TO CHAT
   // DOES NOT WORK EVEN FOR THEM YET
   checkAuthorStatus(users) {
@@ -114,9 +118,12 @@ export class ItemDetailsComponent implements OnInit {
       }
     }
     
+  isLoggedUserItem() {
+    return this.auth.isAuthenticated() && this.auth.getCurrentUser().id == this.itemDto.userId;
   }
 
-  ngAfterViewInit() {
+  editButtonPressed() {
+    this.router.navigate(['items/' + this.itemId + '/edit']);
   }
 
   open(index: number): void {
@@ -137,12 +144,12 @@ export class ItemDetailsComponent implements OnInit {
   deleteItem() {
     this.itemService.deleteItem(this.itemId).subscribe(
       data => {
-        
+
         this.showSuccessfullyDeleted = true;
         setTimeout(() => {
           this.router.navigate(['login']);
         }, 2000);
-      }, 
+      },
       error => {
         if(error.status == 404) {
           this.showAlreadyDeleted = true;
@@ -154,7 +161,7 @@ export class ItemDetailsComponent implements OnInit {
           setTimeout(() => {
             this.errorService.displayErrorPage(error)
           }, 2000);
-        }   
+        }
       });
   }
 }

@@ -1,4 +1,12 @@
 h5 {
+  padding: 10px 0;
+}
+
+.noComments {
+  padding-bottom: 10px;
+}
+
+.noComments {
   padding-bottom: 10px;
 }
 
@@ -32,6 +40,7 @@ h5 {
   max-width: 100%;
   height: auto;
 }
+
 @media (min-width: 768px) {
   .col-sm-1 {
     float: left;

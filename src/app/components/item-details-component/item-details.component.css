@@ -1,3 +1,7 @@
+.container {
+  margin-top: 25px;
+}
+
 .img-row {
   display: inline-block;
 }
@@ -17,7 +21,44 @@
   transform: translateY(-5px);
 }
 
+.star {
+  position: relative;
+  display: inline-block;
+  color: #d3d3d3;
+  font-size: 120%;
+}
 
+.half {
+  position: absolute;
+  display: inline-block;
+  overflow: hidden;
+  color: #029771;
+}
+
+ngb-rating {
+  padding-right: 5px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+h6 {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-right: 10px;
+}
+
+.btn {
+  margin-left: 5px;
+}
+
+.avg {
+  padding-left: 15px;
+}
+
+.text-style {
+  overflow-wrap: break-word;
+  white-space: pre-line;
+}
 
 
 
