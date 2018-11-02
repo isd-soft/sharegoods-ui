@@ -1,17 +1,12 @@
-<div class="row">
-  <div class="col-md-12" *ngIf="auth.isAuthenticated() && !yourVote.rating">
-    <h6>Rate this post</h6>
-    <ngb-rating [(rate)]="rating" (hover)="hovered=$event" (leave)="hovered=0" [max]="5" [readonly]="readonly"
-                [(ngModel)]="rating" (click)="onRate()" [starTemplate]="t">
-    </ngb-rating>
-  </div>
-
-  <div class="col-md-12" *ngIf="auth.isAuthenticated() && yourVote.rating">
-    <h6>You rated</h6>
-    <ngb-rating [(rate)]="yourVote.rating" [max]="5" [readonly]="readonly" [(ngModel)]="rating" [starTemplate]="t"></ngb-rating>
-  </div>
+<div *ngIf="auth.isAuthenticated() && !yourVote.rating"> Rate this post
+  <ngb-rating [(rate)]="rating" (hover)="hovered=$event" (leave)="hovered=0" [max]="5" [readonly]="readonly"
+              [(ngModel)]="rating" (click)="onRate()" [starTemplate]="t">
+  </ngb-rating>
 </div>
 
+<div *ngIf="auth.isAuthenticated() && yourVote.rating"> You rated
+  <ngb-rating [(rate)]="yourVote.rating" [max]="5" [readonly]="readonly" [(ngModel)]="rating" [starTemplate]="t"></ngb-rating>
+</div>
 
 <ng-template #t let-fill="fill">
   <span class="star" [class.full]="fill === 100">

@@ -24,12 +24,12 @@
   </div>
 
   <!--item details-->
+  <h2> {{itemDto.title}} </h2>
+
 
   <div class="row h-100">
-    <h2>
-      {{itemDto.title}}
-    </h2>
     <!--avg rating-->
+    <h6 class="avg"> Average rating: </h6>
     <ngb-rating [(rate)]="ratingComponent.item.rating" [readonly]="true" max="5" [starTemplate]="t"></ngb-rating>
     <h6> {{ratingComponent.item.rating.toFixed(2)}}</h6>
     <ng-template #t let-fill="fill">
@@ -37,13 +37,14 @@
         <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
       </span>
     </ng-template>
+    <app-star-review></app-star-review>
   </div>
 
   <div class="row">
-    <h6 class="col-md-4">Date: {{itemDto.dateTime | date: 'MMM d, y, HH:mm'}}</h6>
+    <h6 class="col-sm-4">Date: {{itemDto.dateTime | date: 'MMM d, y, HH:mm'}}</h6>
 
     <!--status-->
-    <h6 class="col-md-6">Author:
+    <h6 class="col-sm-6">Author:
       <a [routerLink]="['/users/' + itemDto.userId + '/items']">{{itemDto.userName}}</a>&nbsp;
       <span *ngIf="userIsOnline" class="badge badge-success">Online</span>
       <span *ngIf="!userIsOnline" class="badge badge-danger">Offline</span>
@@ -61,12 +62,9 @@
   </div>
   <hr/>
 
-  <app-star-review></app-star-review>
-
   <div class="row">
     <div class="col-md-12">
       <p>{{itemDto.description}}</p>
-
       <!--images-->
       <div class="img-row col-sm-3" *ngFor="let image of albums; let i=index">
         <img class="img-frame img-responsive margin"

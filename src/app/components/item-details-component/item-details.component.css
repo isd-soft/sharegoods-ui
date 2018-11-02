@@ -1,3 +1,7 @@
+.container {
+  margin-top: 25px;
+}
+
 .img-row {
   display: inline-block;
 }
@@ -31,14 +35,6 @@
   color: #446a7a;
 }
 
-.container {
-  margin-top: 25px;
-}
-
-h2{
-  padding: 0 15px;
-}
-
 ngb-rating {
   padding-right: 5px;
   margin-top: auto;
@@ -48,10 +44,15 @@ ngb-rating {
 h6 {
   margin-top: auto;
   margin-bottom: auto;
+  padding-right: 10px;
 }
 
 .btn {
   margin-left: 5px;
+}
+
+.avg {
+  padding-left: 15px;
 }
 
 
