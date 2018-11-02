@@ -6,6 +6,10 @@ h5 {
   padding-bottom: 10px;
 }
 
+.noComments {
+  padding-bottom: 10px;
+}
+
 .thumbnail {
   padding:0px;
   display: block;
