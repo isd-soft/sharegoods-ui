@@ -60,7 +60,7 @@
                  name="password"
                  #password="ngModel">
           <div *ngIf="password.touched && !password.valid" class="alert alert-danger">
-            the password must contain at least one digit, one uppercase, one lowercase and symbol like !@#$&*
+            the password must contain at least one digit, one uppercase, one lowercase
           </div>
         </div>
         <button type="submit" class="btn btn-success" [disabled]="newRegisterForm.form.invalid" (click)="createUser()">
