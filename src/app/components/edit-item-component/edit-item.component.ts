@@ -38,6 +38,7 @@ export class EditItemComponent implements OnInit {
           for (let i = 0; i < imageDtoList.length; i++) {
             this.images.push({fileName: imageDtoList[i].name, url: environment.apiUrl + '/items/getImage/' + imageDtoList[i].id});
           }
+          this.imageUploadComponent.fileCounter = imageDtoList.length;
         },
         err => {
           if (err.status == '404') {
