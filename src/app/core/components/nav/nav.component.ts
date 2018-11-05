@@ -44,7 +44,6 @@ export class NavComponent implements OnInit {
 
   findItems() {
     this.search.changeMessage(this.searchTitle);
-    this.router.navigate(['items']);
   }
 
   searchTitleChange() {

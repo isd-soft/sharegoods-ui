@@ -36,7 +36,7 @@ export class ItemComponent implements OnInit {
 
   ngOnInit() {
       // Initial values
-      //this.search.changeMessage('');
+      this.search.changeMessage('');
       this.setSortingOptions('Rating','Desc');
 
       // Get User Id From URL For Items By Specific User
