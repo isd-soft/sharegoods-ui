@@ -14,6 +14,7 @@ import {AuthService} from 'app/auth/auth.service';
 export class RegisterComponent {
 
   private emailNotUnique = false;
+  private invalidPassword = false;
   user: User = new User();
 
   constructor(
@@ -34,6 +35,8 @@ export class RegisterComponent {
         err => {
           if (err.status == '409') {
             this.emailNotUnique = true;
+          } else if (err.status == '400') {
+            this.invalidPassword = true;
           } else {
             alert('Some error occured: ' + err.status);
           }

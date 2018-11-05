@@ -59,7 +59,7 @@
                  placeholder="Enter password"
                  name="password"
                  #password="ngModel">
-          <div *ngIf="password.touched && !password.valid" class="alert alert-danger">
+          <div *ngIf="invalidPassword || !password.valid" class="alert alert-danger">
             the password must contain at least one digit, one uppercase, one lowercase
           </div>
         </div>
