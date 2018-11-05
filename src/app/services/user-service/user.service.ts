@@ -31,7 +31,7 @@ export class UserService {
   public updatePassword(id, oldPassword, newPassword) {
     const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     const body = new HttpParams().set('oldPassword', oldPassword).set('newPassword', newPassword);
-    return this.http.put(environment.apiUrl + `/users/${id}/updatepassword`, body, {headers: header});
+    return this.http.put(environment.apiUrl + `/users/${id}/updatepassword`, body, {headers: header, responseType : 'text'});
   }
 
   public deleteUser(id) {

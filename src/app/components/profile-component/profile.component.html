@@ -86,7 +86,7 @@
             </div>
 
             <button type="submit" class="btn btn-success" [disabled]="updateForm.form.invalid"
-                    (click)="profileHasChanged = firstName.pristine && lastName.pristine && email.pristine; updateUser()">
+                    (click)="profileHasNotChanged = firstName.pristine && lastName.pristine && email.pristine; updateUser()">
               Save
             </button>
             <button class="btn btn-danger" (click)="getUser()"> Cancel</button>

@@ -14,7 +14,8 @@ export class ProfileComponent implements OnInit {
   user: User;
   userId: Number;
   private emailNotUnique = false;
-  profileHasChanged: string;
+  profileHasNotChanged: boolean;
+
   oldPassword = '';
   newPassword = '';
   newPasswordConfirm = '';
@@ -46,29 +47,28 @@ export class ProfileComponent implements OnInit {
 
   getUser() {
     this.showSuccessfullyUpdated = false;
+    this.showProfileHasNotChanged = false;
     this.userService.getUser(this.auth.getCurrentUser().id)
       .subscribe(data => {
         this.user = data;
-        this.showSuccessfullyUpdated = false;
-        this.showProfileHasNotChanged = false;
         },error => {
         console.error("Some error has occured:", error);
       });
   }
 
   updateUser() {
-    console.log("profile has changed", this.profileHasChanged);
+    console.log("profile has changed", this.profileHasNotChanged);
     this.userService.updateUser(this.userId, this.user)
       .subscribe(data => {
-          if (this.profileHasChanged) {
-            this.showSuccessfullyUpdated = true;
-            setTimeout(() => {
-              this.getUser();
-            }, 2000);
-          } else {
+          if (this.profileHasNotChanged) {
             this.showProfileHasNotChanged = true;
             setTimeout(() => {
               this.showProfileHasNotChanged = false;
+            }, 2000);
+          } else {
+            this.showSuccessfullyUpdated = true;
+            setTimeout(() => {
+              this.getUser();
             }, 2000);
           }},
         err => {
@@ -93,7 +93,7 @@ export class ProfileComponent implements OnInit {
           setTimeout(() => {
             this.auth.removeToken();
             this.router.navigate(['login']);
-          }, 2000);
+          }, 1500);
         },
         err => {
           if (err.status == '404') {

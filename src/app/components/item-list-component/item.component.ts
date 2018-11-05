@@ -36,7 +36,7 @@ export class ItemComponent implements OnInit {
 
   ngOnInit() {
       // Initial values
-      this.search.changeMessage('');
+      //this.search.changeMessage('');
       this.setSortingOptions('Rating','Desc');
 
       // Get User Id From URL For Items By Specific User
@@ -46,9 +46,9 @@ export class ItemComponent implements OnInit {
           } else {
             this.userId = undefined;
           }
-          
+
       });
-      
+
       // Subscribe to changes in search input and query server on change
       this.search.currentMessage.subscribe(message => {
         this.searchTitle = message;
@@ -92,7 +92,7 @@ export class ItemComponent implements OnInit {
       }
     },
     err => {
-      console.log("Error occured"); 
+      console.log("Error occured");
       this.foundItems = false;
     });
   }
