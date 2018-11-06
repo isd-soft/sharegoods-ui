@@ -7,11 +7,11 @@ import {
   HttpResponse,
   HttpErrorResponse
 } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
-import { AuthService } from 'app/auth/auth.service';
+import { AuthService } from '@auth/auth.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -42,7 +42,7 @@ export class TokenInterceptor implements HttpInterceptor {
             this.router.navigate(['login']);
           } else if (err.status == 0) {
             console.error('Server timeout');
-            //this.router.navigate(['login']);
+            // this.router.navigate(['login']);
           }
         }
       }

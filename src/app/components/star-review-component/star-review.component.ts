@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {AuthService} from '../../auth/auth.service';
-import {ItemService} from '@services/item-service/item.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { AuthService } from '@auth/auth.service';
+import { ItemService } from '@services/item-service/item.service';
 
 @Component({
   selector: 'app-star-review',
@@ -40,7 +41,8 @@ export class StarReviewComponent implements OnInit {
           this.yourVote = ratingDto;
           this.readonly = true;
         }, error => {
-          if (error.status == 404) {}
+          if (error.status == 404) {
+          }
         });
     }
 
@@ -52,7 +54,8 @@ export class StarReviewComponent implements OnInit {
   onRate() {
     if (!this.readonly) {
       this.itemService.createRating(this.userId, this.itemId, this.rating).subscribe(this.onCreateSuccess.bind(this),
-        error1 => {});
+        error1 => {
+        });
     } else {
       this.isAlert = true;
     }
@@ -63,7 +66,8 @@ export class StarReviewComponent implements OnInit {
     this.readonly = true;
     this.itemService.getUserRating(this.userId, this.itemId).subscribe(ratingDto => {
       this.yourVote = ratingDto;
-    }); this.getAverageRating(this.itemId);
+    });
+    this.getAverageRating(this.itemId);
   }
 
   getAverageRating(itemId) {

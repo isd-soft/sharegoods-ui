@@ -24,9 +24,9 @@ export class NavComponent implements OnInit {
   ];
 
   constructor(private auth: AuthService,
-    private router: Router,
-    private search: SearchService,
-    private chatComponent: ChatComponent) {
+              private router: Router,
+              private search: SearchService,
+              private chatComponent: ChatComponent) {
   }
 
   ngOnInit() {

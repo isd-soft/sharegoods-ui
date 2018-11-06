@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { User } from 'app/models/user';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
+import { User } from '@models/user';
 import { environment } from '@env/environment';
 
 @Injectable()
 export class AuthService {
 
-  constructor (
+  constructor(
     private http: HttpClient,
     private router: Router
-  ) {  }
+  ) {
+  }
 
   data = new BehaviorSubject<any[]>([]);
   array = [];
@@ -34,13 +35,13 @@ export class AuthService {
 
   public isAdmin(): boolean {
     if (this.isAuthenticated()) {
-      return this.getCurrentUser().role == "ADMIN";
+      return this.getCurrentUser().role == 'ADMIN';
     } else {
       return false;
     }
   }
 
-  public redirectIfNotLoggedIn(redirectToComponent:string) {
+  public redirectIfNotLoggedIn(redirectToComponent: string) {
     if (!this.isAuthenticated()) {
       this.router.navigate([redirectToComponent]);
     }

@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { ImageUploadComponent } from "angular2-image-upload";
-import { ItemService } from "@services/item-service/item.service";
-import { environment } from "@env/environment";
+import { ActivatedRoute, Router } from '@angular/router';
+import { ImageUploadComponent } from 'angular2-image-upload';
+
+import { ItemService } from '@services/item-service/item.service';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-edit-item',
@@ -10,7 +11,7 @@ import { environment } from "@env/environment";
   styleUrls: ['./edit-item.component.css']
 })
 export class EditItemComponent implements OnInit {
-  @ViewChild( ImageUploadComponent ) imageUploadComponent;
+  @ViewChild(ImageUploadComponent) imageUploadComponent;
 
   itemId: Number;
   itemDto: any;
@@ -34,7 +35,7 @@ export class EditItemComponent implements OnInit {
       .subscribe(data => {
           this.itemDetails = data;
           this.itemDto = this.itemDetails.itemDto;
-          let imageDtoList = this.itemDetails.imageDtoList;
+          const imageDtoList = this.itemDetails.imageDtoList;
           for (let i = 0; i < imageDtoList.length; i++) {
             this.images.push({fileName: imageDtoList[i].name, url: environment.apiUrl + '/items/getImage/' + imageDtoList[i].id});
           }
@@ -63,8 +64,8 @@ export class EditItemComponent implements OnInit {
       if (this.uploadedImages[i].src.includes('data')) {
         this.formData.append('file', this.uploadedImages[i].file);
       } else {
-        //image already in database, get id
-        let url = this.uploadedImages[i].src;
+        // image already in database, get id
+        const url = this.uploadedImages[i].src;
         this.formData.append('uploadedImagesIds', url.substring(url.lastIndexOf('/') + 1));
       }
     }

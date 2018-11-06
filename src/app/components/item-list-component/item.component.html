@@ -1,7 +1,5 @@
 <app-add-item *ngIf="auth.isAuthenticated()"></app-add-item>
 
-
-
 <div class="container" *ngIf="foundItems; else itemsNotFound">
 
   <span *ngIf="userId != undefined && items != undefined">Items posted by <b>{{ items[0].itemUserName }}</b></span>

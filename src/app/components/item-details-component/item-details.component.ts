@@ -1,17 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { DomSanitizer } from "@angular/platform-browser";
-import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from "ngx-lightbox";
-import { Subscription } from "rxjs/Rx";
-
-import { ItemService } from "@services/item-service/item.service";
-import { Item } from "@models/item";
-import { ChatComponent } from 'app/components/chat-component/chat.component';
-import { AuthService } from 'app/auth/auth.service';
-import { DefaultErrorService } from 'app/services/default-error.service';
-import { StarReviewComponent } from "@components/star-review-component/star-review.component";
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from 'ngx-lightbox';
+import { Subscription } from 'rxjs/Subscription';
 import { UserStatus } from 'ng-chat';
+
+import { ItemService } from '@services/item-service/item.service';
+import { Item } from '@models/item';
+import { ChatComponent } from '@components/chat-component/chat.component';
+import { AuthService } from '@auth/auth.service';
+import { DefaultErrorService } from '@services/default-error.service';
+import { StarReviewComponent } from '@components/star-review-component/star-review.component';
 
 @Component({
   selector: 'app-item-details',
@@ -52,15 +51,14 @@ export class ItemDetailsComponent implements OnInit {
           this.itemDetails = data;
           this.userIsOnline = this.itemDetails.userIsOnline;
           this.itemDto = this.itemDetails.itemDto;
-          let imageDtoList = this.itemDetails.imageDtoList;
+          const imageDtoList = this.itemDetails.imageDtoList;
 
           for (let i = 0; i < imageDtoList.length; i++) {
-            let imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + imageDtoList[i].imageBase64);
+            const imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + imageDtoList[i].imageBase64);
             this.imagesSrc.push(imageSrc);
             const album = {src: imageSrc};
             this.albums.push(album);
-          };
-
+          }
           this.checkIfShowContactAuthorButton();
         },
         err => {
@@ -78,10 +76,7 @@ export class ItemDetailsComponent implements OnInit {
     if (this.auth.isAdmin()) {
       return true;
     } else if (this.auth.isAuthenticated()) {
-      if (this.auth.getCurrentUser().id == this.itemDto.userId) {
-        return true;
-      }
-      return false;
+      return this.auth.getCurrentUser().id == this.itemDto.userId;
     }
   }
 

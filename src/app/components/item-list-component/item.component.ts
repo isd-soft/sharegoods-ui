@@ -4,7 +4,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { AuthService } from 'app/auth/auth.service';
 import { ItemService } from '@services/item-service/item.service';
-import { SearchService } from "@services/search-service/search.service";
+import { SearchService } from '@services/search-service/search.service';
 
 @Component({
   selector: 'app-item',
@@ -35,25 +35,25 @@ export class ItemComponent implements OnInit {
 
 
   ngOnInit() {
-      // Initial values
-      this.search.changeMessage('');
-      this.setSortingOptions('Rating','Desc');
+    // Initial values
+    this.search.changeMessage('');
+    this.setSortingOptions('Rating', 'Desc');
 
-      // Get User Id From URL For Items By Specific User
-      this.route.params.subscribe(params => {
-          if (params['id'] != undefined) {
-            this.userId = +params['id'];
-          } else {
-            this.userId = undefined;
-          }
+    // Get User Id From URL For Items By Specific User
+    this.route.params.subscribe(params => {
+      if (params['id'] != undefined) {
+        this.userId = +params['id'];
+      } else {
+        this.userId = undefined;
+      }
 
-      });
+    });
 
-      // Subscribe to changes in search input and query server on change
-      this.search.currentMessage.subscribe(message => {
-        this.searchTitle = message;
-        this.getItems();
-      });
+    // Subscribe to changes in search input and query server on change
+    this.search.currentMessage.subscribe(message => {
+      this.searchTitle = message;
+      this.getItems();
+    });
   }
 
   getUserIdIfAuth() {
@@ -83,18 +83,18 @@ export class ItemComponent implements OnInit {
 
   subscribeToItems(service) {
     service.subscribe(data => {
-      this.itemsDto = [];
-      this.foundItems = true;
-      this.items = data;
-      for (let i = 0; i < this.items.length; i++) {
-        const imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + this.items[i].thumbnailDto.imageBase64);
-        this.itemsDto.push({itemId: this.items[i].itemId, title: this.items[i].title, src: imageSrc, rating: this.items[i].rating});
-      }
-    },
-    err => {
-      console.log("Error occured");
-      this.foundItems = false;
-    });
+        this.itemsDto = [];
+        this.foundItems = true;
+        this.items = data;
+        for (let i = 0; i < this.items.length; i++) {
+          const imageSrc = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + this.items[i].thumbnailDto.imageBase64);
+          this.itemsDto.push({itemId: this.items[i].itemId, title: this.items[i].title, src: imageSrc, rating: this.items[i].rating});
+        }
+      },
+      err => {
+        console.log('Error occured');
+        this.foundItems = false;
+      });
   }
 }
 
