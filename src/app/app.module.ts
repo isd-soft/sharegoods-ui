@@ -6,6 +6,7 @@ import { ImageUploadModule } from 'angular2-image-upload';
 import { LightboxModule } from 'ngx-lightbox';
 import { NgChatModule } from 'ng-chat';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,7 +30,6 @@ import { StarReviewComponent } from '@components/star-review-component/star-revi
 import { EditItemComponent } from '@components/edit-item-component/edit-item.component';
 import { ProfileComponent } from '@components/profile-component/profile.component';
 import { DefaultErrorComponent } from '@components/default-error-component/default-error.component';
-
 
 @NgModule({
   declarations: [
@@ -61,7 +61,8 @@ import { DefaultErrorComponent } from '@components/default-error-component/defau
     LightboxModule,
     FormsModule,
     NgChatModule,
-    NgbModule
+    NgbModule,
+    NgxSpinnerModule
   ],
   exports: [
     FooterComponent,

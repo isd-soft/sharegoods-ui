@@ -11,6 +11,7 @@ import { ChatComponent } from '@components/chat-component/chat.component';
 import { AuthService } from '@auth/auth.service';
 import { DefaultErrorService } from '@services/default-error.service';
 import { StarReviewComponent } from '@components/star-review-component/star-review.component';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-item-details',
@@ -35,10 +36,11 @@ export class ItemDetailsComponent implements OnInit {
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
               private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig,
-              private auth: AuthService, private chat: ChatComponent, private errorService: DefaultErrorService) {
+              private auth: AuthService, private chat: ChatComponent, private errorService: DefaultErrorService, private spinner: NgxSpinnerService) {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
@@ -70,6 +72,7 @@ export class ItemDetailsComponent implements OnInit {
         });
 
     this.chat.adapter.usersObservable.subscribe(this.checkAuthorStatus.bind(this));
+    this.spinner.hide();
   }
 
   isItemOfCurrentUser() {

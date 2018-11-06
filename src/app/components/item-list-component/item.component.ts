@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgxSpinnerService } from "ngx-spinner";
 
 import { AuthService } from 'app/auth/auth.service';
 import { ItemService } from '@services/item-service/item.service';
@@ -32,7 +33,8 @@ export class ItemComponent implements OnInit, OnDestroy {
               private itemService: ItemService,
               private _sanitizer: DomSanitizer,
               private auth: AuthService,
-              private search: SearchService) {
+              private search: SearchService,
+              private spinner: NgxSpinnerService) {
 
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
@@ -42,6 +44,7 @@ export class ItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.setSortingOptions('Rating', 'Desc');
 
     // Get User Id From URL For Items By Specific User
@@ -58,6 +61,7 @@ export class ItemComponent implements OnInit, OnDestroy {
       this.searchTitle = message;
       this.getItems();
     });
+   this.spinner.hide();
   }
 
   getUserIdIfAuth() {
