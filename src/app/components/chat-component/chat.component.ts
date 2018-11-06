@@ -1,8 +1,9 @@
 import { Component, OnInit, Injectable, ViewChild } from '@angular/core';
 import { IChatController } from 'ng-chat';
+
 import { Adapter } from '@components/chat-component/adapter';
 import { ChatService } from '@services/chat-service';
-import { AuthService } from 'app/auth/auth.service';
+import { AuthService } from '@auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class ChatComponent implements OnInit {
   // The following fields are needed for ng-chat module
   public adapter = new Adapter();
   public userId;
-  public title = "Chats";
+  public title = 'Chats';
   public isCollapsed = false;
 
   constructor(private chatService: ChatService,
@@ -31,8 +32,12 @@ export class ChatComponent implements OnInit {
     this.adapter.setChatComponent(this);
     this.chatService.setChatComponent(this);
     this.chatService.setAdapter(this.adapter);
-    this.auth.isAuthenticatedObservable().subscribe(this.onAuthUpdate.bind(this), error => {console.log(error);});
-    if(this.auth.isAuthenticated){this.chatService.establishSocket(this.auth.getCurrentUser().email);}
+    this.auth.isAuthenticatedObservable().subscribe(this.onAuthUpdate.bind(this), error => {
+      console.log(error);
+    });
+    if (this.auth.isAuthenticated) {
+      this.chatService.establishSocket(this.auth.getCurrentUser().email);
+    }
   }
 
   openChatWindow(user) {
@@ -40,14 +45,14 @@ export class ChatComponent implements OnInit {
     this.isCollapsed = false;
   }
 
-  onAuthUpdate(data) {
+  onAuthUpdate() {
     if (this.auth.isAuthenticated()) {
       this.userId = this.auth.getCurrentUser().id;
     }
   }
 
   setUserId(userId) {
-    this.userId = userId
+    this.userId = userId;
   }
 
   getUserId() {

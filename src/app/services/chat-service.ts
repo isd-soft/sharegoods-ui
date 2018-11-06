@@ -36,19 +36,19 @@ export class ChatService {
   establishSocket(email) {
     const socket = new SockJS(environment.apiUrl + '/ws');
     this.stompClient = Stomp.over(socket);
-    this.stompClient.connect({login: email, passcode: ""}, this.onConnected.bind(this));
+    this.stompClient.connect({login: email, passcode: ''}, this.onConnected.bind(this));
     this.setCurrentUser();
   }
 
   onConnected() {
     // Connect to personal system channel
     this.stompClient.subscribe('/channel/user/' + this.currentUser.id, this.onSystemMessageReceived.bind(this));
-    
+
     // Send any message to personal channel to get a list of existing rooms
-    let newMessage = new ChatMessageServer;
-    newMessage.sender = this.currentUser.id
-    newMessage.content = "hi"
-    newMessage.type = "CHAT";
+    const newMessage = new ChatMessageServer;
+    newMessage.sender = this.currentUser.id;
+    newMessage.content = 'hi';
+    newMessage.type = 'CHAT';
     this.stompClient.send('/app/chat/user/' + this.currentUser.id, {}, JSON.stringify(newMessage));
   }
 
@@ -66,7 +66,7 @@ export class ChatService {
     const message = JSON.parse(payload.body);
 
     if (message.type == 'STATUS') {
-      let user = this.adapter.getUserById(message.user.id);
+      const user = this.adapter.getUserById(message.user.id);
       if (message.user.status == 'online') {
         user.status = UserStatus.Online;
       } else {
@@ -90,7 +90,7 @@ export class ChatService {
     this.adapter.addUser(userDetails);
 
     // Get a room!
-    let a: boolean = this.adapter.addRoom(message.chatRoomId, message.otherUser.id);
+    const a: boolean = this.adapter.addRoom(message.chatRoomId, message.otherUser.id);
 
     // Subscribe to messages from this user's room
     if (a) {

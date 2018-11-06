@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { UserService } from "@services/user-service/user.service";
-import { AuthService } from "@auth/auth.service";
-import { User } from "@models/user";
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { UserService } from '@services/user-service/user.service';
+import { AuthService } from '@auth/auth.service';
+import { User } from '@models/user';
 
 @Component({
   selector: 'app-profile',
@@ -32,7 +33,8 @@ export class ProfileComponent implements OnInit {
   constructor(private router: Router,
               private userService: UserService,
               private auth: AuthService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.auth.redirectIfNotLoggedIn('items');
@@ -51,13 +53,13 @@ export class ProfileComponent implements OnInit {
     this.userService.getUser(this.auth.getCurrentUser().id)
       .subscribe(data => {
         this.user = data;
-        },error => {
-        console.error("Some error has occured:", error);
+      }, error => {
+        console.error('Some error has occured:', error);
       });
   }
 
   updateUser() {
-    console.log("profile has changed", this.profileHasNotChanged);
+    console.log('profile has changed', this.profileHasNotChanged);
     this.userService.updateUser(this.userId, this.user)
       .subscribe(data => {
           if (this.profileHasNotChanged) {
@@ -70,7 +72,8 @@ export class ProfileComponent implements OnInit {
             setTimeout(() => {
               this.getUser();
             }, 2000);
-          }},
+          }
+        },
         err => {
           if (err.status == '409') {
             this.emailNotUnique = true;
@@ -98,7 +101,7 @@ export class ProfileComponent implements OnInit {
         err => {
           if (err.status == '404') {
             this.showOldPasswordIncorrect = true;
-          } else if  (err.status == '400') {
+          } else if (err.status == '400') {
             this.showNewPasswordInvalid = true;
           } else {
             alert('Some error occured: ' + err.status);

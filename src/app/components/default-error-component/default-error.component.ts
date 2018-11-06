@@ -1,5 +1,6 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { DefaultErrorService } from '@services/default-error.service';
 
 @Injectable()
@@ -12,10 +13,13 @@ export class DefaultErrorComponent implements OnInit {
 
   errorMessage;
 
-  constructor(private router : Router,
-              private errorService : DefaultErrorService) { }
+  constructor(private router: Router,
+              private errorService: DefaultErrorService) {
+  }
 
   ngOnInit() {
-    this.errorService.logsObservable.subscribe(data => {this.errorMessage = data});
+    this.errorService.logsObservable.subscribe(data => {
+      this.errorMessage = data;
+    });
   }
 }

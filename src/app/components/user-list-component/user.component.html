@@ -2,34 +2,41 @@
 
   <br>
 
-  <div *ngIf="showSuccessfullyDeleted" class="alert alert-success alert-dismissible" role="alert">User {{ lastUserDeleted }} has been deleted
+  <div *ngIf="showSuccessfullyDeleted" class="alert alert-success alert-dismissible" role="alert">User {{
+                                                                                                  lastUserDeleted }} has
+                                                                                                  been deleted
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  
-  <div *ngIf="showAlreadyDeleted" class="alert alert-warning alert-dismissible" role="alert">User {{ lastUserDeleted }} is already deleted
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+
+  <div *ngIf="showAlreadyDeleted" class="alert alert-warning alert-dismissible" role="alert">User {{ lastUserDeleted }}
+                                                                                             is already deleted
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
 
   <table class="table table-hover">
 
     <thead>
-      <tr class="row">
-        <th class="col-md-4" scope="col">Name</th>
-        <th class="col-md-4" scope="col">Email</th>
-        <th class="col-md-4" scope="col">Action</th>
-      </tr>
+    <tr class="row">
+      <th class="col-md-4" scope="col">Name</th>
+      <th class="col-md-4" scope="col">Email</th>
+      <th class="col-md-4" scope="col">Action</th>
+    </tr>
     </thead>
 
     <tbody>
-      <tr class="row" *ngFor="let user of users">
-        <td class="col-md-4"> {{ user.firstName + ' ' + user.lastName }}</td>
-        <td class="col-md-4"> {{ user.email }}</td>
-        <td class="col-md-4"> <button class="btn btn-success" *ngIf="user.id != auth.getCurrentUser().id" (click)="deleteUser(user.id)">Delete</button> </td>
-      </tr>
+    <tr class="row" *ngFor="let user of users">
+      <td class="col-md-4"> {{ user.firstName + ' ' + user.lastName }}</td>
+      <td class="col-md-4"> {{ user.email }}</td>
+      <td class="col-md-4">
+        <button class="btn btn-success" *ngIf="user.id != auth.getCurrentUser().id" (click)="deleteUser(user.id)">
+          Delete
+        </button>
+      </td>
+    </tr>
     </tbody>
 
   </table>
