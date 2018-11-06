@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { environment } from '@env/environment';
 import { User } from '@models/user';
@@ -28,8 +28,14 @@ export class UserService {
     return this.http.put<User>(environment.apiUrl + `/users/${id}`, user);
   }
 
+  public updatePassword(id, oldPassword, newPassword) {
+    const header = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    const body = new HttpParams().set('oldPassword', oldPassword).set('newPassword', newPassword);
+    return this.http.put(environment.apiUrl + `/users/${id}/updatepassword`, body, {headers: header, responseType: 'text'});
+  }
+
   public deleteUser(id) {
-    return this.http.delete(environment.apiUrl + '/users/' + id, {responseType : 'text'});
+    return this.http.delete(environment.apiUrl + '/users/' + id, {responseType: 'text'});
   }
 
 }

@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {User} from '@models/user';
-import {UserService} from '@services/user-service/user.service';
-import {AuthService} from 'app/auth/auth.service';
+import { User } from '@models/user';
+import { UserService } from '@services/user-service/user.service';
+import { AuthService } from 'app/auth/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -14,6 +14,7 @@ import {AuthService} from 'app/auth/auth.service';
 export class RegisterComponent {
 
   private emailNotUnique = false;
+  private invalidPassword = false;
   user: User = new User();
 
   constructor(
@@ -34,6 +35,8 @@ export class RegisterComponent {
         err => {
           if (err.status == '409') {
             this.emailNotUnique = true;
+          } else if (err.status == '400') {
+            this.invalidPassword = true;
           } else {
             alert('Some error occured: ' + err.status);
           }
@@ -41,7 +44,7 @@ export class RegisterComponent {
   }
 
   validatePassword() {
-    let myPassword = this.user.password;
+    const myPassword = this.user.password;
 
     if ((/[a-z]/.test(myPassword)) && (/[A-Z]/.test(myPassword)) && (/[0-9]/.test(myPassword))) {
       console.log('good!');

@@ -23,7 +23,8 @@
     </div>
   </form>
 
-  <image-upload [max]="4" [uploadedFiles]="images" dropBoxMessage="Drop your images here(max 4)"></image-upload>
+  <image-upload [max]="4" [uploadedFiles]="images" dropBoxMessage="Drop your images here(max 4)"
+                [extensions]="['jpeg','png', 'jpg']"></image-upload>
   <ng-template [ngIf]="maxExceeded">
     <div class="alert alert-danger">
       You can upload max 4 images
@@ -33,11 +34,10 @@
     </div>
   </ng-template>
 
-  <button class="btn btn-danger pull-right" (click)="cancelButtonPressed()"> Cancel </button>
+  <button class="btn btn-danger pull-right" (click)="cancelButtonPressed()"> Cancel</button>
   <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-info pull-right" (click)="editItem()">
     Update post
   </button>
-
 
 
 </div>

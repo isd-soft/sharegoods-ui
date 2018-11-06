@@ -1,7 +1,5 @@
 <app-add-item *ngIf="auth.isAuthenticated()"></app-add-item>
 
-
-
 <div class="container" *ngIf="foundItems; else itemsNotFound">
 
   <span *ngIf="userId != undefined && items != undefined">Items posted by <b>{{ items[0].itemUserName }}</b></span>
@@ -44,7 +42,7 @@
   <div class="row">
     <div class="gallery col-md-3" *ngFor="let item of itemsDto">
       <div class="img-container">
-        <a [routerLink]="['/items/', item.itemId]"> 
+        <a [routerLink]="['/items/', item.itemId]">
           <img alt="Image" [src]="item.src">
         </a>
       </div>
@@ -65,7 +63,7 @@
 
 <ng-template #itemsNotFound>
   <div class="container">
-    <h5> No items found </h5>
+    <h5> No items found</h5>
   </div>
 </ng-template>
 

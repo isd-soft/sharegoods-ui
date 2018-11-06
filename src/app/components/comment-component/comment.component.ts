@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, takeUntil } from 'rxjs/operators';
-import { Subject, throwError } from 'rxjs';
-
 import { AuthService } from 'app/auth/auth.service';
 import { ItemService } from '@services/item-service/item.service';
 
@@ -35,11 +32,11 @@ export class CommentComponent implements OnInit {
   }
 
   addComment() {
-    this.comment = this.comment.replace(/(\n|\r|\n)+$/g,'');
+    this.comment = this.comment.replace(/([\n\r\n])+$/g, '');
     if (!this.comment) {
       return;
     }
-    let newComment = this.comment;
+    const newComment = this.comment;
     this.comment = '';
     this.itemService.addComment(this.itemId, this.userId, newComment)
       .subscribe(data => {
@@ -54,7 +51,7 @@ export class CommentComponent implements OnInit {
     this.itemService.getComments(this.itemId)
       .subscribe(data => {
         this.comments = data;
-        console.log("comments:", this.comments);
+        console.log('comments:', this.comments);
       });
   }
 
@@ -62,15 +59,15 @@ export class CommentComponent implements OnInit {
     if (this.auth.getCurrentUser().id != comment.userId) {
       this.router.navigate(['/items']);
     }
-    comment.comment = comment.comment.replace(/(\n|\r|\n)+$/g,'');
+    comment.comment = comment.comment.replace(/([\n\r\n])+$/g, '');
     if (!comment.comment) {
       return;
     }
     this.itemService.updateComment(this.itemId, comment.id, comment.comment)
       .subscribe(data => {
         this.editCommentId = null;
-      },err => {
-        console.log("Error occured updating comment:", err);
+      }, err => {
+        console.log('Error occured updating comment:', err);
       });
   }
 
@@ -81,8 +78,8 @@ export class CommentComponent implements OnInit {
     this.itemService.deleteComment(this.itemId, comment.id)
       .subscribe(data => {
         this.getComments();
-      },err => {
-        console.log("Error occured deleting comment:", err);
+      }, err => {
+        console.log('Error occured deleting comment:', err);
       });
   }
 
