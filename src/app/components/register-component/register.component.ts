@@ -28,6 +28,8 @@ export class RegisterComponent {
   }
 
   createUser(): void {
+    this.invalidPassword = false;
+    this.emailNotUnique = false;
     this.userService.createUser(this.user)
       .subscribe(data => {
           this.router.navigate(['login/newuser']);
@@ -43,15 +45,4 @@ export class RegisterComponent {
         });
   }
 
-  validatePassword() {
-    const myPassword = this.user.password;
-
-    if ((/[a-z]/.test(myPassword)) && (/[A-Z]/.test(myPassword)) && (/[0-9]/.test(myPassword))) {
-      console.log('good!');
-      return true;
-    } else {
-      console.error('bad');
-      return false;
-    }
-  }
 }

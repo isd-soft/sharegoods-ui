@@ -110,7 +110,7 @@
                      id="oldpassword"
                      required
                      [(ngModel)]="oldPassword"
-                     minlength="4"
+                     minlength="3"
                      maxlength="16"
                      name="oldpassword"
                      #oldpassword="ngModel">
@@ -126,7 +126,7 @@
                      id="newpassword"
                      required
                      [(ngModel)]="newPassword"
-                     minlength="4"
+                     minlength="3"
                      maxlength="16"
                      name="newpassword"
                      #newpassword="ngModel">
@@ -142,7 +142,7 @@
                      id="newpasswordconfirm"
                      required
                      [(ngModel)]="newPasswordConfirm"
-                     minlength="4"
+                     minlength="3"
                      maxlength="16"
                      name="newpasswordconfirm">
               <div *ngIf="showPasswordsDontMatch" class="alert alert-danger">
