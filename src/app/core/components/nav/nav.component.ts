@@ -1,10 +1,11 @@
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '@auth/auth.service';
 import { NavBarLink } from '@models/navbar-link';
 import { SearchService } from '@services/search-service/search.service';
-import { ChatComponent } from 'app/components/chat-component/chat.component';
+import { ChatComponent } from '@components/chat-component/chat.component';
+import 'rxjs-compat/add/operator/filter';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { ChatComponent } from 'app/components/chat-component/chat.component';
 })
 export class NavComponent implements OnInit {
 
-  searchTitle: string;
+  searchTitle: string = '';
 
   public navItems: Array<NavBarLink> = [
     {
@@ -31,6 +32,13 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
     this.search.currentMessage.subscribe(message => this.searchTitle = message);
+    this.router.events
+      .filter(event => event instanceof NavigationStart)
+      .subscribe((event: NavigationStart) => {
+        if (!(event.url.match(/\/users\/\d+\/items/) || event.url == '/items')) {
+          this.search.changeMessage('');
+        }
+      });
   }
 
   logout() {
@@ -44,6 +52,14 @@ export class NavComponent implements OnInit {
 
   findItems() {
     this.search.changeMessage(this.searchTitle);
+
+    // if on any other page than user's items
+    if (!this.router.url.match(/\/users\/\d+\/items/)) {
+      console.log("on any other page");
+      this.router.navigate(['items']);
+    } else {
+      console.log("on users/id/items");
+    }
   }
 
   searchTitleChange() {

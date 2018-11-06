@@ -33,10 +33,7 @@ export class ItemComponent implements OnInit {
               private search: SearchService) {
   }
 
-
   ngOnInit() {
-    // Initial values
-    this.search.changeMessage('');
     this.setSortingOptions('Rating', 'Desc');
 
     // Get User Id From URL For Items By Specific User
@@ -46,7 +43,6 @@ export class ItemComponent implements OnInit {
       } else {
         this.userId = undefined;
       }
-
     });
 
     // Subscribe to changes in search input and query server on change
