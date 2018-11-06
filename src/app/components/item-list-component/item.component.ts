@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { AuthService } from 'app/auth/auth.service';
@@ -11,7 +11,7 @@ import { SearchService } from '@services/search-service/search.service';
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.css']
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent implements OnInit, OnDestroy {
 
   items: any;
   itemsDto: any = [];
@@ -21,6 +21,8 @@ export class ItemComponent implements OnInit {
   userId;
   searchTitle: string;
   foundItems = true;
+  navigationSubscription;
+
 
   // for button arrows
   sortingOptions = {value: 'Rating', direction: 'Desc'};
@@ -31,6 +33,12 @@ export class ItemComponent implements OnInit {
               private _sanitizer: DomSanitizer,
               private auth: AuthService,
               private search: SearchService) {
+
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      if (e instanceof NavigationEnd) {
+        this.reloadComponent();
+      }
+    });
   }
 
   ngOnInit() {
@@ -91,6 +99,15 @@ export class ItemComponent implements OnInit {
         console.log('Error occured');
         this.foundItems = false;
       });
+  }
+
+  reloadComponent() {
+  }
+
+  ngOnDestroy() {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 }
 

@@ -43,7 +43,8 @@ const routes: Routes = [
   },
   {
     path: 'items',
-    component: ItemComponent
+    component: ItemComponent,
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'items/:itemId',
@@ -65,7 +66,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})
   ],
   exports: [
     RouterModule

@@ -1,20 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageUploadComponent } from 'angular2-image-upload';
 
 import { AuthService } from '@auth/auth.service';
 import { Item } from '@models/item';
 import { ItemService } from '@services/item-service/item.service';
+import { FileHolder } from "angular2-image-upload/src/image-upload/image-upload.component";
 
 @Component({
   selector: 'app-add-item',
   templateUrl: './add-item.component.html',
   styleUrls: ['./add-item.component.css']
 })
-export class AddItemComponent implements OnInit {
+export class AddItemComponent implements OnInit, OnDestroy {
   @ViewChild(ImageUploadComponent) imageUploadComponent;
-
+  navigationSubscription;
   item: Item = new Item();
   formData: FormData = new FormData();
   uploadedImages: any;
@@ -26,6 +27,12 @@ export class AddItemComponent implements OnInit {
               private route: ActivatedRoute,
               private sanitizer: DomSanitizer,
               private auth: AuthService) {
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      if (e instanceof NavigationEnd) {
+        this.reloadComponent();
+      }
+    });
+
     if (auth.isAuthenticated()) {
       return;
     }
@@ -52,6 +59,18 @@ export class AddItemComponent implements OnInit {
         err => {
           console.log('Error occurred to create new item');
         });
+  }
+
+  reloadComponent() {
+    this.item = new Item();
+    this.imageUploadComponent.files = [];
+    this.imageUploadComponent.fileCounter = 0;
+  }
+
+  ngOnDestroy() {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 
 }
