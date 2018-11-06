@@ -23,8 +23,8 @@ export class NavComponent implements OnInit {
     }
   ];
 
-  constructor(private auth: AuthService, 
-    private router: Router, 
+  constructor(private auth: AuthService,
+    private router: Router,
     private search: SearchService,
     private chatComponent: ChatComponent) {
   }
@@ -36,7 +36,7 @@ export class NavComponent implements OnInit {
   logout() {
     this.auth.removeToken();
     this.auth.removeUser();
-    this.chatComponent.userId = null; 
+    this.chatComponent.userId = null;
 
     this.router.navigate(['items']);
 

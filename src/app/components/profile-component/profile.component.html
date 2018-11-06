@@ -3,91 +3,165 @@
     <div class="col-md-3 col-sm-3">
       <img class="img-responsive avatar rounded" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
     </div>
-    <form class="col-md-8" *ngIf="!updateClicked; else editProfile">
-      <div class="form-group">
-        <label for="firstName">First Name:</label>
-        <input type="text" class="form-control" [(ngModel)]="user.firstName" name="firstName" id="firstName" readonly>
+
+    <nav class="col-md-8">
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+           aria-controls="nav-profile" aria-selected="true">Update profile</a>
+        <a class="nav-item nav-link" id="nav-password-tab" data-toggle="tab" href="#nav-password" role="tab"
+           aria-controls="nav-password" aria-selected="false">Change password</a>
       </div>
 
-      <div class="form-group">
-        <label for="lastName">Last Name:</label>
-        <input type="text" class="form-control" id="lastName" [(ngModel)]="user.lastName" name="lastName" readonly>
+      <!--update profile-->
+      <div *ngIf="showSuccessfullyUpdated" class="alert alert-success alert-dismissible" role="alert">Profile has been
+        updated
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
 
-      <div class="form-group">
-        <label for="email">Email address:</label>
-        <input type="text" class="form-control" id="email" [(ngModel)]="user.email" name="email" readonly>
+      <div *ngIf="showProfileHasNotChanged" class="alert alert-success alert-dismissible" role="alert">Profile has
+        not been changed
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <button class="btn btn-info" (click)="updateClicked = true"> Update profile</button>
-    </form>
+
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+          <form #updateForm="ngForm">
+            <ng-template [ngIf]="this.emailNotUnique">
+              <div class="alert alert-danger">
+                User with this email already exists
+              </div>
+            </ng-template>
+
+            <div class="form-group">
+              <label for="firstName">First Name:</label>
+              <input type="text"
+                     class="form-control"
+                     placeholder="First Name"
+                     [(ngModel)]="user.firstName"
+                     name="firstName"
+                     id="firstName"
+                     required
+                     #firstName="ngModel"
+                     minlength="2">
+              <div *ngIf="firstName.touched && !firstName.valid" class="alert alert-danger">
+                First Name is required, minimum 2 characters
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="lastName">Last Name:</label>
+              <input type="text"
+                     class="form-control"
+                     id="lastName"
+                     required
+                     [(ngModel)]="user.lastName"
+                     placeholder="Last name"
+                     name="lastName"
+                     #lastName="ngModel"
+                     minlength="2">
+              <div *ngIf="lastName.touched && !lastName.valid" class="alert alert-danger">
+                Last Name is required, minimum 2 characters
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email address:</label>
+              <input type="email"
+                     class="form-control"
+                     id="email"
+                     required
+                     [(ngModel)]="user.email"
+                     placeholder="Email"
+                     name="email"
+                     #email="ngModel"
+                     maxlength="100"
+                     pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+              <div *ngIf="email.touched && !email.valid" class="alert alert-danger">
+                Email is required, e.g. name@domain.com
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-success" [disabled]="updateForm.form.invalid"
+                    (click)="profileHasNotChanged = firstName.pristine && lastName.pristine && email.pristine; updateUser()">
+              Save
+            </button>
+            <button class="btn btn-danger" (click)="getUser()"> Cancel</button>
+          </form>
+        </div>
+
+        <!--change password-->
+        <div *ngIf="showPasswordSuccessfullyUpdated" class="alert alert-success alert-dismissible"
+             role="alert">Password has been updated
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="tab-pane fade" id="nav-password" role="tabpanel" aria-labelledby="nav-password-tab">
+          <form #changePassword="ngForm">
+            <div class="form-group">
+              <label for="oldpassword">Old password:</label>
+              <input type="password"
+                     class="form-control"
+                     id="oldpassword"
+                     required
+                     [(ngModel)]="oldPassword"
+                     minlength="4"
+                     maxlength="16"
+                     name="oldpassword"
+                     #oldpassword="ngModel">
+              <div *ngIf="showOldPasswordIncorrect" class="alert alert-danger">
+                old password is not correct
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="newpassword">New password:</label>
+              <input type="password"
+                     class="form-control"
+                     id="newpassword"
+                     required
+                     [(ngModel)]="newPassword"
+                     minlength="4"
+                     maxlength="16"
+                     name="newpassword"
+                     #newpassword="ngModel">
+              <div *ngIf="showNewPasswordInvalid" class="alert alert-danger">
+                the password must contain at least one digit, one uppercase, one lowercase
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="newpasswordconfirm">Confirm new password:</label>
+              <input type="password"
+                     class="form-control"
+                     id="newpasswordconfirm"
+                     required
+                     [(ngModel)]="newPasswordConfirm"
+                     minlength="4"
+                     maxlength="16"
+                     name="newpasswordconfirm">
+              <div *ngIf="showPasswordsDontMatch" class="alert alert-danger">
+                please enter the same new password
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-success" [disabled]="changePassword.form.invalid"
+                    (click)="updatePassword()">Update password
+            </button>
+            <button class="btn btn-danger" (click)="clearPasswords()">Cancel</button>
+          </form>
+        </div>
+
+      </div>
+    </nav>
   </div>
 </div>
 
-<ng-template #editProfile>
-  <form #updateForm="ngForm" class="col-md-8">
 
-    <ng-template [ngIf]="this.emailNotUnique">
-      <div class="alert alert-danger">
-        User with this email already exists
-      </div>
-    </ng-template>
 
-    <div class="form-group">
-      <label for="firstName2">First Name:</label>
-      <input type="text" class="form-control" placeholder="First Name" [(ngModel)]="user.firstName" name="firstName2"
-             id="firstName2" required
-             [(ngModel)]="user.firstName" #firstName="ngModel" minlength="2">
-      <div *ngIf="firstName.touched && !firstName.valid" class="alert alert-danger">
-        First Name is required, minimum 2 characters
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="lastName2">Last Name:</label>
-      <input type="text"
-             class="form-control"
-             id="lastName2"
-             required
-             [(ngModel)]="user.lastName"
-             placeholder="Last name"
-             name="lastName"
-             #lastName="ngModel"
-             minlength="2">
-      <div *ngIf="lastName.touched && !lastName.valid" class="alert alert-danger">
-        Last Name is required, minimum 2 characters
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="email2">Email address:</label>
-      <input type="email" class="form-control" id="email2" required [(ngModel)]="user.email" placeholder="Email"
-             name="email2" #email="ngModel"
-             maxlength="100"
-             pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-      <div *ngIf="email.touched && !email.valid" class="alert alert-danger">
-        Email is required, e.g. name@domain.com
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password"
-             class="form-control"
-             id="password"
-             required
-             [(ngModel)]="user.password"
-             minlength="3"
-             maxlength="100"
-             placeholder="Enter password"
-             name="password"
-             #password="ngModel">
-      <div *ngIf="password.touched && !password.valid" class="alert alert-danger">
-        Password is required, minimum 3 charachters
-      </div>
-    </div>
-
-    <button type="submit" class="btn btn-success" [disabled]="updateForm.form.invalid" (click)="updateUser()">Save</button>
-    <button class="btn btn-danger" (click)="updateClicked = false; getUser()"> Cancel </button>
-  </form>
-</ng-template>
 

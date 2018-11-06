@@ -37,3 +37,7 @@ ul {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
+
+.mr-auto > li{
+  margin-right: 5px;
+}

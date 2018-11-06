@@ -1,17 +1,17 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {DomSanitizer} from '@angular/platform-browser';
-import {IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent} from 'ngx-lightbox';
-import {Subscription} from 'rxjs/Rx';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
+import { DomSanitizer } from "@angular/platform-browser";
+import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from "ngx-lightbox";
+import { Subscription } from "rxjs/Rx";
 
-import {ItemService} from '@services/item-service/item.service';
-import {Item} from '@models/item';
-import {ChatComponent} from 'app/components/chat-component/chat.component';
-import {AuthService} from 'app/auth/auth.service';
-import {DefaultErrorService} from 'app/services/default-error.service';
-import {StarReviewComponent} from '@components/star-review-component/star-review.component';
+import { ItemService } from "@services/item-service/item.service";
+import { Item } from "@models/item";
+import { ChatComponent } from 'app/components/chat-component/chat.component';
+import { AuthService } from 'app/auth/auth.service';
+import { DefaultErrorService } from 'app/services/default-error.service';
+import { StarReviewComponent } from "@components/star-review-component/star-review.component";
 
-import {UserStatus} from 'ng-chat';
+import { UserStatus } from 'ng-chat';
 
 @Component({
   selector: 'app-item-details',
@@ -59,8 +59,7 @@ export class ItemDetailsComponent implements OnInit {
             this.imagesSrc.push(imageSrc);
             const album = {src: imageSrc};
             this.albums.push(album);
-          }
-          ;
+          };
 
           this.checkIfShowContactAuthorButton();
         },
@@ -98,7 +97,6 @@ export class ItemDetailsComponent implements OnInit {
     this.showContactAuthorButton = false;
     return;
   }
-
 
   // INTENDED ONLY FOR USERS CONNECTED TO CHAT
   // DOES NOT WORK EVEN FOR THEM YET

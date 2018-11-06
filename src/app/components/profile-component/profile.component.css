@@ -2,7 +2,10 @@
   margin-top: 25px;
 }
 
-.btn {
+.btn-success{
   margin-right: 10px;
 }
 
+.nav-tabs {
+  margin-bottom: 25px;
+}
