@@ -1,6 +1,7 @@
 import { ChatAdapter, User, Message, UserStatus } from 'ng-chat';
 import { Observable } from 'rxjs-compat/Observable';
 import { BehaviorSubject } from 'rxjs';
+import 'rxjs-compat/add/observable/of';
 
 import { ChatMessageServer } from '@models/ChatMessageServer';
 
