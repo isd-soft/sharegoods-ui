@@ -46,8 +46,9 @@ export class NavComponent implements OnInit {
     this.auth.removeUser();
     this.chatComponent.userId = null;
 
-    this.router.navigate(['items']);
+    window.location.reload();
 
+    //this.router.navigate(['items']);
   }
 
   findItems() {

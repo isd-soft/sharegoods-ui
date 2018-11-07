@@ -13,6 +13,12 @@ import { DefaultErrorService } from '@services/default-error.service';
 import { StarReviewComponent } from '@components/star-review-component/star-review.component';
 import { NgxSpinnerService } from "ngx-spinner";
 
+import { HttpClient } from '@angular/common/http';
+import 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
+import { environment } from '@env/environment';
+
+
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
@@ -36,7 +42,8 @@ export class ItemDetailsComponent implements OnInit {
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
               private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig,
-              private auth: AuthService, private chat: ChatComponent, private errorService: DefaultErrorService, private spinner: NgxSpinnerService) {
+              private auth: AuthService, private chat: ChatComponent, private errorService: DefaultErrorService,
+              private spinner: NgxSpinnerService, private http: HttpClient) {
   }
 
   ngOnInit() {
@@ -71,8 +78,14 @@ export class ItemDetailsComponent implements OnInit {
           }
         });
 
-    this.chat.adapter.usersObservable.subscribe(this.checkAuthorStatus.bind(this));
+    Observable.interval(5000)
+    .switchMap(() => this.http.get(environment.apiUrl + '/users/' + this.itemDto.userId + '/status'))
+        .subscribe((data) => {
+          this.userIsOnline = data;
+          this.checkIfShowContactAuthorButton();
+        });
     this.spinner.hide();
+
   }
 
   isItemOfCurrentUser() {
@@ -85,7 +98,7 @@ export class ItemDetailsComponent implements OnInit {
 
   checkIfShowContactAuthorButton() {
     if (this.auth.isAuthenticated()) {
-      if (this.itemDetails.userIsOnline) {
+      if (this.userIsOnline) {
         if (this.auth.getCurrentUser().id != this.itemDto.userId) {
           this.showContactAuthorButton = true;
           return;
@@ -94,25 +107,6 @@ export class ItemDetailsComponent implements OnInit {
     }
     this.showContactAuthorButton = false;
     return;
-  }
-
-  // INTENDED ONLY FOR USERS CONNECTED TO CHAT
-  // DOES NOT WORK EVEN FOR THEM YET
-  checkAuthorStatus(users) {
-    console.error('hello1');
-    console.log(this.itemId in users);
-    console.log(users);
-    if (this.itemId in users) {
-      if (users[this.itemId].status == UserStatus.Online) {
-        this.userIsOnline = true;
-        console.error('user online');
-      } else if (users.status == UserStatus.Offline) {
-        this.userIsOnline = false;
-        console.error('user offline');
-      } else {
-        console.error('ELSE');
-      }
-    }
   }
 
   isLoggedUserItem() {

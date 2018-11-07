@@ -36,11 +36,13 @@ export class ChatService {
   establishSocket(email) {
     const socket = new SockJS(environment.apiUrl + '/ws');
     this.stompClient = Stomp.over(socket);
+    this.stompClient.debug = null;
     this.stompClient.connect({login: email, passcode: ''}, this.onConnected.bind(this));
-    this.setCurrentUser();
   }
 
   onConnected() {
+    this.setCurrentUser();
+
     // Connect to personal system channel
     this.stompClient.subscribe('/channel/user/' + this.currentUser.id, this.onSystemMessageReceived.bind(this));
 
@@ -75,32 +77,19 @@ export class ChatService {
       return;
     }
 
-    if (message.type == 'REMOVE') {
-      this.adapter.deleteRoomsAndUsers(message.chatRoomId);
-      return;
-    }
+    if (message.type == 'ADD') {
+      if (message.user.id != this.currentUser.id) {
+        alert('Got room info for another user!');
+      }
 
-    // Get user data, check if same for current user
-    if (message.user.id != this.currentUser.id) {
-      alert('Got room info for another user!');
-    }
+      const userDetails = message.otherUser;
+      this.adapter.addUser(userDetails);
+      this.adapter.addRoom(message.chatRoomId, message.otherUser.id);
 
-    // Get author data, create new chat user (also need to pass corresponding room id)
-    const userDetails = message.otherUser;
-    this.adapter.addUser(userDetails);
-
-    // Get a room!
-    const a: boolean = this.adapter.addRoom(message.chatRoomId, message.otherUser.id);
-
-    // Subscribe to messages from this user's room
-    if (a) {
-      this.joinRoom(message.chatRoomId);
-    }
-
-    // Open chat window if requested a new chat with this user
-    if (this.requestedChatWithUser == userDetails.id) {
-      this.openChatWindow(userDetails.id);
-      this.requestedChatWithUser = null;
+      if (this.requestedChatWithUser == userDetails.id) {
+        this.openChatWindow(userDetails.id);
+        this.requestedChatWithUser = null;
+      }
     }
   }
 
@@ -111,22 +100,15 @@ export class ChatService {
 
   onChatMessageReceived(payload) {
     const receivedMessage = JSON.parse(payload.body);
-    console.log('Contents of received message: ' + receivedMessage.content);
-
     const messageToShow: Message = new Message();
-    messageToShow.toId = this.currentUser.id;
+    messageToShow.toId = receivedMessage.receiver;
     messageToShow.fromId = receivedMessage.sender;
     messageToShow.message = receivedMessage.content;
-
-
-    console.log('Message to show object:');
-    console.log(messageToShow);
-
     this.adapter.getMessage(messageToShow);
   }
 
   joinRoom(chatRoomId) {
-    this.stompClient.subscribe('/channel/' + chatRoomId, this.onChatMessageReceived.bind(this));
+    return this.stompClient.subscribe('/channel/' + chatRoomId, this.onChatMessageReceived.bind(this));
   }
 
   sendMessage(chatRoomId, message) {
