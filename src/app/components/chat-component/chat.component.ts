@@ -4,6 +4,7 @@ import { IChatController } from 'ng-chat';
 import { Adapter } from '@components/chat-component/adapter';
 import { ChatService } from '@services/chat-service';
 import { AuthService } from '@auth/auth.service';
+import { fromEvent } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class ChatComponent implements OnInit {
   public userId;
   public title = 'Chats';
   public isCollapsed = false;
+  public hideFriendsList = true;
 
   constructor(private chatService: ChatService,
               private auth: AuthService) {
@@ -37,6 +39,17 @@ export class ChatComponent implements OnInit {
     });
     if (this.auth.isAuthenticated) {
       this.chatService.establishSocket(this.auth.getCurrentUser().email);
+    }
+
+    this.onWindowResizeHideFriendsList();
+    fromEvent(window, 'resize').subscribe(this.onWindowResizeHideFriendsList.bind(this));
+  }
+
+  onWindowResizeHideFriendsList() {
+    if(window.innerWidth <= 800 || window.innerHeight <= 600){
+      this.setUserId = null;
+    } else {
+      this.onAuthUpdate();
     }
   }
 
