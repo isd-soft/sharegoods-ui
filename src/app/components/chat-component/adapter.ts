@@ -1,6 +1,7 @@
 import { ChatAdapter, User, Message, UserStatus } from 'ng-chat';
 import { Observable } from 'rxjs-compat/Observable';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
+//import 'rxjs-compat/add/observable/of';
 
 import { ChatMessageServer } from '@models/ChatMessageServer';
 
@@ -10,7 +11,7 @@ export class Adapter extends ChatAdapter {
   public users: User[] = [];
   public usersSubject = new BehaviorSubject(this.users);
   public usersObservable = this.usersSubject.asObservable();
-  public roomsForUsers = [];
+  public roomsForUsers: any[] = [];
 
   public setChatComponent(chat) {
     this.chatComponent = chat;
@@ -52,30 +53,32 @@ export class Adapter extends ChatAdapter {
 
   public addRoom(roomId, interlocutor) {
 
-    if (this.roomsForUsers[interlocutor] != roomId) {
-      this.roomsForUsers[interlocutor] = roomId;
-      return true;
+    console.log("Rooms before:");
+    console.log(this.roomsForUsers);
+
+    if (typeof this.roomsForUsers[interlocutor] !== 'undefined') {
+      this.roomsForUsers[interlocutor]['roomSubscription'].unsubscribe();
     }
-    return false;
+
+    let newRoom = {};
+    newRoom['roomSubscription'] = this.chatComponent.getChatService().joinRoom(roomId);
+    newRoom['roomId'] = roomId;
+    this.roomsForUsers[interlocutor] = newRoom;
+
+    console.log("Rooms after:");
+    console.log(this.roomsForUsers);
   }
 
   public deleteRoomsAndUsers(roomId) {
 
-    // from rooms array
-    console.error('Rooms now: ');
-    console.error(this.roomsForUsers);
-
+    // Delete from rooms array
     let invertedRoomsForUsers: any[];
     let interlocutor: any;
     invertedRoomsForUsers = this.invert(this.roomsForUsers);
     interlocutor = invertedRoomsForUsers[roomId];
-
-    console.error('interlocutor: ' + interlocutor);
     this.roomsForUsers.splice(interlocutor, 1);
 
-    console.error('Rooms Updated: ' + this.roomsForUsers);
-
-    // from user list
+    // Delete from user list
     this.deleteUserById(interlocutor);
   }
 
@@ -91,11 +94,11 @@ export class Adapter extends ChatAdapter {
   }
 
   listFriends(): Observable<User[]> {
-    return Observable.of(this.users);
+    return of(this.users);
   }
 
   getMessageHistory(userId: any): Observable<Message[]> {
-    return Observable.of([]);
+    return of([]);
   }
 
   getMessage(message: Message): void {
@@ -104,7 +107,9 @@ export class Adapter extends ChatAdapter {
   }
 
   sendMessage(message: Message): void {
-    const roomId = this.roomsForUsers[message.toId];
+    const roomId = this.roomsForUsers[message.toId]['roomId'];
+    console.log("Rooms For Users:");
+    console.log(this.roomsForUsers);
     console.log('roomId: ' + roomId);
 
     const newMessage = new ChatMessageServer;
@@ -117,4 +122,4 @@ export class Adapter extends ChatAdapter {
     const user = this.users.find(x => x.id == message.fromId);
     this.onMessageReceived(user, message);
   }
-}
+} 

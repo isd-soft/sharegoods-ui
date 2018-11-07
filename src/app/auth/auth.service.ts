@@ -18,8 +18,8 @@ export class AuthService {
   data = new BehaviorSubject<any[]>([]);
   array = [];
 
-  public addToSessionStorage(key, value) {
-    sessionStorage.setItem(key, value);
+  public addToLocalStorage(key, value) {
+    localStorage.setItem(key, value);
     this.array[key] = value;
     this.data.next(this.array);
   }
@@ -48,28 +48,28 @@ export class AuthService {
   }
 
   public setToken(email: string, password: string) {
-    this.addToSessionStorage('token', btoa(email + ':' + password));
+    this.addToLocalStorage('token', btoa(email + ':' + password));
   }
 
   public getToken(): string {
-    return sessionStorage.getItem('token');
+    return localStorage.getItem('token');
   }
 
   public removeToken() {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
   }
 
   public setCurrentUser(user: User) {
-    this.addToSessionStorage('user', JSON.stringify(user));
+    this.addToLocalStorage('user', JSON.stringify(user));
   }
 
   public getCurrentUser(): User {
-    const user: User = JSON.parse(sessionStorage.getItem('user'));
+    const user: User = JSON.parse(localStorage.getItem('user'));
     return user;
   }
 
   public removeUser() {
-    sessionStorage.removeItem('user');
+    localStorage.removeItem('user');
   }
 
   public isLoginDataValid(email, password) {
