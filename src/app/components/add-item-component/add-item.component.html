@@ -2,14 +2,14 @@
   <form #newItemForm="ngForm">
     <div class="form-group row">
       <input name="title"
-             class="form-control col-md-11 title"
+             class="form-control col-md-11 col-sm-10 title"
              id="title"
              maxlength="50"
              placeholder="Title of your post(max 50 characters)"
              required
              [(ngModel)]="item.title">
 
-      <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-info col-md-1 btn-create"
+      <button type="submit" [disabled]="newItemForm.form.invalid" class="btn btn-info col-md-1 col-sm-2 btn-create"
               (click)="createItem()">Add post
       </button>
     </div>
