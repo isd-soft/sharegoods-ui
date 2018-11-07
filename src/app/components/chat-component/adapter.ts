@@ -53,9 +53,6 @@ export class Adapter extends ChatAdapter {
 
   public addRoom(roomId, interlocutor) {
 
-    console.log("Rooms before:");
-    console.log(this.roomsForUsers);
-
     if (typeof this.roomsForUsers[interlocutor] !== 'undefined') {
       this.roomsForUsers[interlocutor]['roomSubscription'].unsubscribe();
     }
@@ -64,9 +61,6 @@ export class Adapter extends ChatAdapter {
     newRoom['roomSubscription'] = this.chatComponent.getChatService().joinRoom(roomId);
     newRoom['roomId'] = roomId;
     this.roomsForUsers[interlocutor] = newRoom;
-
-    console.log("Rooms after:");
-    console.log(this.roomsForUsers);
   }
 
   public deleteRoomsAndUsers(roomId) {
@@ -102,24 +96,18 @@ export class Adapter extends ChatAdapter {
   }
 
   getMessage(message: Message): void {
-    const user = this.users.find(x => x.id == message.fromId);
+    let user = this.users.find(x => x.id == message.fromId);
     this.onMessageReceived(user, message);
   }
 
   sendMessage(message: Message): void {
-    const roomId = this.roomsForUsers[message.toId]['roomId'];
-    console.log("Rooms For Users:");
-    console.log(this.roomsForUsers);
-    console.log('roomId: ' + roomId);
-
     const newMessage = new ChatMessageServer;
     newMessage.sender = message.fromId;
+    newMessage.receiver = message.toId;
     newMessage.content = message.message;
     newMessage.type = 'CHAT';
 
+    const roomId = this.roomsForUsers[message.toId]['roomId'];
     this.chatComponent.getChatService().sendMessage(roomId, JSON.stringify(newMessage));
-
-    const user = this.users.find(x => x.id == message.fromId);
-    this.onMessageReceived(user, message);
   }
 } 

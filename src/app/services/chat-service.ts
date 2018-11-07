@@ -36,6 +36,7 @@ export class ChatService {
   establishSocket(email) {
     const socket = new SockJS(environment.apiUrl + '/ws');
     this.stompClient = Stomp.over(socket);
+    this.stompClient.debug = null;
     this.stompClient.connect({login: email, passcode: ''}, this.onConnected.bind(this));
   }
 
@@ -46,13 +47,11 @@ export class ChatService {
     this.stompClient.subscribe('/channel/user/' + this.currentUser.id, this.onSystemMessageReceived.bind(this));
 
     // Send any message to personal channel to get a list of existing rooms
-    console.log("Personal message start");
     const newMessage = new ChatMessageServer;
     newMessage.sender = this.currentUser.id;
     newMessage.content = 'hi';
     newMessage.type = 'CHAT';
     this.stompClient.send('/app/chat/user/' + this.currentUser.id, {}, JSON.stringify(newMessage));
-    console.log("Personal message end");
   }
 
   requestChatRoom(currentUserId, itemUserId) {
@@ -78,13 +77,6 @@ export class ChatService {
       return;
     }
 
-    // We dont delete rooms
-    /* if (message.type == 'REMOVE') {
-      this.adapter.deleteRoomsAndUsers(message.chatRoomId);
-      // ALSO NEED TO UNSIBCRIBE FROM CHANNEL
-      return;
-    } */
-
     if (message.type == 'ADD') {
       if (message.user.id != this.currentUser.id) {
         alert('Got room info for another user!');
@@ -109,7 +101,7 @@ export class ChatService {
   onChatMessageReceived(payload) {
     const receivedMessage = JSON.parse(payload.body);
     const messageToShow: Message = new Message();
-    messageToShow.toId = this.currentUser.id;
+    messageToShow.toId = receivedMessage.receiver;
     messageToShow.fromId = receivedMessage.sender;
     messageToShow.message = receivedMessage.content;
     this.adapter.getMessage(messageToShow);
