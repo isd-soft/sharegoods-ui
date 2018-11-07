@@ -4,6 +4,7 @@ import { ImageUploadComponent } from 'angular2-image-upload';
 
 import { ItemService } from '@services/item-service/item.service';
 import { environment } from '@env/environment';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-edit-item',
@@ -23,10 +24,11 @@ export class EditItemComponent implements OnInit {
   uploadedImages: any;
   maxExceeded = false;
 
-  constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute) {
+  constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
@@ -48,6 +50,7 @@ export class EditItemComponent implements OnInit {
             alert('Some error has occurred ' + err.status);
           }
         });
+    this.spinner.hide();
   }
 
   editItem() {

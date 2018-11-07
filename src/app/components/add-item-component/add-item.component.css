@@ -16,3 +16,10 @@
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
+
+
+@media only screen and (min-width: 600px) {
+  .col-s-1 {width: 20%;}
+  .col-s-11 {width: 80%;}
+}
+

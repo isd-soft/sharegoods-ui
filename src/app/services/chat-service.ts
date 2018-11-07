@@ -113,6 +113,5 @@ export class ChatService {
 
   sendMessage(chatRoomId, message) {
     this.stompClient.send('/app/chat/' + chatRoomId + '/sendMessage', {}, message);
-
   }
 }

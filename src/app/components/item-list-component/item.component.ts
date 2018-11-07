@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { NgxSpinnerService } from "ngx-spinner";
 
 import { AuthService } from 'app/auth/auth.service';
 import { ItemService } from '@services/item-service/item.service';
@@ -11,7 +12,7 @@ import { SearchService } from '@services/search-service/search.service';
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.css']
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent implements OnInit, OnDestroy {
 
   items: any;
   itemsDto: any = [];
@@ -21,6 +22,8 @@ export class ItemComponent implements OnInit {
   userId;
   searchTitle: string;
   foundItems = true;
+  navigationSubscription;
+
 
   // for button arrows
   sortingOptions = {value: 'Rating', direction: 'Desc'};
@@ -30,13 +33,18 @@ export class ItemComponent implements OnInit {
               private itemService: ItemService,
               private _sanitizer: DomSanitizer,
               private auth: AuthService,
-              private search: SearchService) {
+              private search: SearchService,
+              private spinner: NgxSpinnerService) {
+
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      if (e instanceof NavigationEnd) {
+        this.reloadComponent();
+      }
+    });
   }
 
-
   ngOnInit() {
-    // Initial values
-    this.search.changeMessage('');
+    this.spinner.show();
     this.setSortingOptions('Rating', 'Desc');
 
     // Get User Id From URL For Items By Specific User
@@ -46,7 +54,6 @@ export class ItemComponent implements OnInit {
       } else {
         this.userId = undefined;
       }
-
     });
 
     // Subscribe to changes in search input and query server on change
@@ -54,6 +61,7 @@ export class ItemComponent implements OnInit {
       this.searchTitle = message;
       this.getItems();
     });
+   this.spinner.hide();
   }
 
   getUserIdIfAuth() {
@@ -95,6 +103,15 @@ export class ItemComponent implements OnInit {
         console.log('Error occured');
         this.foundItems = false;
       });
+  }
+
+  reloadComponent() {
+  }
+
+  ngOnDestroy() {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
   }
 }
 

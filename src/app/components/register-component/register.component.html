@@ -54,12 +54,12 @@
                  id="password"
                  required
                  [(ngModel)]="user.password"
-                 minlength="4"
+                 minlength="3"
                  maxlength="16"
                  placeholder="Enter password"
                  name="password"
                  #password="ngModel">
-          <div *ngIf="invalidPassword || !password.valid" class="alert alert-danger">
+          <div *ngIf="invalidPassword" class="alert alert-danger">
             the password must contain at least one digit, one uppercase, one lowercase
           </div>
         </div>

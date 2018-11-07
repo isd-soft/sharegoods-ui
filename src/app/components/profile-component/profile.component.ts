@@ -99,9 +99,9 @@ export class ProfileComponent implements OnInit {
           }, 1500);
         },
         err => {
-          if (err.status == '404') {
+          if (err.status == '400') {
             this.showOldPasswordIncorrect = true;
-          } else if (err.status == '400') {
+          } else if (err.status == '404') {
             this.showNewPasswordInvalid = true;
           } else {
             alert('Some error occured: ' + err.status);

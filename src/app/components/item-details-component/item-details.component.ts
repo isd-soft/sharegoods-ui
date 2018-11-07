@@ -3,7 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from 'ngx-lightbox';
 import { Subscription } from 'rxjs/Subscription';
-import { UserStatus } from 'ng-chat';
+import { HttpClient } from '@angular/common/http';
+import 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
+import { NgxSpinnerService } from "ngx-spinner";
 
 import { ItemService } from '@services/item-service/item.service';
 import { Item } from '@models/item';
@@ -11,10 +14,6 @@ import { ChatComponent } from '@components/chat-component/chat.component';
 import { AuthService } from '@auth/auth.service';
 import { DefaultErrorService } from '@services/default-error.service';
 import { StarReviewComponent } from '@components/star-review-component/star-review.component';
-
-import { HttpClient } from '@angular/common/http';
-import 'rxjs/Rx';
-import {Observable} from 'rxjs/Rx';
 import { environment } from '@env/environment';
 
 
@@ -41,10 +40,12 @@ export class ItemDetailsComponent implements OnInit {
 
   constructor(private router: Router, private itemService: ItemService, private route: ActivatedRoute, private _sanitizer: DomSanitizer,
               private _lightbox: Lightbox, private _lightboxEvent: LightboxEvent, private _lighboxConfig: LightboxConfig,
-              private auth: AuthService, private chat: ChatComponent, private errorService: DefaultErrorService, private http : HttpClient) {
+              private auth: AuthService, private chat: ChatComponent, private errorService: DefaultErrorService,
+              private spinner: NgxSpinnerService, private http: HttpClient) {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.route.params.subscribe(params => {
       this.itemId = params.itemId;
     });
@@ -81,6 +82,7 @@ export class ItemDetailsComponent implements OnInit {
           this.userIsOnline = data;
           this.checkIfShowContactAuthorButton();
         });
+    this.spinner.hide();
 
   }
 
