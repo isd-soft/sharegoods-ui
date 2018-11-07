@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 import { environment } from '@env/environment';
 import { Item } from '@models/item';
+import { timer } from 'rxjs/observable/timer';
+import { concatMap, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
