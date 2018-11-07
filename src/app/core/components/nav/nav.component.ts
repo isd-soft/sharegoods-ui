@@ -7,7 +7,6 @@ import { SearchService } from '@services/search-service/search.service';
 import { ChatComponent } from '@components/chat-component/chat.component';
 import 'rxjs-compat/add/operator/filter';
 
-
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -56,11 +55,8 @@ export class NavComponent implements OnInit {
 
     // if on any other page than user's items
     if (!this.router.url.match(/\/users\/\d+\/items/)) {
-      console.log("on any other page");
       this.router.navigate(['items']);
-    } else {
-      console.log("on users/id/items");
-    }
+    } 
   }
 
   searchTitleChange() {
