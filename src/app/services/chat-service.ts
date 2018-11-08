@@ -17,6 +17,7 @@ export class ChatService {
   private adapter;
   private chatComponent;
   private requestedChatWithUser;
+  private email;
 
   constructor(private http: HttpClient, private auth: AuthService) {
   }
@@ -34,10 +35,18 @@ export class ChatService {
   }
 
   establishSocket(email) {
+    this.email = email;
     const socket = new SockJS(environment.apiUrl + '/ws');
     this.stompClient = Stomp.over(socket);
     this.stompClient.debug = null;
-    this.stompClient.connect({login: email, passcode: ''}, this.onConnected.bind(this));
+    this.stompClient.connect({login: email, passcode: ''}, this.onConnected.bind(this), this.onErrorReconnect.bind(this));
+  }
+
+  onErrorReconnect(error) {
+    console.log(error);
+    setTimeout(() => {
+      this.establishSocket(this.email);
+    }, 1000);
   }
 
   onConnected() {
